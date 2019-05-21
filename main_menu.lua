@@ -100,6 +100,12 @@ local function Level1ScreenTransition()
     composer.gotoScene("level1_screen")
 end    
 
+local function Level3ScreenTransition()
+    composer.gotoScene("level3_screen")
+end    
+
+
+
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
 
 -----------------------------------------------------------------------------------------
