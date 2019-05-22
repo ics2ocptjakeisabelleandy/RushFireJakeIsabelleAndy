@@ -100,6 +100,12 @@ local function LevelSelectScreenTransition()
     composer.gotoScene("Level_Select", {effect = "zoomInOutFade", time = 500})
 end    
 
+local function Level3ScreenTransition()
+    composer.gotoScene("level3_screen")
+end    
+
+
+
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
 
 -----------------------------------------------------------------------------------------
