@@ -64,7 +64,7 @@ local Y2 = display.contentHeight*5/5/7
 local questionObject
 local numericField
 local userAnswer
-local correctAnswer1
+local correctAnswer
 local incorrectAnswer
 local randomOperator
 
@@ -82,9 +82,7 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
-    userAnswer = answerText.text
-    
-    questionsAnswered = questionsAnswered + 1
+    userAnswer = correctAnswerText.text
 
     if (touch.phase == "ended") then
 
@@ -95,7 +93,7 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer1(touch)
-    userAnswer = wrongText1.text
+    userAnswer = wrongAnswerText1.text
     
     if (touch.phase == "ended") then
         
@@ -106,7 +104,7 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer2(touch)
-    userAnswer = wrongText2.text
+    userAnswer = wrongAnswerText2.text
     
     if (touch.phase == "ended") then
         
@@ -117,7 +115,7 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer3(touch)
-    userAnswer = wrongText3.text
+    userAnswer = wrongAnswerText3.text
     
     if (touch.phase == "ended") then
         
@@ -128,21 +126,21 @@ end
 
 -- add the event listeners
 local function AddTextListeners()
-	answerText:addEventListener("touch", TouchListenerAnswer)
-	wrongText1:addEventListener("tocuh", TouchListenerWrongAnswer1)
-	wrongText2:addEventListener("tocuh", TouchListenerWrongAnswer2)
-	wrongText3:addEventListener("tocuh", TouchListenerWrongAnswer3)
+	correctAnswerText:addEventListener("touch", TouchListenerAnswer)
+	wrongAnswerText1:addEventListener("tocuh", TouchListenerWrongAnswer1)
+	wrongAnswerText2:addEventListener("tocuh", TouchListenerWrongAnswer2)
+	wrongAnswerText3:addEventListener("tocuh", TouchListenerWrongAnswer3)
 end
 
 -- remove event listeners
 local function RemoveTextListeners()
-	answerText:removeEventListener("touch", TouchListenerAnswer)
-	wrongText1:removeEventListener("touch", TouchListenerWrongAnswer1)
-    wrongText2:removeEventListener("touch", TouchListenerWrongAnswer2)
-    wrongText3:removeEventListener("touch", TouchListenerWrongAnswer3)
+	correctAnswerText:removeEventListener("touch", TouchListenerAnswer)
+	wrongAnswerText1:removeEventListener("touch", TouchListenerWrongAnswer1)
+    wrongAnswerText2:removeEventListener("touch", TouchListenerWrongAnswer2)
+    wrongAnswerText3:removeEventListener("touch", TouchListenerWrongAnswer3)
 end
 
-local function AskQuestion()
+local function DisplayQuestion()
     -- generate a random number between 1 and 2
     -- *** declare this variable above
     randomOperator = math.random(1,2)
@@ -153,9 +151,9 @@ local function AskQuestion()
         correctAnswer = " 8 "
 
         -- wrong answers
-        wrongAnswer1 = correctAnswer1 - math.random(1, 3)
-        wrongAnswer2 = correctAnswer1 + math.random(1, 3)
-        wrongAnswer3 = correctAnswer1 - math.random(4, 5)
+        wrongAnswer1 = correctAnswer - math.random(1, 3)
+        wrongAnswer2 = correctAnswer + math.random(1, 3)
+        wrongAnswer3 = correctAnswer - math.random(4, 5)
 
         questionObject.text == " How many planets are there? "
 
@@ -163,9 +161,9 @@ local function AskQuestion()
         correctAnswerText.text = correctAnswer
 
         -- wrong answer text
-        wrongText1.text = wrongAnswer1
-        wrongText2.text = wrongAnswer2
-        wrongText3.text = wrongAnswer3
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
     
     elseif (randomOperator == 2) then
 
@@ -173,19 +171,19 @@ local function AskQuestion()
         correctAnswer = " Earth "
 
         -- wrong answers
-        wrongAnswer4 = " Mars "
-        wrongAnswer5 = " Jupiter "
-        wrongAnswer6 = " Neptune "
+        wrongAnswer1 = " Mars "
+        wrongAnswer2 = " Jupiter "
+        wrongAnswer3 = " Neptune "
 
-        questionObjectText2.text == " What planet has life on it? "
+        questionObjectText.text == " What planet has life on it? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
 
         -- wrong answer text
-        wrongText4.text = wrongAnswer4
-        wrongText5.text = wrongAnswer5
-        wrongText6.text = wrongAnswer6
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
     end
 end
 
@@ -196,7 +194,33 @@ local function PositionAnswers()
 
     if (answerPosition == 1) then
 
-        correctAnswerText1
+        correctAnswerText.x = X1
+        correctAnswerText.y = Y1
+
+        wrongAnswerText1.x = X2
+        wrongAnswerText1.y = Y2
+
+        wrongAnswerText2.x = X3
+        wrongAnswerText2.y = Y3
+
+        wrongAnswerText3.x = X4
+        wrongAnswerText3.y = Y4
+
+    elseif (answerPosition == 2) then
+
+        correctAnswerText.x = X4
+        correctAnswerText.y = Y3
+
+        wrongAnswerText1.x = X2
+        wrongAnswerText1.y = Y1
+
+        wrongAnswerText2.x = X1
+        wrongAnswerText2.y = Y4
+
+        wrongAnswerText3.x = X3
+        wrongAnswerText3.y = Y2
+    end
+end
 
 --------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -207,15 +231,44 @@ function scene:create(event)
 
     -- creat a group tht associates objects with the scene
     local sceneGroup = self.view
+
+    ----------------------------------------------------------------------------------
+    --covering the other scene with a rectangle so it looks faded and stops touch from going through
+    bkg = display.newRect(display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
+    --setting to a semi black colour
+    bkg:setFillColor(0,0,0,0.5)
+
     ----------------------------------------------------------------------------------
     -- make a cover rectangle to have rhe background fully blocked where the question is
     cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*0.8, display.contentHeight*0.95, 50)
     -- set the cover color
     cover:settFillColor(96/255, 96/255, 96/255)
+
+    -- create the question text object
+    questionObjectText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
+
+    -- create the answer text object & wrong answer text objects
+    correctAnswerText = display.newText("", X1, Y1, Arial, 75)
+    correctAnswerText.anchorX = 0
+    wrongAnswerText1 = display.newText("", X2, Y2, Arial, 75)
+    wrongAnswerText1.anchorX = 0
+    wrongAnswerText2 = display.newText("", X3, Y3, Arial, 75)
+    wrongAnswerText2.anchorX = 0
+    wrongAnswerText3 = display.newText("", X4, Y4, Arial, 75)
+    wrongAnswerText3.anchorX = 0
+
     ----------------------------------------------------------------------------------
 
     -- insert all objects for this scene into the scene group
+    sceneGroup:insert(bkg)
     sceneGroup:insert(cover)
+    sceneGroup:insert(questionObjectText)
+    sceneGroup:insert(correctAnswerText)
+    sceneGroup:insert(wrongAnswerText1)
+    sceneGroup:insert(wrongAnswerText2)
+    sceneGroup:insert(wrongAnswerText3)
+
+end
 
 -----------------------------------------------------------------------------------------
 

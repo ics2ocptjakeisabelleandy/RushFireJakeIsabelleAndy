@@ -45,14 +45,15 @@ local uArrow
 local character
 
 local motionx = 0
-local SPEED = 7
-local negativeSpeed = -9
-local LINEAR_VELOCITY = -100
-local GRAVITY = 7
+local SPEED = 20
+local negativeSpeed = -20
+local LINEAR_VELOCITY = -200
+local GRAVITY = 20
 
 local leftW
 local topW
 local rightW
+local floor
 
 local platform1
 local platform2
@@ -65,6 +66,7 @@ local pluto
 local theplanet
 
 local questionsAnswered = 0
+
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -156,16 +158,61 @@ local function MakeObjectCharactersVisible()
     saturn.isVisible = true
 end
 
-local function onCollision()
-    
+local function MakeHeartsVisible()
+    heart1.isVisible = true
+    heart2.isVisible = true
+end
+
+local function YouLoseTansition()
+    composer.gotoScene( "you_lose" )
+end
+
+local function YouWinTransition()
+    composer.gotoScene( "you_win" )
+end
+
+local function onCollision( self, event )
+    -- for testing purposes
+    --print( event.target )        --the first object in the collision
+    --print( event.other )         --the second object in the collision
+    --print( event.selfElement )   --the element (number) of the first object which was hit in the collision
+    --print( event.otherElement )  --the element (number) of the second object which was hit in the collision
+    --print( event.target.myName .. ": collision began with " .. event.other.myName )
+
     if ( event.phase == "began" ) then
 
-        if  (event.target.myName == "ball1") or
-            (event.target.myName == "ball3") or
-            (event.target.myName == "ball2") then
+        if (event.target.myName == "floor") then
+
+            -- remove runtime listeners that move the character
+            RemoveArrowEventListeners()
+            RemoveRuntimeListeners()
+
+            -- remove the character from the display
+            display.remove(character)
+
+            -- decrease number of lives
+            numLives = numLives - 1
+
+            if (numLives == 1) then
+                -- update hearts
+                heart1.isVisible = true
+                heart2.isVisible = false
+                timer.performWithDelay(200, ReplaceCharacter)
+
+            elseif (numLives == 0) then
+                -- update hearts
+                heart1.isVisible = false
+                heart2.isVisible = false
+                timer.performWithDelay(200, YouLoseTansition)
+            end
+        end
+
+        if  (event.target.myName == "earth") or
+            (event.target.myName == "pluto") or
+            (event.target.myName == "saturn") then
 
             -- get the ball that the user hit
-            theBall = event.target
+            theplanet = event.target
 
             -- stop the character from moving
             motionx = 0
@@ -177,11 +224,13 @@ local function onCollision()
             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
-        end
-
-        if (questionsAnswered == 3) then
-            timer.performWithDelay(200, YouWinTransition)
+            if (userAnswer == correctAnswer) then
+                questionsAnswered = questionsAnswered + 1
+            end
+                
+            if (questionsAnswered == 3) then
+                timer.performWithDelay(200, YouWinTransition)
+            end
         end
     end
 end
@@ -195,12 +244,18 @@ local function AddCollisionListeners()
     saturn:addEventListener("collision")
     pluto.collision = onCollision
     pluto:addEventListener("collision")
+
+    -- if character collides with floor, onCollision will be called
+    floor.collision = onCollision
+    floor:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
     earth:removeEventListener("collision")
     saturn:removeEventListener("collision")
     pluto:removeEventListener("collision")
+
+    floor:removeEventListener("collision")
 end
 
 local function AddPhysicsBodies()
@@ -208,6 +263,7 @@ local function AddPhysicsBodies()
     physics.addBody(leftW, "static", {friction=0.5, bounce=0.3})
     physics.addBody(rightW, "static", {friction=0.5, bounce=0.3})
     physics.addBody(topW, "static", {friction=0.5, bounce=0.3})
+    physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2})
 
     physics.addBody(platform1, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(platform2, "static", {density=1, friction=0.3, bounce=0.2})
@@ -223,6 +279,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(leftW)
     physics.removeBody(rightW)
     physics.removeBody(topW)
+    physics.removeBody(floor)
 
     physics.removeBody(platform1)
     physics.removeBody(platform2)
@@ -307,6 +364,13 @@ function scene:create( event )
     -- insert the wall into scene group
     sceneGroup:insert(topW)
 
+    floor = display.newLine (0, 0, display.contentWidth, 0)
+    floor.y = display.contentCenterY * 2
+    floor.isVisible = true
+
+    -- insert the wall into scene group
+    sceneGroup:insert(floor)
+
     leftW = display.newLine (0, 0, 0, display.contentHeight)
     leftW.isVisible = true
 
@@ -345,10 +409,28 @@ function scene:create( event )
     platform4.x = display.contentWidth/2
     platform4.y = display.contentHeight/1.75
 
+    -- Insert the hearts
+    heart1 = display.newImageRect("Images/Lives.png", 80, 80)
+    heart1.x = 50
+    heart1.y = 50
+    heart1.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( heart1 )
+
+    heart2 = display.newImageRect("Images/Lives.png", 80, 80)
+    heart2.x = 130
+    heart2.y = 50
+    heart2.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( heart2 )
+
+
     -- insert platform1 into sceneGroup
     sceneGroup:insert(platform4)
 
-    earth = display.newImage("Images/earthIsabelleLC.png", 100, 100)
+    earth = display.newImage("Images/EarthIsabelleLC.png", 100, 100)
     earth.x = display.contentWidth/2
     earth.y = display.contentHeight/2.15
     earth.width = 100
@@ -357,7 +439,7 @@ function scene:create( event )
     -- insert earth into sceneGroup
     sceneGroup:insert(earth)
 
-    saturn = display.newImage("Images/saturnIsabelleLC.png", 100, 100)
+    saturn = display.newImage("Images/SaturnIsabelleLC.png", 100, 100)
     saturn.x = display.contentWidth/1.25
     saturn.y = display.contentHeight/8.5
     saturn.width = 100
@@ -404,6 +486,9 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
+       numLives = 2
+       questionsAnswered = 0
+
         --create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
 
@@ -413,8 +498,11 @@ function scene:show( event )
         -- add collision listeners to objects
         AddCollisionListeners()
 
-        -- make planes visible
+        -- make planets visible
         MakeObjectCharactersVisible()
+
+        -- make lives visible
+        MakeHeartsVisible()
     end
 end --function scene:show( event )
 
