@@ -254,6 +254,7 @@ function scene:create( event )
     rArrow = display.newImageRect("Images/arrow.png", 100, 50)
     rArrow.x = display.contentWidth * 9.2 / 10
     rArrow.y = display.contentHeight * 9.5 / 10
+    rArrow:toFront()
    
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert(rArrow)
@@ -300,22 +301,22 @@ function scene:create( event )
 
     skyscraper1 = display.newImage("Images/skyscraper1jakeH.png", 200, 100)
     skyscraper1.x = display.contentWidth/11
-    skyscraper1.y = display.contentHeight/6
+    skyscraper1.y = display.contentHeight/1.35
 
     -- insert platform1 into sceneGroup
     sceneGroup:insert(skyscraper1)
 
 
-    skyscraper2 = display.newImage("Images/skyscraper2jakeH.png", 200, 100)
+    skyscraper2 = display.newImage("Images/skyscraper2jakeH.png", 300, 100)
     skyscraper2.x = display.contentWidth/2
-    skyscraper2.y = display.contentHeight/3
+    skyscraper2.y = display.contentHeight/1.35
 
     -- insert skyscraper2 into sceneGroup
     sceneGroup:insert(skyscraper2)
 
     skyscraper3 = display.newImage("Images/skyscraper3jakeH.png", 200, 100)
-    skyscraper3.x = display.contentWidth/2
-    skyscraper3.y = display.contentHeight/1.75
+    skyscraper3.x = display.contentWidth/1.1
+    skyscraper3.y = display.contentHeight/1.35
 
     -- insert skyscraper3 into sceneGroup
     sceneGroup:insert(skyscraper3)
