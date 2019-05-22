@@ -146,8 +146,8 @@ function scene:create( event )
     LevelSelectScreenButton = widget.newButton( 
         {   
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*1/8,
-            y = display.contentHeight*4.5/8,
+            x = display.contentWidth*4/8,
+            y = display.contentHeight*6/8,
 
             -- Insert the images here
             defaultFile = "Images/LevelSelectScreenButtonAndyDF.png",
@@ -162,10 +162,10 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Creating Credits Button
-    LevelSelectScreenButton2 = widget.newButton( 
+    LevelSelectScreenButton3 = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*1/8,
+            x = display.contentWidth*4/8,
             y = display.contentHeight*2/8,
 
             -- Insert the images here
@@ -176,16 +176,16 @@ function scene:create( event )
             onRelease = Level3ScreenTransition
         } ) 
 
-    LevelSelectScreenButton2:scale(0.5, 0.5)
+    LevelSelectScreenButton3:scale(0.5, 0.5)
     
     -----------------------------------------------------------------------------------------
 
     -- Creating Instructions Button
-    LevelSelectScreenButton3 = widget.newButton( 
+    LevelSelectScreenButton2 = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*1/8,
-            y = display.contentHeight*3.25/8,
+            x = display.contentWidth*4/8,
+            y = display.contentHeight*4/8,
 
             -- Insert the images here
             defaultFile = "Images/LevelSelectScreenButton2AndyDF.png",
@@ -195,7 +195,7 @@ function scene:create( event )
             onRelease = Level2ScreenTransition
         } ) 
     
-    LevelSelectScreenButton3:scale(0.5, 0.5)
+    LevelSelectScreenButton2:scale(0.5, 0.5)
    
     -----------------------------------------------------------------------------------------
 
