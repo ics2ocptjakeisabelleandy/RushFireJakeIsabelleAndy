@@ -151,11 +151,7 @@ local function ReplaceCharacter()
     AddRuntimeListeners()
 end
 
-local function MakeObjectCharactersVisible()
-    earth.isVisible = true
-    pluto.isVisible = true
-    saturn.isVisible = true
-end
+
 
 local function onCollision()
     
@@ -188,36 +184,17 @@ local function onCollision()
 end
 
 
-local function AddCollisionListeners()
-    -- if character collides with earth, onCollision will be called
-    earth.collision = onCollision
-    earth:addEventListener("collision")
-    saturn.collision = onCollision
-    saturn:addEventListener("collision")
-    pluto.collision = onCollision
-    pluto:addEventListener("collision")
-end
-
-local function RemoveCollisionListeners()
-    earth:removeEventListener("collision")
-    saturn:removeEventListener("collision")
-    pluto:removeEventListener("collision")
-end
-
 local function AddPhysicsBodies()
     -- add to physics engine
     physics.addBody(leftW, "static", {friction=0.5, bounce=0.3})
     physics.addBody(rightW, "static", {friction=0.5, bounce=0.3})
     physics.addBody(topW, "static", {friction=0.5, bounce=0.3})
 
-    physics.addBody(platform1, "static", {density=1, friction=0.3, bounce=0.2})
-    physics.addBody(platform2, "static", {density=1, friction=0.3, bounce=0.2})
-    physics.addBody(platform3, "static", {density=1, friction=0.3, bounce=0.2})
-    physics.addBody(platform4, "static", {density=1, friction=0.3, bounce=0.2})
-
-    physics.addBody(earth, "static", {density=1, friction=0.3, bounce=0.2})
-    physics.addBody(saturn, "static", {density=1, friction=0.3, bounce=0.2})
-    physics.addBody(pluto, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(skyscraper1, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(skyscraper2, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(skyscraper3, "static", {density=1, friction=0.3, bounce=0.2})
+    
+    
 end
 
 local function RemovePhysicsBodies()
@@ -228,7 +205,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(platform1)
     physics.removeBody(platform2)
     physics.removeBody(platform3)
-    physics.removeBody(platform4)
+    
 end
 
 -----------------------------------------------------------------------------------------
@@ -334,7 +311,7 @@ function scene:create( event )
     skyscraper2.y = display.contentHeight/3
 
     -- insert skyscraper2 into sceneGroup
-    sceneGroup:insert(platform2)
+    sceneGroup:insert(skyscraper2)
 
     skyscraper3 = display.newImage("Images/skyscraper3jakeH.png", 200, 100)
     skyscraper3.x = display.contentWidth/2
@@ -384,10 +361,10 @@ function scene:show( event )
         AddPhysicsBodies()
 
         -- add collision listeners to objects
-        AddCollisionListeners()
+        
 
         -- make planes visible
-        MakeObjectCharactersVisible()
+        
     end
 end --function scene:show( event )
 
