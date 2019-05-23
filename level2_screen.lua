@@ -345,35 +345,6 @@ function scene:create( event )
     platform4.x = display.contentWidth/2
     platform4.y = display.contentHeight/1.75
 
-    -- insert platform1 into sceneGroup
-    sceneGroup:insert(platform4)
-
-    earth = display.newImage("Images/earthIsabelleLC.png", 100, 100)
-    earth.x = display.contentWidth/2
-    earth.y = display.contentHeight/2.15
-    earth.width = 100
-    earth.height = 100
-
-    -- insert earth into sceneGroup
-    sceneGroup:insert(earth)
-
-    saturn = display.newImage("Images/saturnIsabelleLC.png", 100, 100)
-    saturn.x = display.contentWidth/1.25
-    saturn.y = display.contentHeight/8.5
-    saturn.width = 100
-    saturn.height = 100
-
-    -- insert earth into sceneGroup
-    sceneGroup:insert(saturn)
-
-    pluto = display.newImage("Images/PlutoIsabelleLC.png", 100, 100)
-    pluto.x = display.contentWidth/8
-    pluto.y = display.contentHeight/8.5
-    pluto.width = 100
-    pluto.height = 100
-
-    -- insert earth into sceneGroup
-    sceneGroup:insert(pluto)
 end --function scene:create( event )
 
 
