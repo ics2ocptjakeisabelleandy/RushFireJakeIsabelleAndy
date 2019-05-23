@@ -34,41 +34,47 @@ local backgroundSoundChannel
 --------------------------------------------------------------------------------------------------
 -- LOCAL VARIABLES 
 -------------------------------------------------------------------------------------------
-local background
-local turboG
-local companyLogo
 
-------------------------------------------------------------------------------------------------------
--- LOCAL FUNCTIONS
---------------------------------------------------------------------------------------
-local function HideCompanyLogo()
-    companyLogo.isVisible = false
-end
 
-local function ShowTurboG()
-    turboG.isVisible = true
-end
+display.setStatusBar(display.HiddenStatusBar)
 
-local function HideTurboG()
-    turboG.isVisible = false
-end
----------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------
+--Global Variables
+-------------------------------------------------------------------
 
--- function: MoveCompanyLogo
-local function MoveCompanyLogo(event)
-    -- add the scroll speed to the x-value
-    companyLogo.x = companyLogo.x - scrollSpeed
-    -- scale the image by 100.2% (x) and 100.2% (y)
-    companyLogo:scale(1.025, 1.025)
 
-    timer.performWithDelay(2000, HideCompanyLogo)
-    timer.performWithDelay(2050, ShowTurboG)
-    timer.performWithDelay(2100, HideTurboG)
-end
 
-local function HideTurboG2()
-    turboG.isVisible = false
-end
+-------------------------------------------------------------------
+--local Variables
+-------------------------------------------------------------------
+local scrollspeed = 3
+local CompanyLogo
+
+-------------------------------------------------------------------
+--Sounds
+-------------------------------------------------------------------
+
+local AnimationSound = audio.loadSound( "Sounds/wowc.mp3" )
+local AnimationSoundChannel
+
+-------------------------------------------------------------------
+--Object creation
+-------------------------------------------------------------------
+CompanyLogo = display.newImageRect("Images/CompanyLogoJakeH@2x.png", 500, 500 )
+
+--creating the company logo
+CompanyLogo.x = 0 
+CompanyLogo.y = display.contentHeight
+
+--rotating the logo (and transitioning the logo)
+transition.to( CompanyLogo, { rotation = CompanyLogo.rotation-360, time=2000})
+transition.to(CompanyLogo, {x= 512, y=384, time=2000})
+
+--Plays the animation sound
+AnimationSoundChannel = audio.play(AnimationSound)
+
+
+
 
 -- The function that will go to the main menu 
 local function gotoMainMenu()
@@ -88,43 +94,21 @@ function scene:create( event )
     ------------------------------------------------------------------------------------------------------------
     -- OBJECT CREATION & TEXT
     ------------------------------------------------------------------------------------------------------------
-    -- background
-    background = display.newImage("Images/1.jpg", 0, 0)
+    --creating the company logo
+    CompanyLogo.x = 0 
+    CompanyLogo.y = display.contentHeight
 
-    -- set the x and y position
-    background.x = display.contentCenterX
-    background.y = display.contentCenterY
+    
 
-    -- set the width and height
-    background.width = display.contentWidth
-    background.height = display.contentHeight
-
-
-    -- create the text object that will say Correct, set the colour and then hide it
-    turboG = display.newText("Turbo Games", display.contentWidth/2, display.contentHeight*1/2, nil, 100 )
-    turboG:setTextColor(1, 1, 1)
-    turboG.isVisible = false
-
-
-    ------------------------------------------------------------------------------------------------
-    -- logo
-    companyLogo = display.newImage("Images/CompanyLogoIsabelleLC@2x.png", 25, 25)
-    companyLogo:scale(0.09, 0.09)
-    companyLogo.isVisible = true
-
-    companyLogo.alpha = 1
-
-    -- set the x and y
-    companyLogo.x = 1024
-    companyLogo.y = display.contentHeight/2
+  
+    
 
   
     -----------------------------------------------------------------------------------------
 
     -- Associating button widgets with this scene
-    sceneGroup:insert(background)
-    sceneGroup:insert(turboG)
-    sceneGroup:insert(companyLogo)
+    
+    sceneGroup:insert(CompanyLogo)
 
 end -- function scene:create( event )   
 
@@ -149,8 +133,7 @@ function scene:show( event )
         -- start the splash screen music
         backgroundSoundChannel = audio.play(backgroundSound)
 
-        -- Call the movechibi function as soon as we enter the frame.
-        Runtime:addEventListener("enterFrame", MoveCompanyLogo)
+        
 
         -- Go to the main menu screen after the given time.
         timer.performWithDelay ( 2500, gotoMainMenu)          
