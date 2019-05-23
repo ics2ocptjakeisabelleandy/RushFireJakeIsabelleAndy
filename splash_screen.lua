@@ -54,8 +54,7 @@ local CompanyLogo
 --Sounds
 -------------------------------------------------------------------
 
-local AnimationSound = audio.loadSound( "Sounds/wowc.mp3" )
-local AnimationSoundChannel
+
 
 -------------------------------------------------------------------
 --Object creation
@@ -70,8 +69,7 @@ CompanyLogo.y = display.contentHeight
 transition.to( CompanyLogo, { rotation = CompanyLogo.rotation-360, time=2000})
 transition.to(CompanyLogo, {x= 512, y=384, time=2000})
 
---Plays the animation sound
-AnimationSoundChannel = audio.play(AnimationSound)
+
 
 
 

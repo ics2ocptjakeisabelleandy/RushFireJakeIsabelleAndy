@@ -35,9 +35,11 @@ local scene = composer.newScene( sceneName )
 -- The local variables for this scene
 local bkg_image
 
-local heart1
-local heart2
-local numLives = 2
+local health1
+local health2
+local health3
+
+local numLives = 5
 
 local rArrow
 local lArrow
@@ -317,6 +319,28 @@ function scene:create( event )
     skyscraper3 = display.newImage("Images/skyscraper3jakeH.png", 200, 100)
     skyscraper3.x = display.contentWidth/1.1
     skyscraper3.y = display.contentHeight/1.35
+
+    health1 = display.newImage("Images/HealthBarJakeH.png", 200, 100)
+    health1.x = display.contentWidth/18
+    health1.y = display.contentHeight/7.5
+
+    health2 = display.newImage("Images/HealthBarJakeH.png", 200, 100)
+    health2.x = display.contentWidth/8
+    health2.y = display.contentHeight/7.5
+
+    health3 = display.newImage("Images/HealthBarJakeH.png", 200, 100)
+    health3.x = display.contentWidth/5.10
+    health3.y = display.contentHeight/7.5
+
+    health3 = display.newImage("Images/HealthBarJakeH.png", 200, 100)
+    health3.x = display.contentWidth/5.10
+    health3.y = display.contentHeight/7.5
+
+
+
+
+
+
 
     -- insert skyscraper3 into sceneGroup
     sceneGroup:insert(skyscraper3)
