@@ -39,7 +39,7 @@ local health1
 local health2
 local health3
 
-local numLives = 5
+local numLives = 3
 
 local rArrow
 local lArrow
@@ -61,6 +61,8 @@ local skyscraper1
 local skyscraper2
 local skyscraper3
 local platform4
+local Ground 
+local Ground2
 
 local earth
 local saturn
@@ -196,6 +198,8 @@ local function AddPhysicsBodies()
     physics.addBody(skyscraper2, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(skyscraper3, "static", {density=1, friction=0.3, bounce=0.2})
     
+
+    physics.addBody(Ground, "static", {density=1, friction=0.3, bounce=0.2})
     
 end
 
@@ -319,7 +323,7 @@ function scene:create( event )
     skyscraper3 = display.newImage("Images/skyscraper3jakeH.png", 200, 100)
     skyscraper3.x = display.contentWidth/1.1
     skyscraper3.y = display.contentHeight/1.35
-
+    --displaying the health bars
     health1 = display.newImage("Images/HealthBarJakeH.png", 200, 100)
     health1.x = display.contentWidth/18
     health1.y = display.contentHeight/7.5
@@ -336,6 +340,14 @@ function scene:create( event )
     health3.x = display.contentWidth/5.10
     health3.y = display.contentHeight/7.5
 
+    --displaying the ground 
+    Ground = display.newImage("Images/Ground_Level3JakeH.png", 1000, 2000)
+    Ground.x = display.contentWidth/10
+    Ground.y = display.contentHeight/1
+
+    Ground2 = display.newImage("Images/Ground_Level3JakeH.png", 100, 200)
+    Ground2.x = display.contentWidth/7
+    Ground2.y = display.contentHeight/1
 
 
 
