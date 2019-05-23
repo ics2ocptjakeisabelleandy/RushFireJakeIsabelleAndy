@@ -20,7 +20,7 @@ local physics = require("physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_screen"
+sceneName = "level2_screen"
 
 -----------------------------------------------------------------------------------------
 
@@ -53,16 +53,6 @@ local GRAVITY = 7
 local leftW
 local topW
 local rightW
-
-local platform1
-local platform2
-local platform3
-local platform4
-
-local earth
-local saturn
-local pluto
-local theplanet
 
 local questionsAnswered = 0
 -----------------------------------------------------------------------------------------
@@ -151,9 +141,7 @@ local function ReplaceCharacter()
 end
 
 local function MakeObjectCharactersVisible()
-    earth.isVisible = true
-    pluto.isVisible = true
-    saturn.isVisible = true
+
 end
 
 local function onCollision()
@@ -189,45 +177,19 @@ end
 
 local function AddCollisionListeners()
     -- if character collides with earth, onCollision will be called
-    earth.collision = onCollision
-    earth:addEventListener("collision")
-    saturn.collision = onCollision
-    saturn:addEventListener("collision")
-    pluto.collision = onCollision
-    pluto:addEventListener("collision")
+
 end
 
 local function RemoveCollisionListeners()
-    earth:removeEventListener("collision")
-    saturn:removeEventListener("collision")
-    pluto:removeEventListener("collision")
+
 end
 
 local function AddPhysicsBodies()
     -- add to physics engine
-    physics.addBody(leftW, "static", {friction=0.5, bounce=0.3})
-    physics.addBody(rightW, "static", {friction=0.5, bounce=0.3})
-    physics.addBody(topW, "static", {friction=0.5, bounce=0.3})
-
-    physics.addBody(platform1, "static", {density=1, friction=0.3, bounce=0.2})
-    physics.addBody(platform2, "static", {density=1, friction=0.3, bounce=0.2})
-    physics.addBody(platform3, "static", {density=1, friction=0.3, bounce=0.2})
-    physics.addBody(platform4, "static", {density=1, friction=0.3, bounce=0.2})
-
-    physics.addBody(earth, "static", {density=1, friction=0.3, bounce=0.2})
-    physics.addBody(saturn, "static", {density=1, friction=0.3, bounce=0.2})
-    physics.addBody(pluto, "static", {density=1, friction=0.3, bounce=0.2})
 end
 
 local function RemovePhysicsBodies()
-    physics.removeBody(leftW)
-    physics.removeBody(rightW)
-    physics.removeBody(topW)
 
-    physics.removeBody(platform1)
-    physics.removeBody(platform2)
-    physics.removeBody(platform3)
-    physics.removeBody(platform4)
 end
 
 -----------------------------------------------------------------------------------------
@@ -319,31 +281,6 @@ function scene:create( event )
 
     -- insert the wall into scene group
     sceneGroup:insert(rightW)
-
-    platform1 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
-    platform1.x = display.contentWidth/11
-    platform1.y = display.contentHeight/6
-
-    -- insert platform1 into sceneGroup
-    sceneGroup:insert(platform1)
-
-    platform2 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
-    platform2.x = display.contentWidth/1.25
-    platform2.y = display.contentHeight/5
-
-    -- insert platform1 into sceneGroup
-    sceneGroup:insert(platform2)
-
-    platform3 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
-    platform3.x = display.contentWidth/2
-    platform3.y = display.contentHeight/3
-
-    -- insert platform1 into sceneGroup
-    sceneGroup:insert(platform3)
-
-    platform4 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
-    platform4.x = display.contentWidth/2
-    platform4.y = display.contentHeight/1.75
 
 end --function scene:create( event )
 
