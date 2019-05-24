@@ -1,5 +1,4 @@
 -----------------------------------------------------------------------------------------
---
 -- level1_screen.lua
 -- Created by: Isabelle LC
 -- Date: May 2, 2019
@@ -34,6 +33,8 @@ local scene = composer.newScene( sceneName )
 -- The local variables for this scene
 local bkg_image
 
+local character
+
 local heart1
 local heart2
 local numLives = 2
@@ -42,7 +43,6 @@ local rArrow
 local lArrow
 local uArrow
 
-local character
 
 local motionx = 0
 local SPEED = 20
@@ -59,6 +59,11 @@ local platform1
 local platform2
 local platform3
 local platform4
+local platform5
+local platform6
+local platform7
+local platform8
+local platform9
 
 local earth
 local saturn
@@ -224,13 +229,19 @@ local function onCollision( self, event )
             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
-            if (userAnswer == correctAnswer) then
+            if  (userAnswer == correctAnswer) then
                 questionsAnswered = questionsAnswered + 1
             end
-                
-            if (questionsAnswered == 3) then
-                timer.performWithDelay(200, YouWinTransition)
+
+            if  (userAnswer == wrongAnswer1) or
+                (userAnswer == wrongAnswer2) or
+                (userAnswer == wrongAnswer3) then
+                numLives = numLives - 1
             end
+        end
+
+        if (questionsAnswered == 3) then
+            timer.performWithDelay(2500, YouWinTransition)
         end
     end
 end
@@ -269,6 +280,11 @@ local function AddPhysicsBodies()
     physics.addBody(platform2, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(platform3, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(platform4, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(platform5, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(platform6, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(platform7, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(platform8, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(platform9, "static", {density=1, friction=0.3, bounce=0.2})
 
     physics.addBody(earth, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(saturn, "static", {density=1, friction=0.3, bounce=0.2})
@@ -285,6 +301,11 @@ local function RemovePhysicsBodies()
     physics.removeBody(platform2)
     physics.removeBody(platform3)
     physics.removeBody(platform4)
+    physics.removeBody(platform5)
+    physics.removeBody(platform6)
+    physics.removeBody(platform7)
+    physics.removeBody(platform8)
+    physics.removeBody(platform9)
 end
 
 -----------------------------------------------------------------------------------------
@@ -297,7 +318,7 @@ function ResumeGame()
     character.isVisible = true
 
     if (questionsAnswered > 0) then
-        if (theplanet~= nil) and (theplanet.isBodyActive == true) then
+        if (theplanet ~= nil) and (theplanet.isBodyActive == true) then
             physics.removeBody(theplanet)
             theplanet.isVisible = false
         end
@@ -367,6 +388,7 @@ function scene:create( event )
     floor = display.newLine (0, 0, display.contentWidth, 0)
     floor.y = display.contentCenterY * 2
     floor.isVisible = true
+    floor.myName = "floor"
 
     -- insert the wall into scene group
     sceneGroup:insert(floor)
@@ -409,6 +431,41 @@ function scene:create( event )
     platform4.x = display.contentWidth/2
     platform4.y = display.contentHeight/1.75
 
+    sceneGroup:insert(platform4)
+
+    platform5 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
+    platform5.x = display.contentWidth/5
+    platform5.y = display.contentHeight/1.25
+
+    -- insert platform1 into sceneGroup
+    sceneGroup:insert(platform5)
+
+    platform6 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
+    platform6.x = display.contentWidth/1.2
+    platform6.y = display.contentHeight/2
+
+    -- insert platform1 into sceneGroup
+    sceneGroup:insert(platform6)
+
+    platform7 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
+    platform7.x = display.contentWidth/2
+    platform7.y = display.contentHeight/1.1
+
+    -- insert platform1 into sceneGroup
+    sceneGroup:insert(platform7)
+
+    platform8 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
+    platform8.x = display.contentWidth/7
+    platform8.y = display.contentHeight/2
+
+    sceneGroup:insert(platform8)
+
+    platform9 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
+    platform9.x = display.contentWidth/1.2
+    platform9.y = display.contentHeight/1.4
+
+    sceneGroup:insert(platform9)
+
     -- Insert the hearts
     heart1 = display.newImageRect("Images/Lives.png", 80, 80)
     heart1.x = 50
@@ -431,10 +488,11 @@ function scene:create( event )
     sceneGroup:insert(platform4)
 
     earth = display.newImage("Images/EarthIsabelleLC.png", 100, 100)
-    earth.x = display.contentWidth/2
-    earth.y = display.contentHeight/2.15
+    earth.x = display.contentWidth/1.2
+    earth.y = display.contentHeight/1.6
     earth.width = 100
     earth.height = 100
+    earth.myName = "earth"
 
     -- insert earth into sceneGroup
     sceneGroup:insert(earth)
@@ -444,15 +502,17 @@ function scene:create( event )
     saturn.y = display.contentHeight/8.5
     saturn.width = 100
     saturn.height = 100
+    saturn.myName = "saturn"
 
     -- insert earth into sceneGroup
     sceneGroup:insert(saturn)
 
     pluto = display.newImage("Images/PlutoIsabelleLC.png", 100, 100)
-    pluto.x = display.contentWidth/8
-    pluto.y = display.contentHeight/8.5
+    pluto.x = display.contentWidth/5
+    pluto.y = display.contentHeight/1.4
     pluto.width = 100
     pluto.height = 100
+    pluto.myName = "pluto"
 
     -- insert earth into sceneGroup
     sceneGroup:insert(pluto)

@@ -1,11 +1,11 @@
 -----------------------------------------------------------------------------------------
 --
 -- level1_screen.lua
--- Created by: Allison
--- Date: May 16, 2017
--- Description: This is the level 1 screen of the game. the charater can be dragged to move
---If character goes off a certain araea they go back to the start. When a user interactes
---with piant a trivia question will come up. they will have a limided time to click on the answer
+-- Created by: Isabelle
+-- Date: May 23, 2019
+-- Description: Asks a question in level 1. If user gets the question right, then the user
+-- continues the level and his 'questionsAnswered' goes up by one. if the user gets the
+-- answer wrong, they lose a life.
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
@@ -33,24 +33,18 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 -- the local variables for this scene
-
 local correctAnswerText
 local wrongAnswerText1
 local wrongAnswerText2
 local wrongAnswerText3
-local wrongAnswerText4
-local wrongAnswerText5
-local wrongAnswerText6
 
 local answer
 local wrongAnswer1
 local wrongAnswer2
 local wrongAnswer3
-local wrongAnswer4
-local wrongAnswer5
-local wrongAnswer6
 
 local answerPosition = 1
+local bkg
 local cover
 
 local userAnswer
@@ -59,14 +53,13 @@ local textTouched = false
 local X1 = display.contentWidth*2/7
 local X2 = display.contentWidth*4/7
 local Y1 = display.contentHeight*1/2
-local Y2 = display.contentHeight*5/5/7
+local Y2 = display.contentHeight*5.5/7
 
 local questionObject
-local numericField
-local userAnswer
 local correctAnswer
-local incorrectAnswer
 local randomOperator
+local questionsAnswered
+local questionText
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -85,44 +78,11 @@ local function TouchListenerAnswer(touch)
     userAnswer = correctAnswerText.text
 
     if (touch.phase == "ended") then
-
-        BackToLevel1( )
     
+        timer.performWithDelay(100, BackToLevel1)
     end 
 end
 
---checking to see if the user pressed the right answer and bring them back to level 1
-local function TouchListenerWrongAnswer1(touch)
-    userAnswer = wrongAnswerText1.text
-    
-    if (touch.phase == "ended") then
-        
-        BackToLevel1( )
-        
-    end 
-end
-
---checking to see if the user pressed the right answer and bring them back to level 1
-local function TouchListenerWrongAnswer2(touch)
-    userAnswer = wrongAnswerText2.text
-    
-    if (touch.phase == "ended") then
-        
-        BackToLevel1( ) 
-        
-    end 
-end
-
---checking to see if the user pressed the right answer and bring them back to level 1
-local function TouchListenerWrongAnswer3(touch)
-    userAnswer = wrongAnswerText3.text
-    
-    if (touch.phase == "ended") then
-        
-        BackToLevel1( )
-          
-    end 
-end
 
 -- add the event listeners
 local function AddTextListeners()
@@ -140,10 +100,10 @@ local function RemoveTextListeners()
     wrongAnswerText3:removeEventListener("touch", TouchListenerWrongAnswer3)
 end
 
-local function DisplayQuestion()
+local function AskQuestion()
     -- generate a random number between 1 and 2
     -- *** declare this variable above
-    randomOperator = math.random(1,2)
+    randomOperator = math.random(1,4)
 
     if (randomOperator == 1) then
 
@@ -151,11 +111,11 @@ local function DisplayQuestion()
         correctAnswer = " 8 "
 
         -- wrong answers
-        wrongAnswer1 = correctAnswer - math.random(1, 3)
-        wrongAnswer2 = correctAnswer + math.random(1, 3)
-        wrongAnswer3 = correctAnswer - math.random(4, 5)
+        wrongAnswer1 = " 7 "
+        wrongAnswer2 = " 6 "
+        wrongAnswer3 = " 9 "
 
-        questionObject.text == " How many planets are there? "
+        questionText.text = " How many planets are there? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -175,7 +135,47 @@ local function DisplayQuestion()
         wrongAnswer2 = " Jupiter "
         wrongAnswer3 = " Neptune "
 
-        questionObjectText.text == " What planet has life on it? "
+        questionText.text = " What planet has life on it? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+    elseif (randomOperator == 3) then
+
+        -- correct answer
+        correctAnswer = " Pluto "
+
+        -- wrong answers
+        wrongAnswer1 = " Mercury "
+        wrongAnswer2 = " Saturn "
+        wrongAnswer3 = " Neptune "
+
+        questionText.text = " What is the smallest planet? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+    elseif (randomOperator == 4) then
+
+        -- correct answer
+        correctAnswer = " Blue, Green "
+
+        -- wrong answers
+        wrongAnswer1 = " Blue "
+        wrongAnswer2 = " Purple, Green "
+        wrongAnswer3 = " Red, White "
+
+        questionText.text = " What colours are the Earth? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -189,37 +189,89 @@ end
 
 local function PositionAnswers()
 
-    --creating random positions in a certain area
-    answerPosition = math.random(1,2)
+    --creating random start position in a cretain area
+    answerPosition = math.random(1,3)
 
     if (answerPosition == 1) then
 
         correctAnswerText.x = X1
         correctAnswerText.y = Y1
-
-        wrongAnswerText1.x = X2
-        wrongAnswerText1.y = Y2
-
-        wrongAnswerText2.x = X3
-        wrongAnswerText2.y = Y3
-
-        wrongAnswerText3.x = X4
-        wrongAnswerText3.y = Y4
-
-    elseif (answerPosition == 2) then
-
-        correctAnswerText.x = X4
-        correctAnswerText.y = Y3
-
+        
         wrongAnswerText1.x = X2
         wrongAnswerText1.y = Y1
-
+        
         wrongAnswerText2.x = X1
-        wrongAnswerText2.y = Y4
+        wrongAnswerText2.y = Y2
 
-        wrongAnswerText3.x = X3
+        wrongAnswerText3.x = X2
         wrongAnswerText3.y = Y2
+
+        
+    elseif (answerPosition == 2) then
+
+        correctAnswerText.x = X1
+        correctAnswerText.y = Y2
+            
+        wrongAnswerText1.x = X1
+        wrongAnswerText1.y = Y1
+            
+        wrongAnswerText2.x = X2
+        wrongAnswerText2.y = Y2
+
+        wrongAnswerText3.x = X2
+        wrongAnswerText3.y = Y1
+
+
+    elseif (answerPosition == 3) then
+
+        correctAnswerText.x = X2
+        correctAnswerText.y = Y1
+            
+        wrongAnswerText1.x = X1
+        wrongAnswerText1.y = Y2
+            
+        wrongAnswerText2.x = X2
+        wrongAnswerText2.y = Y2
+
+        wrongAnswerText3.x = X1
+        wrongAnswerText3.y = Y1
+
     end
+end
+
+
+--------------------------------------------------------------------------------------
+-- GLOBAL FUNCTIONS
+--------------------------------------------------------------------------------------
+
+--checking to see if the user pressed the right answer and bring them back to level 1
+function TouchListenerWrongAnswer1(touch)
+    userAnswer = wrongAnswerText1.text
+    
+    if (touch.phase == "ended") then
+        
+        timer.performWithDelay(100, BackToLevel1)
+    end 
+end
+
+--checking to see if the user pressed the right answer and bring them back to level 1
+function TouchListenerWrongAnswer2(touch)
+    userAnswer = wrongAnswerText2.text
+    
+    if (touch.phase == "ended") then
+
+        timer.performWithDelay(100, BackToLevel1)
+    end 
+end
+
+--checking to see if the user pressed the right answer and bring them back to level 1
+function TouchListenerWrongAnswer3(touch)
+    userAnswer = wrongAnswerText3.text
+    
+    if (touch.phase == "ended") then
+
+        timer.performWithDelay(100, BackToLevel1)
+    end 
 end
 
 --------------------------------------------------------------------------------------
@@ -240,21 +292,24 @@ function scene:create(event)
 
     ----------------------------------------------------------------------------------
     -- make a cover rectangle to have rhe background fully blocked where the question is
-    cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*0.8, display.contentHeight*0.95, 50)
+    cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*1.5, display.contentHeight*0.95, 50)
     -- set the cover color
-    cover:settFillColor(96/255, 96/255, 96/255)
+    cover:setFillColor(96/255, 96/255, 96/255)
 
     -- create the question text object
-    questionObjectText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
+    questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 60)
 
     -- create the answer text object & wrong answer text objects
-    correctAnswerText = display.newText("", X1, Y1, Arial, 75)
+    correctAnswerText = display.newText("", X1, Y2, Arial, 50)
     correctAnswerText.anchorX = 0
-    wrongAnswerText1 = display.newText("", X2, Y2, Arial, 75)
+
+    wrongAnswerText1 = display.newText("", X2, Y2, Arial, 50)
     wrongAnswerText1.anchorX = 0
-    wrongAnswerText2 = display.newText("", X3, Y3, Arial, 75)
+
+    wrongAnswerText2 = display.newText("", X1, Y1, Arial, 50)
     wrongAnswerText2.anchorX = 0
-    wrongAnswerText3 = display.newText("", X4, Y4, Arial, 75)
+
+    wrongAnswerText3 = display.newText("", X2, Y1, Arial, 50)
     wrongAnswerText3.anchorX = 0
 
     ----------------------------------------------------------------------------------
@@ -262,7 +317,7 @@ function scene:create(event)
     -- insert all objects for this scene into the scene group
     sceneGroup:insert(bkg)
     sceneGroup:insert(cover)
-    sceneGroup:insert(questionObjectText)
+    sceneGroup:insert(questionText)
     sceneGroup:insert(correctAnswerText)
     sceneGroup:insert(wrongAnswerText1)
     sceneGroup:insert(wrongAnswerText2)
@@ -290,14 +345,14 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        DisplayQuestion()
+        AskQuestion()
         PositionAnswers()
         AddTextListeners()
     end
 
 end --function scene:show( event )
 
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
@@ -306,14 +361,14 @@ function scene:hide( event )
     local sceneGroup = self.view
     local phase = event.phase
 
-    -----------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
         --parent:resumeGame()
-    -----------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
@@ -322,7 +377,7 @@ function scene:hide( event )
 
 end --function scene:hide( event )
 
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to be destroyed
 function scene:destroy( event )
@@ -330,7 +385,7 @@ function scene:destroy( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    -----------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------
 
     -- Called prior to the removal of scene's view ("sceneGroup"). 
     -- Insert code here to clean up the scene.
@@ -338,9 +393,9 @@ function scene:destroy( event )
 
 end -- function scene:destroy( event )
 
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
 -- EVENT LISTENERS
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
 
 -- Adding Event Listeners
 scene:addEventListener( "create", scene )
