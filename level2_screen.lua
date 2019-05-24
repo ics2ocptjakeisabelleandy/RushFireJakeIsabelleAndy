@@ -55,6 +55,8 @@ local topW
 local rightW
 
 local questionsAnswered = 0
+
+local ground 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -185,7 +187,8 @@ local function RemoveCollisionListeners()
 end
 
 local function AddPhysicsBodies()
-    -- add to physics engine
+    -- add the physics
+    physics.addBody(ground, "static", {density=1, friction=0.5, bounce=0 })
 end
 
 local function RemovePhysicsBodies()
@@ -228,11 +231,20 @@ function scene:create( event )
     bkg_image.width = display.contentWidth
     bkg_image.height = display.contentHeight
 
-    -- Send the background image to the back layer so all other objects can be on top
-    bkg_image:toBack()
-
     -- Insert background image into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( bkg_image )    
+    sceneGroup:insert( bkg_image ) 
+
+
+    ground = display.newImageRect("Images/ground.png", display.contentWidth, 100)
+
+
+    -- putting the ground on the ground
+    ground.x = display.contentWidth/2
+    ground.y = display.contentHeight*0.95
+       
+
+    -- insert the ground image into the scene group
+    sceneGroup:insert( ground )    
 
    --Insert the right arrow
     rArrow = display.newImageRect("Images/arrow.png", 100, 50)
