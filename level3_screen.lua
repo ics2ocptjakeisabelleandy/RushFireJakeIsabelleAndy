@@ -47,11 +47,11 @@ local uArrow
 
 local character
 
-local motionx = 0
-local SPEED = 7
-local negativeSpeed = -9
+local motionx = 1
+local SPEED = 12.5
+local negativeSpeed = -12.5
 local LINEAR_VELOCITY = -100
-local GRAVITY = 7
+local GRAVITY = 3
 
 local leftW
 local topW
@@ -59,20 +59,39 @@ local rightW
 
 local skyscraper1
 local skyscraper2
-local skyscraper3
+
 local platform4
 local Ground 
 local Ground2
+local cloud
 
-local earth
-local saturn
-local pluto
-local theplanet
 
 local questionsAnswered = 0
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
+local function MakeHealthVisible()
+    health1.isVisible = true
+    health2.isVisible = true
+    health3.isVisible = true
+end
+----------------------------------
+local function YouLoseTransition()
+    composer.gotoScene( "you_lose")
+end
+
+local function YouWinTransition()
+    composer.gotoScene( "you_lose")
+end
+
+
+
+
+
+
+
+
+
 
 -- when right arrow is pressed
 local function right(touch)
@@ -155,30 +174,35 @@ local function ReplaceCharacter()
     AddRuntimeListeners()
 end
 
+local function AddCollisionListeners()
+    --if character collides with ground they lose a life
+    ground.collision = onCollision
+    ground:addEventListener( "collision")
+end
+
+local function RemoveCollisionListeners()
+    ground:removeEventListener( "collision")
+end
+
 
 
 local function onCollision()
     
     if ( event.phase == "began" ) then
 
-        if  (event.target.myName == "ball1") or
-            (event.target.myName == "ball3") or
-            (event.target.myName == "ball2") then
+        if (numLives == 2 ) then 
+            health3.isVisible = false
+            health2.isVisible = true
+            health1.isVisible = true
 
-            -- get the ball that the user hit
-            theBall = event.target
+        elseif (numLives == 1) then
 
-            -- stop the character from moving
-            motionx = 0
+            health1.isVisible = true
+            health2.isVisible = false
+            health3.isVisible = false
 
-            -- make the character invisible
-            character.isVisible = false
-
-            -- show overlay with math question
-            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
-
-            -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
+        elseif (numLives == 0 ) then
+           timer.performWithDelay(200, YouLoseTransition)
         end
 
         if (questionsAnswered == 3) then
@@ -196,8 +220,7 @@ local function AddPhysicsBodies()
 
     physics.addBody(skyscraper1, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(skyscraper2, "static", {density=1, friction=0.3, bounce=0.2})
-    physics.addBody(skyscraper3, "static", {density=1, friction=0.3, bounce=0.2})
-    
+    physics.addBody(cloud, "static", {density=1, friction=0.3, bounce=0.2})
 
     physics.addBody(Ground, "static", {density=1, friction=0.3, bounce=0.2})
     
@@ -210,7 +233,7 @@ local function RemovePhysicsBodies()
 
     physics.removeBody(platform1)
     physics.removeBody(platform2)
-    physics.removeBody(platform3)
+    physics.removeBody(platform)
     
 end
 
@@ -319,10 +342,14 @@ function scene:create( event )
 
     -- insert skyscraper2 into sceneGroup
     sceneGroup:insert(skyscraper2)
+    --creating the cloud
+    cloud = display.newImage("Images/SquareCloudJakeH.png", 200, 100)
+    cloud.x = display.contentWidth/1.12
+    cloud.y = display.contentHeight/1.75
 
-    skyscraper3 = display.newImage("Images/skyscraper3jakeH.png", 200, 100)
-    skyscraper3.x = display.contentWidth/1.1
-    skyscraper3.y = display.contentHeight/1.35
+
+
+   
     --displaying the health bars
     health1 = display.newImage("Images/HealthBarJakeH.png", 200, 100)
     health1.x = display.contentWidth/18
@@ -341,25 +368,13 @@ function scene:create( event )
     health3.y = display.contentHeight/7.5
 
     --displaying the ground 
-    Ground = display.newImage("Images/Ground_Level3JakeH.png", 1000, 2000)
-    Ground.x = display.contentWidth/10
-    Ground.y = display.contentHeight/1
-
-    Ground2 = display.newImage("Images/Ground_Level3JakeH.png", 100, 200)
-    Ground2.x = display.contentWidth/7
-    Ground2.y = display.contentHeight/1
-
-
-
-
-
-
-    -- insert skyscraper3 into sceneGroup
-    sceneGroup:insert(skyscraper3)
+    Ground = display.newImage("Images/Ground_Level3JakeH.png", 100, 200)
+    Ground.x = display.contentWidth/2
+    Ground.y = display.contentHeight*1.1
+    Ground.isVisible = true
 
    
 
-    
     
 end --function scene:create( event )
 
@@ -452,6 +467,13 @@ function scene:destroy( event )
     -- Example: remove display objects, save state, etc.
 
 end -- function scene:destroy( event )
+----------------------------------------------------
+
+
+
+
+
+
 
 -----------------------------------------------------------------------------------------
 -- EVENT LISTENERS
