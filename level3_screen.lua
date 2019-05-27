@@ -51,9 +51,9 @@ local zombie2
 
 local motionx = 1
 local SPEED = 12.5
-local negativeSpeed = -12.5
+local negativeSpeed = -8
 local LINEAR_VELOCITY = -100
-local GRAVITY = 3
+local GRAVITY = 10
 
 local leftW
 local topW
