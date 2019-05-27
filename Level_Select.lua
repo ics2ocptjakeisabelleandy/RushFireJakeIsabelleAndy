@@ -151,7 +151,7 @@ function scene:create( event )
 
             -- Insert the images here
             defaultFile = "Images/LevelSelectScreenButtonAndyDF.png",
-            overFile = "Images/LevelSelectScreenButtonAndyDF.png",
+            overFile = "Images/LevelSelectScreenButtonPressedAndyDF.png",
 
             -- When the button is released, call the Level1 screen transition function
             onRelease = Level1ScreenTransition          
@@ -170,7 +170,7 @@ function scene:create( event )
 
             -- Insert the images here
             defaultFile = "Images/LevelSelectScreenButton3AndyDF.png",
-            overFile = "Images/LevelSelectScreenButton3AndyDF.png",
+            overFile = "Images/LevelSelectScreenButton3PressedAndyDF.png",
 
             -- When the button is released, call the Credits transition function
             onRelease = Level3ScreenTransition
@@ -189,7 +189,7 @@ function scene:create( event )
 
             -- Insert the images here
             defaultFile = "Images/LevelSelectScreenButton2AndyDF.png",
-            overFile = "Images/LevelSelectScreenButton2AndyDF.png",
+            overFile = "Images/LevelSelectScreenButton2PressedAndyDF.png",
 
             -- When the button is released, call the Credits transition function
             onRelease = Level2ScreenTransition
