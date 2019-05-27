@@ -240,7 +240,7 @@ function scene:create( event )
 
     -- putting the ground on the ground
     ground.x = display.contentWidth/2
-    ground.y = display.contentHeight*0.95
+    ground.y = display.contentHeight*1.02
        
 
     -- insert the ground image into the scene group

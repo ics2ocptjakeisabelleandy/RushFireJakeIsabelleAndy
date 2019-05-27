@@ -150,14 +150,15 @@ local function AskQuestion()
     if (randomOperator == 1) then
 
         -- correct answer
-        correctAnswer = " 8 "
+        correctAnswer = " Chicken "
 
         -- wrong answers
-        wrongAnswer1 = correctAnswer1 - math.random(1, 3)
-        wrongAnswer2 = correctAnswer1 + math.random(1, 3)
-        wrongAnswer3 = correctAnswer1 - math.random(4, 5)
+        wrongAnswer1 = " Carrot "
+        wrongAnswer2 = " Yogurt "
+        wrongAnswer3 = " Cereal "
+        wrongAsnwer4 = " Orange "
 
-        questionObject.text == " How many planets are there? "
+        questionObject.text == " what is in the protein food group? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -170,14 +171,15 @@ local function AskQuestion()
     elseif (randomOperator == 2) then
 
         -- correct answer
-        correctAnswer = " Earth "
+        correctAnswer = " Dairy "
 
         -- wrong answers
-        wrongAnswer4 = " Mars "
-        wrongAnswer5 = " Jupiter "
-        wrongAnswer6 = " Neptune "
+        wrongAnswer4 = " Vegetables "
+        wrongAnswer5 = " Protein "
+        wrongAnswer6 = " Fruits "
+        wrongAnswer7 = " Grains "
 
-        questionObjectText2.text == " What planet has life on it? "
+        questionObjectText2.text == " what food group is milk part of? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
