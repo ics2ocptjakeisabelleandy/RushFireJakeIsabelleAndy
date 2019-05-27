@@ -177,6 +177,13 @@ local function onCollision( self, event )
 
         if  (event.target.myName == "Ground") then
 
+            -- remove runtime listeners that move the character
+            RemoveArrowEventListeners()
+            RemoveRuntimeListeners()
+
+            -- remove the character from the display
+            display.remove(character)
+
             numLives = numLives - 1
             print ("***Collided with ground")
 
@@ -184,12 +191,14 @@ local function onCollision( self, event )
                 health3.isVisible = false
                 health2.isVisible = true
                 health1.isVisible = true
+                timer.performWithDelay(200, ReplaceCharacter) 
 
             elseif (numLives == 1) then
 
                 health1.isVisible = true
                 health2.isVisible = false
                 health3.isVisible = false
+                timer.performWithDelay(200, ReplaceCharacter) 
 
             elseif (numLives == 0 ) then
                 timer.performWithDelay(200, YouLoseTransition)
