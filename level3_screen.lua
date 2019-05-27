@@ -46,6 +46,8 @@ local lArrow
 local uArrow
 
 local character
+local zombie    
+local zombie2
 
 local motionx = 1
 local SPEED = 12.5
@@ -70,6 +72,7 @@ local questionsAnswered = 0
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
+
 local function MakeHealthVisible()
     health1.isVisible = true
     health2.isVisible = true
@@ -83,14 +86,6 @@ end
 local function YouWinTransition()
     composer.gotoScene( "you_lose")
 end
-
-
-
-
-
-
-
-
 
 
 -- when right arrow is pressed
@@ -152,8 +147,8 @@ end
 -- replace character
 local function ReplaceCharacter()
     character = display.newImageRect("Images/character.png", 100, 150)
-    character.x = display.contentWidth*1/2
-    character.y = display.contentHeight*0.1/3
+    character.x = display.contentWidth*0.3/3
+    character.y = display.contentHeight*1/4
     character.width = 75
     character.height = 100
     character.myName = "Sam"
@@ -174,41 +169,45 @@ local function ReplaceCharacter()
     AddRuntimeListeners()
 end
 
+
+
+local function onCollision( self, event )
+    
+    if ( event.phase == "began" ) then
+
+        if  (event.target.myName == "Ground") then
+
+            numLives = numLives - 1
+            print ("***Collided with ground")
+
+            if (numLives == 2 ) then 
+                health3.isVisible = false
+                health2.isVisible = true
+                health1.isVisible = true
+
+            elseif (numLives == 1) then
+
+                health1.isVisible = true
+                health2.isVisible = false
+                health3.isVisible = false
+
+            elseif (numLives == 0 ) then
+                timer.performWithDelay(200, YouLoseTransition)
+            end
+
+        end
+    end
+end
+
+
 local function AddCollisionListeners()
     --if character collides with ground they lose a life
-    ground.collision = onCollision
-    ground:addEventListener( "collision")
+    Ground.collision = onCollision
+    Ground:addEventListener( "collision")
 end
 
 local function RemoveCollisionListeners()
     ground:removeEventListener( "collision")
-end
-
-
-
-local function onCollision()
-    
-    if ( event.phase == "began" ) then
-
-        if (numLives == 2 ) then 
-            health3.isVisible = false
-            health2.isVisible = true
-            health1.isVisible = true
-
-        elseif (numLives == 1) then
-
-            health1.isVisible = true
-            health2.isVisible = false
-            health3.isVisible = false
-
-        elseif (numLives == 0 ) then
-           timer.performWithDelay(200, YouLoseTransition)
-        end
-
-        if (questionsAnswered == 3) then
-            timer.performWithDelay(200, YouWinTransition)
-        end
-    end
 end
 
 
@@ -342,6 +341,7 @@ function scene:create( event )
 
     -- insert skyscraper2 into sceneGroup
     sceneGroup:insert(skyscraper2)
+
     --creating the cloud
     cloud = display.newImage("Images/SquareCloudJakeH.png", 200, 100)
     cloud.x = display.contentWidth/1.12
@@ -363,16 +363,12 @@ function scene:create( event )
     health3.x = display.contentWidth/5.10
     health3.y = display.contentHeight/7.5
 
-    health3 = display.newImage("Images/HealthBarJakeH.png", 200, 100)
-    health3.x = display.contentWidth/5.10
-    health3.y = display.contentHeight/7.5
-
     --displaying the ground 
     Ground = display.newImage("Images/Ground_Level3JakeH.png", 100, 200)
     Ground.x = display.contentWidth/2
     Ground.y = display.contentHeight*1.1
     Ground.isVisible = true
-
+    Ground.myName = "Ground"
    
 
     
@@ -413,7 +409,7 @@ function scene:show( event )
         AddPhysicsBodies()
 
         -- add collision listeners to objects
-        
+        AddCollisionListeners()
 
         -- make planes visible
         
