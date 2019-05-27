@@ -177,6 +177,13 @@ local function onCollision( self, event )
 
         if  (event.target.myName == "Ground") then
 
+            -- remove runtime listeners that move the character
+            RemoveArrowEventListeners()
+            RemoveRuntimeListeners()
+
+            -- remove the character from the display
+            display.remove(character)
+
             numLives = numLives - 1
             print ("***Collided with ground")
 
@@ -184,12 +191,14 @@ local function onCollision( self, event )
                 health3.isVisible = false
                 health2.isVisible = true
                 health1.isVisible = true
+                timer.performWithDelay(200, ReplaceCharacter) 
 
             elseif (numLives == 1) then
 
                 health1.isVisible = true
                 health2.isVisible = false
                 health3.isVisible = false
+                timer.performWithDelay(200, ReplaceCharacter) 
 
             elseif (numLives == 0 ) then
                 timer.performWithDelay(200, YouLoseTransition)
@@ -207,7 +216,7 @@ local function AddCollisionListeners()
 end
 
 local function RemoveCollisionListeners()
-    ground:removeEventListener( "collision")
+    Ground:removeEventListener( "collision")
 end
 
 
@@ -230,9 +239,9 @@ local function RemovePhysicsBodies()
     physics.removeBody(rightW)
     physics.removeBody(topW)
 
-    physics.removeBody(platform1)
-    physics.removeBody(platform2)
-    physics.removeBody(platform)
+    physics.removeBody(skyscraper1)
+    physics.removeBody(skyscraper2)
+    physics.removeBody(cloud)
     
 end
 
@@ -347,21 +356,24 @@ function scene:create( event )
     cloud.x = display.contentWidth/1.12
     cloud.y = display.contentHeight/1.75
 
-
+    sceneGroup:insert(cloud)
 
    
     --displaying the health bars
     health1 = display.newImage("Images/HealthBarJakeH.png", 200, 100)
     health1.x = display.contentWidth/18
     health1.y = display.contentHeight/7.5
+    sceneGroup:insert(health1)
 
     health2 = display.newImage("Images/HealthBarJakeH.png", 200, 100)
     health2.x = display.contentWidth/8
     health2.y = display.contentHeight/7.5
+    sceneGroup:insert(health2)
 
     health3 = display.newImage("Images/HealthBarJakeH.png", 200, 100)
     health3.x = display.contentWidth/5.10
     health3.y = display.contentHeight/7.5
+    sceneGroup:insert(health3)
 
     --displaying the ground 
     Ground = display.newImage("Images/Ground_Level3JakeH.png", 100, 200)
@@ -369,7 +381,7 @@ function scene:create( event )
     Ground.y = display.contentHeight*1.1
     Ground.isVisible = true
     Ground.myName = "Ground"
-   
+    sceneGroup:insert(Ground)
 
     
 end --function scene:create( event )
