@@ -39,9 +39,9 @@ soundOn = true
 -----------------------------------------------------------------------------------------
 
 local bkg_image
-local playButton
-local creditsButton
-local instructionsButton
+local LevelSelectScreenButton
+local LevelSelectScreenButton2
+local LevelSelectScreenButton3
 
 local muteButton
 local unmuteButton
@@ -89,23 +89,24 @@ end
 
 
 -- Creating Transition Function to Credits Page
-local function CreditsTransition( )       
-    composer.gotoScene( "credits_screen", {effect = "zoomInOutFade", time = 500})
+local function Level3ScreenTransition( )       
+    composer.gotoScene( "level3_screen", {effect = "zoomInOutFade", time = 500})
 end 
 
 -----------------------------------------------------------------------------------------
 
 -- Creating Transition to Level1 Screen
-local function LevelSelectScreenTransition()
-    composer.gotoScene("Level_Select", {effect = "zoomInOutFade", time = 500})
-end
+local function Level1ScreenTransition()
+    composer.gotoScene("Level1_screen", {effect = "zoomInOutFade", time = 500})
+end    
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
+
 -----------------------------------------------------------------------------------------
 
 -- Creating Transition Function to Credits Page
-local function InstructionsTransition( )       
-    composer.gotoScene( "instructions_screen", {effect = "fromRight", time = 500})
+local function Level2ScreenTransition( )       
+    composer.gotoScene( "level2_screen", {effect = "zoomInOutFade", time = 500})
 end 
 
 
@@ -124,7 +125,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImage("Images/MainMenuIsabelleLC.png")
+    bkg_image = display.newImage("Images/LevelSelectScreenAndyDF.png")
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -142,59 +143,59 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------   
 
     -- Creating Play Button
-    playButton = widget.newButton( 
+    LevelSelectScreenButton = widget.newButton( 
         {   
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*1/8,
-            y = display.contentHeight*4.5/8,
+            x = display.contentWidth*4/8,
+            y = display.contentHeight*6/8,
 
             -- Insert the images here
-            defaultFile = "Images/PlayButtonUnpressed.png",
-            overFile = "Images/PlayButtonPressed .png",
+            defaultFile = "Images/LevelSelectScreenButtonAndyDF.png",
+            overFile = "Images/LevelSelectScreenButtonPressedAndyDF.png",
 
             -- When the button is released, call the Level1 screen transition function
-            onRelease = LevelSelectScreenTransition          
+            onRelease = Level1ScreenTransition          
         } )
 
-    playButton:scale(0.5, 0.5)
+    LevelSelectScreenButton:scale(0.5, 0.5)
 
     -----------------------------------------------------------------------------------------
 
     -- Creating Credits Button
-    creditsButton = widget.newButton( 
+    LevelSelectScreenButton3 = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*1/8,
+            x = display.contentWidth*4/8,
             y = display.contentHeight*2/8,
 
             -- Insert the images here
-            defaultFile = "Images/CreditsButtonUnressed.png",
-            overFile = "Images/CreditsButtonPressed.png",
+            defaultFile = "Images/LevelSelectScreenButton3AndyDF.png",
+            overFile = "Images/LevelSelectScreenButton3PressedAndyDF.png",
 
             -- When the button is released, call the Credits transition function
-            onRelease = CreditsTransition
+            onRelease = Level3ScreenTransition
         } ) 
 
-    creditsButton:scale(0.5, 0.5)
+    LevelSelectScreenButton3:scale(0.5, 0.5)
     
     -----------------------------------------------------------------------------------------
 
     -- Creating Instructions Button
-    instructionsButton = widget.newButton( 
+    LevelSelectScreenButton2 = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*1/8,
-            y = display.contentHeight*3.25/8,
+            x = display.contentWidth*4/8,
+            y = display.contentHeight*4/8,
 
             -- Insert the images here
-            defaultFile = "Images/InstructionsButtonUnpressed.png",
-            overFile = "Images/InstructionsButtonPressed.png",
+            defaultFile = "Images/LevelSelectScreenButton2AndyDF.png",
+            overFile = "Images/LevelSelectScreenButton2PressedAndyDF.png",
 
             -- When the button is released, call the Credits transition function
-            onRelease = InstructionsTransition
+            onRelease = Level2ScreenTransition
         } ) 
     
-    instructionsButton:scale(0.5, 0.5)
+    LevelSelectScreenButton2:scale(0.5, 0.5)
    
     -----------------------------------------------------------------------------------------
 
@@ -215,19 +216,11 @@ function scene:create( event )
     unmuteButton.isVisible = true
 
     unmuteButton:scale(0.5, 0.5)
-
-    -- Insert the background image and set it to the center of the screen
-    floor = display.newImage("Images/floor.png")
-    floor.x = display.contentCenterX
-    floor.y = display.contentCenterY
-    floor.width = display.contentWidth
-    floor.height = display.contentHeight
     -----------------------------------------------------------------------------------------
     -- Associating button widgets with this scene
-    sceneGroup:insert( playButton )
-    sceneGroup:insert( creditsButton )
-    sceneGroup:insert( instructionsButton)
-    sceneGroup:insert( floor )
+    sceneGroup:insert( LevelSelectScreenButton )
+    sceneGroup:insert( LevelSelectScreenButton2 )
+    sceneGroup:insert( LevelSelectScreenButton3 )
     
 
 end -- function scene:create( event )   

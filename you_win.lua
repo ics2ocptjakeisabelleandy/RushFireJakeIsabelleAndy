@@ -1,24 +1,29 @@
 -----------------------------------------------------------------------------------------
---
 -- SceneTemplate.lua
 -- Scene Template (Composer API)
---
+-- credits_screen.lua
+-- Created by: Daniel Lopez-Carreon
+-- Date: Nov. 24th, 2014
+-- Description: This is the you win screen
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
-
 -- Calling Composer Library
 local composer = require( "composer" )
+-- Use Composer Library
+local composer = require( "composer" )
 
+-----------------------------------------------------------------------------------------
+
+-- Use Widget Library
 local widget = require( "widget" )
 
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
 sceneName = "you_win"
-
 -----------------------------------------------------------------------------------------
 
 -- Creating Scene Object
@@ -41,6 +46,14 @@ local function MainMenuTransition( )
 end
 
 --------------------------------------------------------------------------------------
+-- Creating Scene Object
+local scene = composer.newScene( sceneName ) -- This function doesn't accept a string, only a variable containing a string
+
+-----------------------------------------------------------------------------------------
+-- DISPLAY OBJECTS
+-----------------------------------------------------------------------------------------
+local bkg_image
+
 -- The function called when the screen doesn't exist
 function scene:create( event )
 
@@ -58,11 +71,6 @@ function scene:create( event )
     sceneGroup:insert( bkg )
   
 end    
-
------------------------------------------------------------------------------------------
--- GLOBAL SCENE FUNCTIONS
------------------------------------------------------------------------------------------
-
 -----------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to appear on screen
@@ -93,7 +101,6 @@ function scene:show( event )
     end
 
 end
-
 -----------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to leave the screen
@@ -120,6 +127,7 @@ function scene:hide( event )
     end
 
 end
+
 
 -----------------------------------------------------------------------------------------
 
@@ -148,6 +156,4 @@ scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
 
 -----------------------------------------------------------------------------------------
-
 return scene
-
