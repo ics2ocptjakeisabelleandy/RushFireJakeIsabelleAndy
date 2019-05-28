@@ -35,6 +35,11 @@ local bkg
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
+-- Creating Transition Function to Credits Page
+local function MainMenuTransition( )       
+    composer.gotoScene( "main_menu" )
+end
+
 --------------------------------------------------------------------------------------
 -- The function called when the screen doesn't exist
 function scene:create( event )
@@ -83,6 +88,8 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+
+        timer.performWithDelay(1500, MainMenuTransition)
     end
 
 end

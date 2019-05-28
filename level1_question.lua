@@ -38,7 +38,7 @@ local wrongAnswerText1
 local wrongAnswerText2
 local wrongAnswerText3
 
-local answer
+local correctAnswer
 local wrongAnswer1
 local wrongAnswer2
 local wrongAnswer3
@@ -78,22 +78,58 @@ local function TouchListenerAnswer(touch)
     userAnswer = correctAnswerText.text
 
     if (touch.phase == "ended") then
+
+        timer.performWithDelay(100, BackToLevel1)
+    end 
+end
+
+--checking to see if the user pressed the right answer and bring them back to level 1
+local function TouchListenerWrongAnswer1(touch)
+    userAnswer = wrongAnswerText1.text
     
+    if (touch.phase == "ended") then
+
+        numLives = numLives - 1
+        
+        timer.performWithDelay(100, BackToLevel1)
+    end 
+end
+
+--checking to see if the user pressed the right answer and bring them back to level 1
+local function TouchListenerWrongAnswer2(touch)
+    userAnswer = wrongAnswerText2.text
+    
+    if (touch.phase == "ended") then
+
+        numLives = numLives - 1
+
+        timer.performWithDelay(100, BackToLevel1)
+    end 
+end
+
+--checking to see if the user pressed the right answer and bring them back to level 1
+local function TouchListenerWrongAnswer3(touch)
+    userAnswer = wrongAnswerText3.text
+    
+    if (touch.phase == "ended") then
+
+        numLives = numLives - 1
+
         timer.performWithDelay(100, BackToLevel1)
     end 
 end
 
 
 -- add the event listeners
-local function AddTextListeners()
+local function AddTouchListeners()
 	correctAnswerText:addEventListener("touch", TouchListenerAnswer)
-	wrongAnswerText1:addEventListener("tocuh", TouchListenerWrongAnswer1)
-	wrongAnswerText2:addEventListener("tocuh", TouchListenerWrongAnswer2)
-	wrongAnswerText3:addEventListener("tocuh", TouchListenerWrongAnswer3)
+	wrongAnswerText1:addEventListener("touch", TouchListenerWrongAnswer1)
+	wrongAnswerText2:addEventListener("touch", TouchListenerWrongAnswer2)
+	wrongAnswerText3:addEventListener("touch", TouchListenerWrongAnswer3)
 end
 
 -- remove event listeners
-local function RemoveTextListeners()
+local function RemoveTouchListeners()
 	correctAnswerText:removeEventListener("touch", TouchListenerAnswer)
 	wrongAnswerText1:removeEventListener("touch", TouchListenerWrongAnswer1)
     wrongAnswerText2:removeEventListener("touch", TouchListenerWrongAnswer2)
@@ -239,41 +275,6 @@ local function PositionAnswers()
     end
 end
 
-
---------------------------------------------------------------------------------------
--- GLOBAL FUNCTIONS
---------------------------------------------------------------------------------------
-
---checking to see if the user pressed the right answer and bring them back to level 1
-function TouchListenerWrongAnswer1(touch)
-    userAnswer = wrongAnswerText1.text
-    
-    if (touch.phase == "ended") then
-        
-        timer.performWithDelay(100, BackToLevel1)
-    end 
-end
-
---checking to see if the user pressed the right answer and bring them back to level 1
-function TouchListenerWrongAnswer2(touch)
-    userAnswer = wrongAnswerText2.text
-    
-    if (touch.phase == "ended") then
-
-        timer.performWithDelay(100, BackToLevel1)
-    end 
-end
-
---checking to see if the user pressed the right answer and bring them back to level 1
-function TouchListenerWrongAnswer3(touch)
-    userAnswer = wrongAnswerText3.text
-    
-    if (touch.phase == "ended") then
-
-        timer.performWithDelay(100, BackToLevel1)
-    end 
-end
-
 --------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 --------------------------------------------------------------------------------------
@@ -300,16 +301,16 @@ function scene:create(event)
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 60)
 
     -- create the answer text object & wrong answer text objects
-    correctAnswerText = display.newText("", X1, Y2, Arial, 50)
+    correctAnswerText = display.newText("", X1, Y2, Arial, 40)
     correctAnswerText.anchorX = 0
 
-    wrongAnswerText1 = display.newText("", X2, Y2, Arial, 50)
+    wrongAnswerText1 = display.newText("", X2, Y2, Arial, 40)
     wrongAnswerText1.anchorX = 0
 
-    wrongAnswerText2 = display.newText("", X1, Y1, Arial, 50)
+    wrongAnswerText2 = display.newText("", X1, Y1, Arial, 40)
     wrongAnswerText2.anchorX = 0
 
-    wrongAnswerText3 = display.newText("", X2, Y1, Arial, 50)
+    wrongAnswerText3 = display.newText("", X2, Y1, Arial, 40)
     wrongAnswerText3.anchorX = 0
 
     ----------------------------------------------------------------------------------
@@ -347,7 +348,9 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
         AskQuestion()
         PositionAnswers()
-        AddTextListeners()
+        AddTouchListeners()
+
+        numLives = 2
     end
 
 end --function scene:show( event )
@@ -372,7 +375,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        RemoveTextListeners()
+        RemoveTouchListeners()
     end
 
 end --function scene:hide( event )

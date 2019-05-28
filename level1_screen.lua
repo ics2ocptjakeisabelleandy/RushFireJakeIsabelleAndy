@@ -63,14 +63,21 @@ local platform5
 local platform6
 local platform7
 local platform8
-local platform9
 
 local earth
 local saturn
 local pluto
 local theplanet
 
-local questionsAnswered = 0
+local numberCorrect = 0
+
+local rect
+local instructions
+local instructions2
+local instructions3
+local instructions4
+local instructions5
+local instructions6
 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -229,20 +236,14 @@ local function onCollision( self, event )
             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
-            if  (userAnswer == correctAnswer) then
-                questionsAnswered = questionsAnswered + 1
-            end
-
-            if  (userAnswer == wrongAnswer1) or
-                (userAnswer == wrongAnswer2) or
-                (userAnswer == wrongAnswer3) then
-                numLives = numLives - 1
-            end
+            numberCorrect = numberCorrect + 1
         end
 
-        if (questionsAnswered == 3) then
-            timer.performWithDelay(2500, YouWinTransition)
+
+        if (numberCorrect == 3) then
+            timer.performWithDelay(3000, YouWinTransition)
         end
+    
     end
 end
 
@@ -284,7 +285,6 @@ local function AddPhysicsBodies()
     physics.addBody(platform6, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(platform7, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(platform8, "static", {density=1, friction=0.3, bounce=0.2})
-    physics.addBody(platform9, "static", {density=1, friction=0.3, bounce=0.2})
 
     physics.addBody(earth, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(saturn, "static", {density=1, friction=0.3, bounce=0.2})
@@ -305,7 +305,6 @@ local function RemovePhysicsBodies()
     physics.removeBody(platform6)
     physics.removeBody(platform7)
     physics.removeBody(platform8)
-    physics.removeBody(platform9)
 end
 
 -----------------------------------------------------------------------------------------
@@ -317,7 +316,7 @@ function ResumeGame()
     -- make character visible again
     character.isVisible = true
 
-    if (questionsAnswered > 0) then
+    if (numberCorrect > 0) then
         if (theplanet ~= nil) and (theplanet.isBodyActive == true) then
             physics.removeBody(theplanet)
             theplanet.isVisible = false
@@ -348,7 +347,28 @@ function scene:create( event )
     bkg_image:toBack()
 
     -- Insert background image into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( bkg_image )    
+    sceneGroup:insert( bkg_image )
+
+    -- make a cover rectangle to have rhe background fully blocked where the question is
+    cover = display.newRoundedRect(150, 650, display.contentWidth/2.4, display.contentHeight/2.6, 50)
+    -- set the cover color
+    cover:setFillColor(96/255, 96/255, 96/255)
+
+    sceneGroup:insert(cover)
+
+    instructions = display.newText("The evil Greg and Betmorax", display.contentWidth/6, display.contentHeight/1.4, nil, 25)
+    instructions2 = display.newText("scattered our planets!", display.contentWidth/6.5, display.contentHeight/1.325, nil, 25)
+    instructions3 = display.newText("Can you collect them?", display.contentWidth/6.3, display.contentHeight/1.25, nil, 25)
+    instructions4 = display.newText("For this level ONLY", display.contentWidth/6.3, display.contentHeight/1.15, nil, 25)
+    instructions5 = display.newText("you only lose a life", display.contentWidth/6.3, display.contentHeight/1.1, nil, 25)
+    instructions6 = display.newText("if you fall off the screen!", display.contentWidth/6.3, display.contentHeight/1.05, nil, 25)
+
+    sceneGroup:insert(instructions)
+    sceneGroup:insert(instructions2)
+    sceneGroup:insert(instructions3)
+    sceneGroup:insert(instructions4)
+    sceneGroup:insert(instructions5)
+    sceneGroup:insert(instructions6)
 
    --Insert the right arrow
     rArrow = display.newImageRect("Images/arrow.png", 100, 50)
@@ -409,6 +429,7 @@ function scene:create( event )
     platform1 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
     platform1.x = display.contentWidth/11
     platform1.y = display.contentHeight/6
+    platform1.myName = "platform1"
 
     -- insert platform1 into sceneGroup
     sceneGroup:insert(platform1)
@@ -416,6 +437,7 @@ function scene:create( event )
     platform2 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
     platform2.x = display.contentWidth/1.25
     platform2.y = display.contentHeight/5
+    platform2.myName = "platform2"
 
     -- insert platform1 into sceneGroup
     sceneGroup:insert(platform2)
@@ -423,6 +445,7 @@ function scene:create( event )
     platform3 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
     platform3.x = display.contentWidth/2
     platform3.y = display.contentHeight/3
+    platform3.myName = "platform3"
 
     -- insert platform1 into sceneGroup
     sceneGroup:insert(platform3)
@@ -430,41 +453,39 @@ function scene:create( event )
     platform4 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
     platform4.x = display.contentWidth/2
     platform4.y = display.contentHeight/1.75
+    platform4.myName = "platform4"
 
     sceneGroup:insert(platform4)
 
     platform5 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
-    platform5.x = display.contentWidth/5
-    platform5.y = display.contentHeight/1.25
+    platform5.x = display.contentWidth/1.2
+    platform5.y = display.contentHeight/2
+    platform5.myName = "platform5"
 
     -- insert platform1 into sceneGroup
     sceneGroup:insert(platform5)
 
     platform6 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
-    platform6.x = display.contentWidth/1.2
-    platform6.y = display.contentHeight/2
+    platform6.x = display.contentWidth/2
+    platform6.y = display.contentHeight/1.1
+    platform6.myName = "platform6"
 
     -- insert platform1 into sceneGroup
     sceneGroup:insert(platform6)
 
     platform7 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
-    platform7.x = display.contentWidth/2
-    platform7.y = display.contentHeight/1.1
+    platform7.x = display.contentWidth/7
+    platform7.y = display.contentHeight/2
+    platform7.myName = "platform7"
 
-    -- insert platform1 into sceneGroup
     sceneGroup:insert(platform7)
 
     platform8 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
-    platform8.x = display.contentWidth/7
-    platform8.y = display.contentHeight/2
+    platform8.x = display.contentWidth/1.2
+    platform8.y = display.contentHeight/1.4
+    platform8.myName = "platform8"
 
     sceneGroup:insert(platform8)
-
-    platform9 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
-    platform9.x = display.contentWidth/1.2
-    platform9.y = display.contentHeight/1.4
-
-    sceneGroup:insert(platform9)
 
     -- Insert the hearts
     heart1 = display.newImageRect("Images/Lives.png", 80, 80)
@@ -476,7 +497,7 @@ function scene:create( event )
     sceneGroup:insert( heart1 )
 
     heart2 = display.newImageRect("Images/Lives.png", 80, 80)
-    heart2.x = 130
+    heart2.x = 140
     heart2.y = 50
     heart2.isVisible = true
 
@@ -508,8 +529,8 @@ function scene:create( event )
     sceneGroup:insert(saturn)
 
     pluto = display.newImage("Images/PlutoIsabelleLC.png", 100, 100)
-    pluto.x = display.contentWidth/5
-    pluto.y = display.contentHeight/1.4
+    pluto.x = display.contentWidth/6.8
+    pluto.y = display.contentHeight/2.4
     pluto.width = 100
     pluto.height = 100
     pluto.myName = "pluto"
@@ -547,7 +568,7 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
 
        numLives = 2
-       questionsAnswered = 0
+       numberCorrect = 0
 
         --create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
