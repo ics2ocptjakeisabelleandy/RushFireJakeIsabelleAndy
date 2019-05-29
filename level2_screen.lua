@@ -43,6 +43,7 @@ local lArrow
 local uArrow
 
 local character
+local zombie1
 
 local motionx = 0
 local SPEED = 7
@@ -179,20 +180,22 @@ end
 
 local function AddCollisionListeners()
     -- if character collides with earth, onCollision will be called
-
+    zombie1.collision = onCollision
+    zombie1:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
-
+    zombies1:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
     -- add the physics
     physics.addBody(ground, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(zombie1, "static", {density=1, friction=0.5, bounce=0 })
 end
 
 local function RemovePhysicsBodies()
-
+    physics.removeBody(zombie1)
 end
 
 -----------------------------------------------------------------------------------------
@@ -236,7 +239,7 @@ function scene:create( event )
 
 
     ground = display.newImageRect("Images/ground.png", display.contentWidth, 100)
-
+    zombie1 = display.newImage("Images/character2.png")
 
     -- putting the ground on the ground
     ground.x = display.contentWidth/2
