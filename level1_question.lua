@@ -139,7 +139,7 @@ end
 local function AskQuestion()
     -- generate a random number between 1 and 2
     -- *** declare this variable above
-    randomOperator = math.random(1,4)
+    randomOperator = math.random(1,5)
 
     if (randomOperator == 1) then
 
@@ -212,6 +212,326 @@ local function AskQuestion()
         wrongAnswer3 = " Red, White "
 
         questionText.text = " What colours are the Earth? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 5) then
+
+        -- correct answer
+        correctAnswer = " Neptune "
+
+        -- wrong answers
+        wrongAnswer1 = " Saturn "
+        wrongAnswer2 = " Mercury "
+        wrongAnswer3 = " Earth "
+
+        questionText.text = " What is the coldest planet? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 6) then
+
+        -- correct answer
+        correctAnswer = " The Sun "
+
+        -- wrong answers
+        wrongAnswer1 = " Red Star "
+        wrongAnswer2 = " Blue Star "
+        wrongAnswer3 = " Green Star "
+
+        questionText.text = " What is the biggest Star? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 7) then
+
+        -- correct answer
+        correctAnswer = " Earth "
+
+        -- wrong answers
+        wrongAnswer1 = " Saturn "
+        wrongAnswer2 = " Pluto "
+        wrongAnswer3 = " The Moon "
+
+        questionText.text = " What planet do we live on? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 8) then
+
+        -- correct answer
+        correctAnswer = " 1 "
+
+        -- wrong answers
+        wrongAnswer1 = " 7 "
+        wrongAnswer2 = " 100 "
+        wrongAnswer3 = " 3 "
+
+        questionText.text = " How much Moons does earth have? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 9) then
+
+        -- correct answer
+        correctAnswer = " Saturn "
+
+        -- wrong answers
+        wrongAnswer1 = " Jupiter "
+        wrongAnswer2 = " Mercury "
+        wrongAnswer3 = " Venus "
+
+        questionText.text = " What planet has a ring? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 10) then
+
+        -- correct answer
+        correctAnswer = " Jupiter "
+
+        -- wrong answers
+        wrongAnswer1 = " Mercury "
+        wrongAnswer2 = " Mars "
+        wrongAnswer3 = " The Sun "
+
+        questionText.text = " What is the gas planet? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 11) then
+
+        -- correct answer
+        correctAnswer = " 100+ "
+
+        -- wrong answers
+        wrongAnswer1 = " 1 "
+        wrongAnswer2 = " 76 "
+        wrongAnswer3 = " 4 "
+
+        questionText.text = " About how many Jupiters can fit on the Sun? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 12) then
+
+        -- correct answer
+        correctAnswer = " Jupiter "
+
+        -- wrong answers
+        wrongAnswer1 = " Earth "
+        wrongAnswer2 = " Uranus "
+        wrongAnswer3 = " Mars "
+
+        questionText.text = " What planet has the most storms? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 13) then
+
+        -- correct answer
+        correctAnswer = " Mercury "
+
+        -- wrong answers
+        wrongAnswer1 = " Saturn "
+        wrongAnswer2 = " Pluto "
+        wrongAnswer3 = " Earth "
+
+        questionText.text = " What planet has the most violent weather? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 14) then
+
+        -- correct answer
+        correctAnswer = " Mars "
+
+        -- wrong answers
+        wrongAnswer1 = " Jupiter "
+        wrongAnswer2 = " Neptune "
+        wrongAnswer3 = " The moon "
+
+        questionText.text = " What planet do we plan to live on? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 15) then
+
+        -- correct answer
+        correctAnswer = " Mars "
+
+        -- wrong answers
+        wrongAnswer1 = " Earth "
+        wrongAnswer2 = " Uranus "
+        wrongAnswer3 = " Pluto "
+
+        questionText.text = " What chocolate bar is named after a planet? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 16) then
+
+        -- correct answer
+        correctAnswer = " Nothing/Silence "
+
+        -- wrong answers
+        wrongAnswer1 = " Rocket blasts "
+        wrongAnswer2 = " Laughing "
+        wrongAnswer3 = " Crickets "
+
+        questionText.text = " What does space sound like? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 17) then
+
+        -- correct answer
+        correctAnswer = " Mercury "
+
+        -- wrong answers
+        wrongAnswer1 = " Jupiter "
+        wrongAnswer2 = " Neptune "
+        wrongAnswer3 = " Earth "
+
+        questionText.text = " What is the hottest planet? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 18) then
+
+        -- correct answer
+        correctAnswer = " Unknown "
+
+        -- wrong answers
+        wrongAnswer1 = " 10000000000 "
+        wrongAnswer2 = " 50 "
+        wrongAnswer3 = " 0 "
+
+        questionText.text = " How many stars are in space? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 19) then
+
+        -- correct answer
+        correctAnswer = " Venus "
+
+        -- wrong answers
+        wrongAnswer1 = " Mars "
+        wrongAnswer2 = " Neptune "
+        wrongAnswer3 = " Uranus "
+
+        questionText.text = " One day on Earth, ie equal to a year on which planet? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 20) then
+
+        -- correct answer
+        correctAnswer = " Mars "
+
+        -- wrong answers
+        wrongAnswer1 = " Saturn "
+        wrongAnswer2 = " Venus "
+        wrongAnswer3 = " Mercury "
+
+        questionText.text = " What planet has a giant volcano on it? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer

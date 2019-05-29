@@ -27,6 +27,13 @@ sceneName = "level1_screen"
 local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
+-- SOUNDS
+-----------------------------------------------------------------------------------------
+
+local bkgMusic = audio.loadStream("Sounds/clear.mp3")
+local bkgMusicChannel = audio.play( bkgMusic, { channel=2, loops=-1 })
+
+-----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
@@ -82,6 +89,32 @@ local instructions6
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
+
+local function Mute(touch)
+    if (touch.phase == "ended") then
+        -- pause the sound
+        audio.pause(bkgMusic)
+        -- set the boolean variable to be false (sound is now muted)
+        soundOn = false
+        -- hide the mute button
+        muteButton.isVisible = false
+        -- make the unmute button visible
+        unmuteButton.isVisible = true
+    end
+end
+
+local function Unmute(touch)
+    if (touch.phase == "ended") then
+        -- play the sound
+        audio.resume(bkgMusic)
+        -- set the boolean variable to be false (sound is now muted)
+        soundOn = true
+        -- hide the mute button
+        muteButton.isVisible = true
+        -- make the unmute button visible
+        unmuteButton.isVisible = false
+    end
+end
 
 -- when right arrow is pressed
 local function right(touch)
@@ -567,8 +600,12 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
-       numLives = 2
-       numberCorrect = 0
+        if (soundOn == true) then
+            bkgMusicChannel = audio.play(bkgMusic)
+        end
+
+        numLives = 2
+        numberCorrect = 0
 
         --create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
@@ -615,6 +652,8 @@ function scene:hide( event )
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
         display.remove(character)
+
+        bkgMusic = audio.stop()
     end
 
 end --function scene:hide( event )
