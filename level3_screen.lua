@@ -48,6 +48,7 @@ local uArrow
 local character
 local zombie    
 local zombie2
+local greg
 
 local motionx = 1
 local SPEED = 12.5
@@ -203,6 +204,27 @@ local function onCollision( self, event )
             elseif (numLives == 0 ) then
                 timer.performWithDelay(200, YouLoseTransition)
             end
+        end
+
+
+            if  (event.target.myName == "zombie2") or
+            (event.target.myName == "zombie") or
+            (event.target.myName == "greg") then
+
+            -- get the ball that the user hit
+            zombie = event.target
+
+            -- stop the character from moving
+            motionx = 0
+
+            -- make the character invisible
+            character.isVisible = false
+
+            -- show overlay with math question
+            composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
+
+            -- Increment questions answered
+            questionsAnswered = questionsAnswered + 1
 
         end
     end
@@ -228,10 +250,13 @@ local function AddPhysicsBodies()
 
     physics.addBody(skyscraper1, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(skyscraper2, "static", {density=1, friction=0.3, bounce=0.2})
-    physics.addBody(cloud, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(cloud, "static", {density=1, friction=0.3, bounce=0})
 
-    physics.addBody(Ground, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(Ground, "static", {density=1, friction=0.3, bounce=0})
     
+    physics.addBody(zombie, "static,", {density=1, friction=0.3, bounce=0})
+    physics.addBody(zombie2, "static,", {density=1, friction=0.3, bounce=0})
+    physics.addBody(greg, "static,", {density=1, friction=0.3, bounce=0})
 end
 
 local function RemovePhysicsBodies()
@@ -383,7 +408,28 @@ function scene:create( event )
     Ground.myName = "Ground"
     sceneGroup:insert(Ground)
 
+
+    zombie = display.newImage("Images/character2(resize)AndyDF.png", 25, 50)
+    zombie.x = display.contentWidth/2
+    zombie.y = display.contentHeight/4
+    zombie.isVisible = true
+    zombie.myName = "zombie"
+    sceneGroup:insert(zombie)
     
+
+
+    zombie2 = display.newImage("Images/character2(resize)AndyDF.png", 25, 50)
+    zombie2.x = display.contentWidth/1.15
+    zombie2.y = display.contentHeight/2.25
+    zombie2.isVisible = true
+    zombie2.myName = "zombie2"
+    sceneGroup:insert(zombie2)
+    
+    greg = display.newImageRect("Images/JakeH(greg)@.png", 100, 100)
+    greg.x = display.contentWidth*.9
+    greg.y = 20
+    greg.myName = "greg"
+    sceneGroup:insert(greg)    
 end --function scene:create( event )
 
 
