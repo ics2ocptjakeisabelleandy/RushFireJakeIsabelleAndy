@@ -61,7 +61,9 @@ local X2 = display.contentWidth*4/7
 local Y1 = display.contentHeight*1/2
 local Y2 = display.contentHeight*5/5/7
 
-local questionObject
+local questionText
+local questionText2
+local questionText3
 local numericField
 local userAnswer
 local correctAnswer1
@@ -129,9 +131,12 @@ end
 -- add the event listeners
 local function AddTextListeners()
 	answerText:addEventListener("touch", TouchListenerAnswer)
-	wrongText1:addEventListener("tocuh", TouchListenerWrongAnswer1)
-	wrongText2:addEventListener("tocuh", TouchListenerWrongAnswer2)
-	wrongText3:addEventListener("tocuh", TouchListenerWrongAnswer3)
+	wrongText1:addEventListener("touch", TouchListenerWrongAnswer1)
+	wrongText2:addEventListener("touch", TouchListenerWrongAnswer2)
+	wrongText3:addEventListener("touch", TouchListenerWrongAnswer3)
+    wrongText4:addEventListener("touch", TouchListenerWrongAnswer4)
+    wrongText5:addEventListener("touch", TouchListenerWrongAnswer5)
+    wrongText6:addEventListener("touch", TouchListenerWrongAnswer6)
 end
 
 -- remove event listeners
@@ -140,6 +145,9 @@ local function RemoveTextListeners()
 	wrongText1:removeEventListener("touch", TouchListenerWrongAnswer1)
     wrongText2:removeEventListener("touch", TouchListenerWrongAnswer2)
     wrongText3:removeEventListener("touch", TouchListenerWrongAnswer3)
+    wrongText4:addEventListener("touch", TouchListenerWrongAnswer4)
+    wrongText5:addEventListener("touch", TouchListenerWrongAnswer5)
+    wrongText6:addEventListener("touch", TouchListenerWrongAnswer6)
 end
 
 local function AskQuestion()
@@ -158,7 +166,7 @@ local function AskQuestion()
         wrongAnswer3 = " Cereal "
         wrongAsnwer4 = " Orange "
 
-        questionObject.text == " what is in the protein food group? "
+        questionText = " what is in the protein food group? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -179,7 +187,7 @@ local function AskQuestion()
         wrongAnswer6 = " Fruits "
         wrongAnswer7 = " Grains "
 
-        questionObjectText2.text == " what food group is milk part of? "
+        questionText2 = " what food group is milk part of? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -198,8 +206,61 @@ local function PositionAnswers()
 
     if (answerPosition == 1) then
 
-        correctAnswerText1
+        answerText.x = X1
+        answerText.y = Y1
+        
+        wrongText1.x = X2
+        wrongText1.y = Y1
+        
+        wrongText2.x = X3
+        wrongText2.y = Y3
 
+        wrongText3.x = X1
+        wrongText3.y = Y2 
+        
+    elseif (answerPosition == 2) then
+
+        answerText.x = X1
+        answerText.y = Y2
+                    
+        wrongText1.x = X1
+        wrongText1.y = Y1
+            
+        wrongText2.x = X2
+        wrongText2.y = Y1
+        
+        wrongText3.x = X3
+        wrongText3.y = Y3
+
+    elseif (answerPosition == 3) then
+
+        answerText.x = X3
+        answerText.y = Y3
+            
+        wrongText1.x = X1
+        wrongText1.y = Y2
+            
+        wrongText2.x = X1
+        wrongText2.y = Y1
+        
+        wrongText3.x = Y2
+        wrongText3.y = Y1
+
+    elseif (answerPosition == 4) then
+
+        answerText.x = X2
+        answerText.y = Y1
+
+        wrongText1.x = X3
+        wrongText1.y = Y3
+
+        wrongText2.x = X1
+        wrongText2.y = Y2
+
+        wrongText3.x = Y1
+        wrongText3.y = Y1
+    end
+end
 --------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 --------------------------------------------------------------------------------------
@@ -213,12 +274,35 @@ function scene:create(event)
     -- make a cover rectangle to have rhe background fully blocked where the question is
     cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*0.8, display.contentHeight*0.95, 50)
     -- set the cover color
-    cover:settFillColor(96/255, 96/255, 96/255)
+    cover:setFillColor(96/255, 96/255, 96/255)
     ----------------------------------------------------------------------------------
 
     -- insert all objects for this scene into the scene group
     sceneGroup:insert(cover)
+   
+    questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
+    questionText2 = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
+    answerText = display.newText("", X1, Y2, Arial, 75)
+    answerText.anchorX = 0
+    wrongText1 = display.newText("", X2, Y2, Arial, 75)
+    wrongText1.anchorX = 0
+    wrongText2 = display.newText("", X1, Y1, Arial, 75)
+    wrongText2.anchorX = 0
+    wrongText3 = display.newText("", X1, Y1, Arial, 75)
+    wrongText3.anchorX = 0
+    wrongText4 = display.newText("", X1, Y1, Arial, 75)
+    wrongText4.anchorX = 0
+     -----------------------------------------------------------------------------------------
 
+    -- insert all objects for this scene into the scene group
+    sceneGroup:insert(cover)
+    sceneGroup:insert(questionText)
+    sceneGroup:insert(answerText)
+    sceneGroup:insert(wrongText1)
+    sceneGroup:insert(wrongText2)
+    sceneGroup:insert(wrongText3)
+    sceneGroup:insert(wrongText4)
+end
 -----------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to appear on screen
