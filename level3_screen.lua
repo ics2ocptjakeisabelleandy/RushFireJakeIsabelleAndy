@@ -49,6 +49,7 @@ local character
 local zombie    
 local zombie2
 local greg
+local theEnemy
 
 local motionx = 1
 local SPEED = 12.5
@@ -207,12 +208,13 @@ local function onCollision( self, event )
         end
 
 
-            if  (event.target.myName == "zombie2") or
+        if  (event.target.myName == "zombie2") or
             (event.target.myName == "zombie") or
             (event.target.myName == "greg") then
 
-            -- get the ball that the user hit
-            zombie = event.target
+            print ("***Collided with " .. event.target.myName)
+            -- get the enemy that the user hit
+            theEnemy = event.target
 
             -- stop the character from moving
             motionx = 0
@@ -235,6 +237,9 @@ local function AddCollisionListeners()
     --if character collides with ground they lose a life
     Ground.collision = onCollision
     Ground:addEventListener( "collision")
+    greg.collision = onCollision
+    greg:addEventListener( "collision")
+     
 end
 
 local function RemoveCollisionListeners()
@@ -379,7 +384,7 @@ function scene:create( event )
     --creating the cloud
     cloud = display.newImage("Images/SquareCloudJakeH.png", 200, 100)
     cloud.x = display.contentWidth/1.12
-    cloud.y = display.contentHeight/1.75
+    cloud.y = display.contentHeight/1.5
 
     sceneGroup:insert(cloud)
 
