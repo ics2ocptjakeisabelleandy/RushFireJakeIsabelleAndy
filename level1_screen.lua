@@ -1,5 +1,4 @@
 -----------------------------------------------------------------------------------------
---
 -- level1_screen.lua
 -- Created by: Isabelle LC
 -- Date: May 2, 2019
@@ -28,11 +27,20 @@ sceneName = "level1_screen"
 local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
+-- SOUNDS
+-----------------------------------------------------------------------------------------
+
+local bkgMusic = audio.loadStream("Sounds/clear.mp3")
+local bkgMusicChannel = audio.play( bkgMusic, { channel=2, loops=-1 })
+
+-----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
 -- The local variables for this scene
 local bkg_image
+
+local character
 
 local heart1
 local heart2
@@ -42,32 +50,71 @@ local rArrow
 local lArrow
 local uArrow
 
-local character
 
 local motionx = 0
-local SPEED = 7
-local negativeSpeed = -9
-local LINEAR_VELOCITY = -100
-local GRAVITY = 7
+local SPEED = 20
+local negativeSpeed = -20
+local LINEAR_VELOCITY = -200
+local GRAVITY = 20
 
 local leftW
 local topW
 local rightW
+local floor
 
 local platform1
 local platform2
 local platform3
 local platform4
+local platform5
+local platform6
+local platform7
+local platform8
 
 local earth
 local saturn
 local pluto
 local theplanet
 
-local questionsAnswered = 0
+local numberCorrect = 0
+
+local rect
+local instructions
+local instructions2
+local instructions3
+local instructions4
+local instructions5
+local instructions6
+
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
+
+local function Mute(touch)
+    if (touch.phase == "ended") then
+        -- pause the sound
+        audio.pause(bkgMusic)
+        -- set the boolean variable to be false (sound is now muted)
+        soundOn = false
+        -- hide the mute button
+        muteButton.isVisible = false
+        -- make the unmute button visible
+        unmuteButton.isVisible = true
+    end
+end
+
+local function Unmute(touch)
+    if (touch.phase == "ended") then
+        -- play the sound
+        audio.resume(bkgMusic)
+        -- set the boolean variable to be false (sound is now muted)
+        soundOn = true
+        -- hide the mute button
+        muteButton.isVisible = true
+        -- make the unmute button visible
+        unmuteButton.isVisible = false
+    end
+end
 
 -- when right arrow is pressed
 local function right(touch)
@@ -156,16 +203,61 @@ local function MakeObjectCharactersVisible()
     saturn.isVisible = true
 end
 
-local function onCollision()
-    
+local function MakeHeartsVisible()
+    heart1.isVisible = true
+    heart2.isVisible = true
+end
+
+local function YouLoseTansition()
+    composer.gotoScene( "you_lose" )
+end
+
+local function YouWinTransition()
+    composer.gotoScene( "you_win" )
+end
+
+local function onCollision( self, event )
+    -- for testing purposes
+    --print( event.target )        --the first object in the collision
+    --print( event.other )         --the second object in the collision
+    --print( event.selfElement )   --the element (number) of the first object which was hit in the collision
+    --print( event.otherElement )  --the element (number) of the second object which was hit in the collision
+    --print( event.target.myName .. ": collision began with " .. event.other.myName )
+
     if ( event.phase == "began" ) then
 
-        if  (event.target.myName == "ball1") or
-            (event.target.myName == "ball3") or
-            (event.target.myName == "ball2") then
+        if (event.target.myName == "floor") then
+
+            -- remove runtime listeners that move the character
+            RemoveArrowEventListeners()
+            RemoveRuntimeListeners()
+
+            -- remove the character from the display
+            display.remove(character)
+
+            -- decrease number of lives
+            numLives = numLives - 1
+
+            if (numLives == 1) then
+                -- update hearts
+                heart1.isVisible = true
+                heart2.isVisible = false
+                timer.performWithDelay(200, ReplaceCharacter)
+
+            elseif (numLives == 0) then
+                -- update hearts
+                heart1.isVisible = false
+                heart2.isVisible = false
+                timer.performWithDelay(200, YouLoseTansition)
+            end
+        end
+
+        if  (event.target.myName == "earth") or
+            (event.target.myName == "pluto") or
+            (event.target.myName == "saturn") then
 
             -- get the ball that the user hit
-            theBall = event.target
+            theplanet = event.target
 
             -- stop the character from moving
             motionx = 0
@@ -177,12 +269,14 @@ local function onCollision()
             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
+            numberCorrect = numberCorrect + 1
         end
 
-        if (questionsAnswered == 3) then
-            timer.performWithDelay(200, YouWinTransition)
+
+        if (numberCorrect == 3) then
+            timer.performWithDelay(3000, YouWinTransition)
         end
+    
     end
 end
 
@@ -195,12 +289,18 @@ local function AddCollisionListeners()
     saturn:addEventListener("collision")
     pluto.collision = onCollision
     pluto:addEventListener("collision")
+
+    -- if character collides with floor, onCollision will be called
+    floor.collision = onCollision
+    floor:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
     earth:removeEventListener("collision")
     saturn:removeEventListener("collision")
     pluto:removeEventListener("collision")
+
+    floor:removeEventListener("collision")
 end
 
 local function AddPhysicsBodies()
@@ -208,11 +308,16 @@ local function AddPhysicsBodies()
     physics.addBody(leftW, "static", {friction=0.5, bounce=0.3})
     physics.addBody(rightW, "static", {friction=0.5, bounce=0.3})
     physics.addBody(topW, "static", {friction=0.5, bounce=0.3})
+    physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2})
 
     physics.addBody(platform1, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(platform2, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(platform3, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(platform4, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(platform5, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(platform6, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(platform7, "static", {density=1, friction=0.3, bounce=0.2})
+    physics.addBody(platform8, "static", {density=1, friction=0.3, bounce=0.2})
 
     physics.addBody(earth, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(saturn, "static", {density=1, friction=0.3, bounce=0.2})
@@ -223,11 +328,16 @@ local function RemovePhysicsBodies()
     physics.removeBody(leftW)
     physics.removeBody(rightW)
     physics.removeBody(topW)
+    physics.removeBody(floor)
 
     physics.removeBody(platform1)
     physics.removeBody(platform2)
     physics.removeBody(platform3)
     physics.removeBody(platform4)
+    physics.removeBody(platform5)
+    physics.removeBody(platform6)
+    physics.removeBody(platform7)
+    physics.removeBody(platform8)
 end
 
 -----------------------------------------------------------------------------------------
@@ -239,8 +349,8 @@ function ResumeGame()
     -- make character visible again
     character.isVisible = true
 
-    if (questionsAnswered > 0) then
-        if (theplanet~= nil) and (theplanet.isBodyActive == true) then
+    if (numberCorrect > 0) then
+        if (theplanet ~= nil) and (theplanet.isBodyActive == true) then
             physics.removeBody(theplanet)
             theplanet.isVisible = false
         end
@@ -270,7 +380,28 @@ function scene:create( event )
     bkg_image:toBack()
 
     -- Insert background image into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( bkg_image )    
+    sceneGroup:insert( bkg_image )
+
+    -- make a cover rectangle to have rhe background fully blocked where the question is
+    cover = display.newRoundedRect(150, 650, display.contentWidth/2.4, display.contentHeight/2.6, 50)
+    -- set the cover color
+    cover:setFillColor(96/255, 96/255, 96/255)
+
+    sceneGroup:insert(cover)
+
+    instructions = display.newText("The evil Greg and Betmorax", display.contentWidth/6, display.contentHeight/1.4, nil, 25)
+    instructions2 = display.newText("scattered our planets!", display.contentWidth/6.5, display.contentHeight/1.325, nil, 25)
+    instructions3 = display.newText("Can you collect them?", display.contentWidth/6.3, display.contentHeight/1.25, nil, 25)
+    instructions4 = display.newText("For this level ONLY", display.contentWidth/6.3, display.contentHeight/1.15, nil, 25)
+    instructions5 = display.newText("you only lose a life", display.contentWidth/6.3, display.contentHeight/1.1, nil, 25)
+    instructions6 = display.newText("if you fall off the screen!", display.contentWidth/6.3, display.contentHeight/1.05, nil, 25)
+
+    sceneGroup:insert(instructions)
+    sceneGroup:insert(instructions2)
+    sceneGroup:insert(instructions3)
+    sceneGroup:insert(instructions4)
+    sceneGroup:insert(instructions5)
+    sceneGroup:insert(instructions6)
 
    --Insert the right arrow
     rArrow = display.newImageRect("Images/arrow.png", 100, 50)
@@ -307,6 +438,14 @@ function scene:create( event )
     -- insert the wall into scene group
     sceneGroup:insert(topW)
 
+    floor = display.newLine (0, 0, display.contentWidth, 0)
+    floor.y = display.contentCenterY * 2
+    floor.isVisible = true
+    floor.myName = "floor"
+
+    -- insert the wall into scene group
+    sceneGroup:insert(floor)
+
     leftW = display.newLine (0, 0, 0, display.contentHeight)
     leftW.isVisible = true
 
@@ -323,6 +462,7 @@ function scene:create( event )
     platform1 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
     platform1.x = display.contentWidth/11
     platform1.y = display.contentHeight/6
+    platform1.myName = "platform1"
 
     -- insert platform1 into sceneGroup
     sceneGroup:insert(platform1)
@@ -330,6 +470,7 @@ function scene:create( event )
     platform2 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
     platform2.x = display.contentWidth/1.25
     platform2.y = display.contentHeight/5
+    platform2.myName = "platform2"
 
     -- insert platform1 into sceneGroup
     sceneGroup:insert(platform2)
@@ -337,6 +478,7 @@ function scene:create( event )
     platform3 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
     platform3.x = display.contentWidth/2
     platform3.y = display.contentHeight/3
+    platform3.myName = "platform3"
 
     -- insert platform1 into sceneGroup
     sceneGroup:insert(platform3)
@@ -344,33 +486,87 @@ function scene:create( event )
     platform4 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
     platform4.x = display.contentWidth/2
     platform4.y = display.contentHeight/1.75
+    platform4.myName = "platform4"
+
+    sceneGroup:insert(platform4)
+
+    platform5 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
+    platform5.x = display.contentWidth/1.2
+    platform5.y = display.contentHeight/2
+    platform5.myName = "platform5"
+
+    -- insert platform1 into sceneGroup
+    sceneGroup:insert(platform5)
+
+    platform6 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
+    platform6.x = display.contentWidth/2
+    platform6.y = display.contentHeight/1.1
+    platform6.myName = "platform6"
+
+    -- insert platform1 into sceneGroup
+    sceneGroup:insert(platform6)
+
+    platform7 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
+    platform7.x = display.contentWidth/7
+    platform7.y = display.contentHeight/2
+    platform7.myName = "platform7"
+
+    sceneGroup:insert(platform7)
+
+    platform8 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
+    platform8.x = display.contentWidth/1.2
+    platform8.y = display.contentHeight/1.4
+    platform8.myName = "platform8"
+
+    sceneGroup:insert(platform8)
+
+    -- Insert the hearts
+    heart1 = display.newImageRect("Images/Lives.png", 80, 80)
+    heart1.x = 50
+    heart1.y = 50
+    heart1.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( heart1 )
+
+    heart2 = display.newImageRect("Images/Lives.png", 80, 80)
+    heart2.x = 140
+    heart2.y = 50
+    heart2.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( heart2 )
+
 
     -- insert platform1 into sceneGroup
     sceneGroup:insert(platform4)
 
-    earth = display.newImage("Images/earthIsabelleLC.png", 100, 100)
-    earth.x = display.contentWidth/2
-    earth.y = display.contentHeight/2.15
+    earth = display.newImage("Images/EarthIsabelleLC.png", 100, 100)
+    earth.x = display.contentWidth/1.2
+    earth.y = display.contentHeight/1.6
     earth.width = 100
     earth.height = 100
+    earth.myName = "earth"
 
     -- insert earth into sceneGroup
     sceneGroup:insert(earth)
 
-    saturn = display.newImage("Images/saturnIsabelleLC.png", 100, 100)
+    saturn = display.newImage("Images/SaturnIsabelleLC.png", 100, 100)
     saturn.x = display.contentWidth/1.25
     saturn.y = display.contentHeight/8.5
     saturn.width = 100
     saturn.height = 100
+    saturn.myName = "saturn"
 
     -- insert earth into sceneGroup
     sceneGroup:insert(saturn)
 
     pluto = display.newImage("Images/PlutoIsabelleLC.png", 100, 100)
-    pluto.x = display.contentWidth/8
-    pluto.y = display.contentHeight/8.5
+    pluto.x = display.contentWidth/6.8
+    pluto.y = display.contentHeight/2.4
     pluto.width = 100
     pluto.height = 100
+    pluto.myName = "pluto"
 
     -- insert earth into sceneGroup
     sceneGroup:insert(pluto)
@@ -404,6 +600,13 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
+        if (soundOn == true) then
+            bkgMusicChannel = audio.play(bkgMusic)
+        end
+
+        numLives = 2
+        numberCorrect = 0
+
         --create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
 
@@ -413,8 +616,11 @@ function scene:show( event )
         -- add collision listeners to objects
         AddCollisionListeners()
 
-        -- make planes visible
+        -- make planets visible
         MakeObjectCharactersVisible()
+
+        -- make lives visible
+        MakeHeartsVisible()
     end
 end --function scene:show( event )
 
@@ -446,6 +652,8 @@ function scene:hide( event )
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
         display.remove(character)
+
+        bkgMusic = audio.stop()
     end
 
 end --function scene:hide( event )

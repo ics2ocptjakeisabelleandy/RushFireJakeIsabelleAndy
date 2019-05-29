@@ -1,11 +1,11 @@
 -----------------------------------------------------------------------------------------
 --
 -- level1_screen.lua
--- Created by: Allison
--- Date: May 16, 2017
--- Description: This is the level 1 screen of the game. the charater can be dragged to move
---If character goes off a certain araea they go back to the start. When a user interactes
---with piant a trivia question will come up. they will have a limided time to click on the answer
+-- Created by: Isabelle
+-- Date: May 23, 2019
+-- Description: Asks a question in level 1. If user gets the question right, then the user
+-- continues the level and his 'questionsAnswered' goes up by one. if the user gets the
+-- answer wrong, they lose a life.
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
@@ -33,24 +33,18 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 -- the local variables for this scene
-
 local correctAnswerText
 local wrongAnswerText1
 local wrongAnswerText2
 local wrongAnswerText3
-local wrongAnswerText4
-local wrongAnswerText5
-local wrongAnswerText6
 
-local answer
+local correctAnswer
 local wrongAnswer1
 local wrongAnswer2
 local wrongAnswer3
-local wrongAnswer4
-local wrongAnswer5
-local wrongAnswer6
 
 local answerPosition = 1
+local bkg
 local cover
 
 local userAnswer
@@ -59,14 +53,13 @@ local textTouched = false
 local X1 = display.contentWidth*2/7
 local X2 = display.contentWidth*4/7
 local Y1 = display.contentHeight*1/2
-local Y2 = display.contentHeight*5/5/7
+local Y2 = display.contentHeight*5.5/7
 
 local questionObject
-local numericField
-local userAnswer
-local correctAnswer1
-local incorrectAnswer
+local correctAnswer
 local randomOperator
+local questionsAnswered
+local questionText
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -82,70 +75,71 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
-    userAnswer = answerText.text
-    
-    questionsAnswered = questionsAnswered + 1
+    userAnswer = correctAnswerText.text
 
     if (touch.phase == "ended") then
 
-        BackToLevel1( )
-    
+        timer.performWithDelay(100, BackToLevel1)
     end 
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer1(touch)
-    userAnswer = wrongText1.text
+    userAnswer = wrongAnswerText1.text
     
     if (touch.phase == "ended") then
+
+        numLives = numLives - 1
         
-        BackToLevel1( )
-        
+        timer.performWithDelay(100, BackToLevel1)
     end 
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer2(touch)
-    userAnswer = wrongText2.text
+    userAnswer = wrongAnswerText2.text
     
     if (touch.phase == "ended") then
-        
-        BackToLevel1( ) 
-        
+
+        numLives = numLives - 1
+
+        timer.performWithDelay(100, BackToLevel1)
     end 
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer3(touch)
-    userAnswer = wrongText3.text
+    userAnswer = wrongAnswerText3.text
     
     if (touch.phase == "ended") then
-        
-        BackToLevel1( )
-          
+
+        numLives = numLives - 1
+
+        timer.performWithDelay(100, BackToLevel1)
     end 
 end
 
+
 -- add the event listeners
-local function AddTextListeners()
-	answerText:addEventListener("touch", TouchListenerAnswer)
-	wrongText1:addEventListener("tocuh", TouchListenerWrongAnswer1)
-	wrongText2:addEventListener("tocuh", TouchListenerWrongAnswer2)
-	wrongText3:addEventListener("tocuh", TouchListenerWrongAnswer3)
+local function AddTouchListeners()
+	correctAnswerText:addEventListener("touch", TouchListenerAnswer)
+	wrongAnswerText1:addEventListener("touch", TouchListenerWrongAnswer1)
+	wrongAnswerText2:addEventListener("touch", TouchListenerWrongAnswer2)
+	wrongAnswerText3:addEventListener("touch", TouchListenerWrongAnswer3)
 end
 
 -- remove event listeners
-local function RemoveTextListeners()
-	answerText:removeEventListener("touch", TouchListenerAnswer)
-	wrongText1:removeEventListener("touch", TouchListenerWrongAnswer1)
-    wrongText2:removeEventListener("touch", TouchListenerWrongAnswer2)
-    wrongText3:removeEventListener("touch", TouchListenerWrongAnswer3)
+local function RemoveTouchListeners()
+	correctAnswerText:removeEventListener("touch", TouchListenerAnswer)
+	wrongAnswerText1:removeEventListener("touch", TouchListenerWrongAnswer1)
+    wrongAnswerText2:removeEventListener("touch", TouchListenerWrongAnswer2)
+    wrongAnswerText3:removeEventListener("touch", TouchListenerWrongAnswer3)
 end
 
 local function AskQuestion()
     -- generate a random number between 1 and 2
     -- *** declare this variable above
-    randomOperator = math.random(1,2)
+    randomOperator = math.random(1,5)
 
     if (randomOperator == 1) then
 
@@ -153,19 +147,19 @@ local function AskQuestion()
         correctAnswer = " 8 "
 
         -- wrong answers
-        wrongAnswer1 = correctAnswer1 - math.random(1, 3)
-        wrongAnswer2 = correctAnswer1 + math.random(1, 3)
-        wrongAnswer3 = correctAnswer1 - math.random(4, 5)
+        wrongAnswer1 = " 7 "
+        wrongAnswer2 = " 6 "
+        wrongAnswer3 = " 9 "
 
-        questionObject.text == " How many planets are there? "
+        questionText.text = " How many planets are there? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
 
         -- wrong answer text
-        wrongText1.text = wrongAnswer1
-        wrongText2.text = wrongAnswer2
-        wrongText3.text = wrongAnswer3
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
     
     elseif (randomOperator == 2) then
 
@@ -173,30 +167,433 @@ local function AskQuestion()
         correctAnswer = " Earth "
 
         -- wrong answers
-        wrongAnswer4 = " Mars "
-        wrongAnswer5 = " Jupiter "
-        wrongAnswer6 = " Neptune "
+        wrongAnswer1 = " Mars "
+        wrongAnswer2 = " Jupiter "
+        wrongAnswer3 = " Neptune "
 
-        questionObjectText2.text == " What planet has life on it? "
+        questionText.text = " What planet has life on it? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
 
         -- wrong answer text
-        wrongText4.text = wrongAnswer4
-        wrongText5.text = wrongAnswer5
-        wrongText6.text = wrongAnswer6
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+    elseif (randomOperator == 3) then
+
+        -- correct answer
+        correctAnswer = " Pluto "
+
+        -- wrong answers
+        wrongAnswer1 = " Mercury "
+        wrongAnswer2 = " Saturn "
+        wrongAnswer3 = " Neptune "
+
+        questionText.text = " What is the smallest planet? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+    elseif (randomOperator == 4) then
+
+        -- correct answer
+        correctAnswer = " Blue, Green "
+
+        -- wrong answers
+        wrongAnswer1 = " Blue "
+        wrongAnswer2 = " Purple, Green "
+        wrongAnswer3 = " Red, White "
+
+        questionText.text = " What colours are the Earth? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 5) then
+
+        -- correct answer
+        correctAnswer = " Neptune "
+
+        -- wrong answers
+        wrongAnswer1 = " Saturn "
+        wrongAnswer2 = " Mercury "
+        wrongAnswer3 = " Earth "
+
+        questionText.text = " What is the coldest planet? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 6) then
+
+        -- correct answer
+        correctAnswer = " The Sun "
+
+        -- wrong answers
+        wrongAnswer1 = " Red Star "
+        wrongAnswer2 = " Blue Star "
+        wrongAnswer3 = " Green Star "
+
+        questionText.text = " What is the biggest Star? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 7) then
+
+        -- correct answer
+        correctAnswer = " Earth "
+
+        -- wrong answers
+        wrongAnswer1 = " Saturn "
+        wrongAnswer2 = " Pluto "
+        wrongAnswer3 = " The Moon "
+
+        questionText.text = " What planet do we live on? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 8) then
+
+        -- correct answer
+        correctAnswer = " 1 "
+
+        -- wrong answers
+        wrongAnswer1 = " 7 "
+        wrongAnswer2 = " 100 "
+        wrongAnswer3 = " 3 "
+
+        questionText.text = " How much Moons does earth have? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 9) then
+
+        -- correct answer
+        correctAnswer = " Saturn "
+
+        -- wrong answers
+        wrongAnswer1 = " Jupiter "
+        wrongAnswer2 = " Mercury "
+        wrongAnswer3 = " Venus "
+
+        questionText.text = " What planet has a ring? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 10) then
+
+        -- correct answer
+        correctAnswer = " Jupiter "
+
+        -- wrong answers
+        wrongAnswer1 = " Mercury "
+        wrongAnswer2 = " Mars "
+        wrongAnswer3 = " The Sun "
+
+        questionText.text = " What is the gas planet? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 11) then
+
+        -- correct answer
+        correctAnswer = " 100+ "
+
+        -- wrong answers
+        wrongAnswer1 = " 1 "
+        wrongAnswer2 = " 76 "
+        wrongAnswer3 = " 4 "
+
+        questionText.text = " About how many Jupiters can fit on the Sun? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 12) then
+
+        -- correct answer
+        correctAnswer = " Jupiter "
+
+        -- wrong answers
+        wrongAnswer1 = " Earth "
+        wrongAnswer2 = " Uranus "
+        wrongAnswer3 = " Mars "
+
+        questionText.text = " What planet has the most storms? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 13) then
+
+        -- correct answer
+        correctAnswer = " Mercury "
+
+        -- wrong answers
+        wrongAnswer1 = " Saturn "
+        wrongAnswer2 = " Pluto "
+        wrongAnswer3 = " Earth "
+
+        questionText.text = " What planet has the most violent weather? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 14) then
+
+        -- correct answer
+        correctAnswer = " Mars "
+
+        -- wrong answers
+        wrongAnswer1 = " Jupiter "
+        wrongAnswer2 = " Neptune "
+        wrongAnswer3 = " The moon "
+
+        questionText.text = " What planet do we plan to live on? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 15) then
+
+        -- correct answer
+        correctAnswer = " Mars "
+
+        -- wrong answers
+        wrongAnswer1 = " Earth "
+        wrongAnswer2 = " Uranus "
+        wrongAnswer3 = " Pluto "
+
+        questionText.text = " What chocolate bar is named after a planet? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 16) then
+
+        -- correct answer
+        correctAnswer = " Nothing/Silence "
+
+        -- wrong answers
+        wrongAnswer1 = " Rocket blasts "
+        wrongAnswer2 = " Laughing "
+        wrongAnswer3 = " Crickets "
+
+        questionText.text = " What does space sound like? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 17) then
+
+        -- correct answer
+        correctAnswer = " Mercury "
+
+        -- wrong answers
+        wrongAnswer1 = " Jupiter "
+        wrongAnswer2 = " Neptune "
+        wrongAnswer3 = " Earth "
+
+        questionText.text = " What is the hottest planet? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 18) then
+
+        -- correct answer
+        correctAnswer = " Unknown "
+
+        -- wrong answers
+        wrongAnswer1 = " 10000000000 "
+        wrongAnswer2 = " 50 "
+        wrongAnswer3 = " 0 "
+
+        questionText.text = " How many stars are in space? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 19) then
+
+        -- correct answer
+        correctAnswer = " Venus "
+
+        -- wrong answers
+        wrongAnswer1 = " Mars "
+        wrongAnswer2 = " Neptune "
+        wrongAnswer3 = " Uranus "
+
+        questionText.text = " One day on Earth, ie equal to a year on which planet? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
+
+        elseif (randomOperator == 20) then
+
+        -- correct answer
+        correctAnswer = " Mars "
+
+        -- wrong answers
+        wrongAnswer1 = " Saturn "
+        wrongAnswer2 = " Venus "
+        wrongAnswer3 = " Mercury "
+
+        questionText.text = " What planet has a giant volcano on it? "
+
+        -- create answer text
+        correctAnswerText.text = correctAnswer
+
+        -- wrong answer text
+        wrongAnswerText1.text = wrongAnswer1
+        wrongAnswerText2.text = wrongAnswer2
+        wrongAnswerText3.text = wrongAnswer3
     end
 end
 
 local function PositionAnswers()
 
-    --creating random positions in a certain area
-    answerPosition = math.random(1,2)
+    --creating random start position in a cretain area
+    answerPosition = math.random(1,3)
 
     if (answerPosition == 1) then
 
-        correctAnswerText1
+        correctAnswerText.x = X1
+        correctAnswerText.y = Y1
+        
+        wrongAnswerText1.x = X2
+        wrongAnswerText1.y = Y1
+        
+        wrongAnswerText2.x = X1
+        wrongAnswerText2.y = Y2
+
+        wrongAnswerText3.x = X2
+        wrongAnswerText3.y = Y2
+
+        
+    elseif (answerPosition == 2) then
+
+        correctAnswerText.x = X1
+        correctAnswerText.y = Y2
+            
+        wrongAnswerText1.x = X1
+        wrongAnswerText1.y = Y1
+            
+        wrongAnswerText2.x = X2
+        wrongAnswerText2.y = Y2
+
+        wrongAnswerText3.x = X2
+        wrongAnswerText3.y = Y1
+
+
+    elseif (answerPosition == 3) then
+
+        correctAnswerText.x = X2
+        correctAnswerText.y = Y1
+            
+        wrongAnswerText1.x = X1
+        wrongAnswerText1.y = Y2
+            
+        wrongAnswerText2.x = X2
+        wrongAnswerText2.y = Y2
+
+        wrongAnswerText3.x = X1
+        wrongAnswerText3.y = Y1
+
+    end
+end
 
 --------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -207,15 +604,47 @@ function scene:create(event)
 
     -- creat a group tht associates objects with the scene
     local sceneGroup = self.view
+
+    ----------------------------------------------------------------------------------
+    --covering the other scene with a rectangle so it looks faded and stops touch from going through
+    bkg = display.newRect(display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
+    --setting to a semi black colour
+    bkg:setFillColor(0,0,0,0.5)
+
     ----------------------------------------------------------------------------------
     -- make a cover rectangle to have rhe background fully blocked where the question is
-    cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*0.8, display.contentHeight*0.95, 50)
+    cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*1.5, display.contentHeight*0.95, 50)
     -- set the cover color
-    cover:settFillColor(96/255, 96/255, 96/255)
+    cover:setFillColor(96/255, 96/255, 96/255)
+
+    -- create the question text object
+    questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 60)
+
+    -- create the answer text object & wrong answer text objects
+    correctAnswerText = display.newText("", X1, Y2, Arial, 40)
+    correctAnswerText.anchorX = 0
+
+    wrongAnswerText1 = display.newText("", X2, Y2, Arial, 40)
+    wrongAnswerText1.anchorX = 0
+
+    wrongAnswerText2 = display.newText("", X1, Y1, Arial, 40)
+    wrongAnswerText2.anchorX = 0
+
+    wrongAnswerText3 = display.newText("", X2, Y1, Arial, 40)
+    wrongAnswerText3.anchorX = 0
+
     ----------------------------------------------------------------------------------
 
     -- insert all objects for this scene into the scene group
+    sceneGroup:insert(bkg)
     sceneGroup:insert(cover)
+    sceneGroup:insert(questionText)
+    sceneGroup:insert(correctAnswerText)
+    sceneGroup:insert(wrongAnswerText1)
+    sceneGroup:insert(wrongAnswerText2)
+    sceneGroup:insert(wrongAnswerText3)
+
+end
 
 -----------------------------------------------------------------------------------------
 
@@ -237,14 +666,16 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        DisplayQuestion()
+        AskQuestion()
         PositionAnswers()
-        AddTextListeners()
+        AddTouchListeners()
+
+        numLives = 2
     end
 
 end --function scene:show( event )
 
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
@@ -253,23 +684,23 @@ function scene:hide( event )
     local sceneGroup = self.view
     local phase = event.phase
 
-    -----------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
         --parent:resumeGame()
-    -----------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        RemoveTextListeners()
+        RemoveTouchListeners()
     end
 
 end --function scene:hide( event )
 
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to be destroyed
 function scene:destroy( event )
@@ -277,7 +708,7 @@ function scene:destroy( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    -----------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------
 
     -- Called prior to the removal of scene's view ("sceneGroup"). 
     -- Insert code here to clean up the scene.
@@ -285,9 +716,9 @@ function scene:destroy( event )
 
 end -- function scene:destroy( event )
 
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
 -- EVENT LISTENERS
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
 
 -- Adding Event Listeners
 scene:addEventListener( "create", scene )

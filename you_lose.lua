@@ -15,10 +15,7 @@ local composer = require( "composer" )
 local widget = require( "widget" )
 
 -----------------------------------------------------------------------------------------
-
--- Naming Scene
 sceneName = "you_lose"
-
 -----------------------------------------------------------------------------------------
 
 -- Creating Scene Object
@@ -27,14 +24,15 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 -- FORWARD REFERENCES
 -----------------------------------------------------------------------------------------
-
--- local variables for the scene
-local bkg
-
 ----------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
+
+-- Creating Transition Function to Credits Page
+local function MainMenuTransition( )       
+    composer.gotoScene( "main_menu" )
+end
 
 --------------------------------------------------------------------------------------
 -- The function called when the screen doesn't exist
@@ -79,7 +77,12 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+        -- displayed "you lose" sound
+        -- Called when the scene is now on screen.
+        -- Insert code here to make the scene come alive.
+        -- Example: start timers, begin animation, play audio, etc.
 
+        timer.performWithDelay(1500, MainMenuTransition)
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.

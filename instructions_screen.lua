@@ -43,6 +43,31 @@ local function BackTransition( )
     composer.gotoScene( "main_menu", {effect = "fromRight", time = 500})
 end
 
+local function Mute(touch)
+    if (touch.phase == "ended") then
+        -- pause the sound
+        audio.pause(bkgMusic)
+        -- set the boolean variable to be false (sound is now muted)
+        soundOn = false
+        -- hide the mute button
+        muteButton.isVisible = false
+        -- make the unmute button visible
+        unmuteButton.isVisible = true
+    end
+end
+
+local function Unmute(touch)
+    if (touch.phase == "ended") then
+        -- play the sound
+        audio.resume(bkgMusic)
+        -- set the boolean variable to be false (sound is now muted)
+        soundOn = true
+        -- hide the mute button
+        muteButton.isVisible = true
+        -- make the unmute button visible
+        unmuteButton.isVisible = false
+    end
+end
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -128,7 +153,9 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
         -- play audio
-        bkgMusicChannel = audio.play(bkgMusic)
+        if (soundOn == true) then
+            bkgMusicChannel = audio.play(bkgMusic)
+        end
     end
 
 end -- function scene:show( event )

@@ -75,7 +75,7 @@ end
 local function Unmute(touch)
     if (touch.phase == "ended") then
         -- play the sound
-        audio.play(bkgMusic)
+        audio.resume(bkgMusic)
         -- set the boolean variable to be false (sound is now muted)
         soundOn = true
         -- hide the mute button
