@@ -44,6 +44,7 @@ local uArrow
 
 local character
 local zombie1
+local theZombie
 
 local motionx = 0
 local SPEED = 7
@@ -147,14 +148,17 @@ local function MakeObjectCharactersVisible()
 
 end
 
-local function onCollision()
+local function onCollision(self, event)
     
     if ( event.phase == "began" ) then
+        print ("***Collision occurred")
 
         if (event.target.myName == "zombie1") then
 
-            -- get the ball that the user hit
-            zombie1 = event.target
+            print ("*** Collided with zombie")
+
+            -- get the zombie that the character hit
+            theZombie = event.target
 
             -- stop the character from moving
             motionx = 0
@@ -170,7 +174,7 @@ local function onCollision()
         end
 
         if (questionsAnswered == 5) then
-            timer.performWithDelay(200, YouWinTransition)
+            timer.performWithDelay(200, level3screenTransition)
         end
     end
 end
@@ -247,6 +251,9 @@ function scene:create( event )
     sceneGroup:insert( ground )    
 
     zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
+    zombie1.x = display.contentWidth/2
+    zombie1.y = display.contentHeight/2
+    zombie1.myName = "zombie1"
 
     -- insert the zombie into the scene group
     sceneGroup:insert( zombie1 )

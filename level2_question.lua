@@ -239,9 +239,9 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        DisplayQuestion()
-        PositionAnswers()
-        AddTextListeners()
+        --DisplayQuestion()
+        --PositionAnswers()
+        --AddTextListeners()
     end
 
 end --function scene:show( event )
