@@ -43,6 +43,7 @@ local lArrow
 local uArrow
 
 local character
+local zombie1
 
 local motionx = 0
 local SPEED = 7
@@ -150,12 +151,10 @@ local function onCollision()
     
     if ( event.phase == "began" ) then
 
-        if  (event.target.myName == "ball1") or
-            (event.target.myName == "ball3") or
-            (event.target.myName == "ball2") then
+        if (event.target.myName == "zombie1") then
 
             -- get the ball that the user hit
-            theBall = event.target
+            zombie1 = event.target
 
             -- stop the character from moving
             motionx = 0
@@ -164,13 +163,13 @@ local function onCollision()
             character.isVisible = false
 
             -- show overlay with math question
-            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
         end
 
-        if (questionsAnswered == 3) then
+        if (questionsAnswered == 5) then
             timer.performWithDelay(200, YouWinTransition)
         end
     end
@@ -179,20 +178,22 @@ end
 
 local function AddCollisionListeners()
     -- if character collides with earth, onCollision will be called
-
+    zombie1.collision = onCollision
+    zombie1:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
-
+    zombie1:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
     -- add the physics
     physics.addBody(ground, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(zombie1, "static", {density=1, friction=0.5, bounce=0 })
 end
 
 local function RemovePhysicsBodies()
-
+    physics.removeBody(zombie1)
 end
 
 -----------------------------------------------------------------------------------------
@@ -237,14 +238,18 @@ function scene:create( event )
 
     ground = display.newImageRect("Images/ground.png", display.contentWidth, 100)
 
-
     -- putting the ground on the ground
     ground.x = display.contentWidth/2
-    ground.y = display.contentHeight*1.02
-       
+    ground.y = display.contentHeight*1.02  
+
 
     -- insert the ground image into the scene group
     sceneGroup:insert( ground )    
+
+    zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
+
+    -- insert the zombie into the scene group
+    sceneGroup:insert( zombie1 )
 
    --Insert the right arrow
     rArrow = display.newImageRect("Images/arrow.png", 100, 50)

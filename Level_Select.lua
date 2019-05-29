@@ -161,7 +161,7 @@ function scene:create( event )
 
     -----------------------------------------------------------------------------------------
 
-    -- Creating Credits Button
+    -- Creating Level 3 Button
     LevelSelectScreenButton3 = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
