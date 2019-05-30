@@ -52,8 +52,8 @@ local uArrow
 
 
 local motionx = 0
-local SPEED = 20
-local negativeSpeed = -20
+local SPEED = 10
+local negativeSpeed = -10
 local LINEAR_VELOCITY = -200
 local GRAVITY = 20
 
@@ -61,6 +61,7 @@ local leftW
 local topW
 local rightW
 local floor
+local portal
 
 local platform1
 local platform2
@@ -272,11 +273,12 @@ local function onCollision( self, event )
             numberCorrect = numberCorrect + 1
         end
 
-
-        if (numberCorrect == 3) then
-            timer.performWithDelay(3000, YouWinTransition)
+        if (event.target.myName == "portal") then
+            -- check to see if user has answered 3 questions
+            if (numberCorrect == 3) then
+                timer.performWithDelay(300, YouWinTransition)
+            end
         end
-    
     end
 end
 
@@ -293,6 +295,9 @@ local function AddCollisionListeners()
     -- if character collides with floor, onCollision will be called
     floor.collision = onCollision
     floor:addEventListener( "collision" )
+
+    portal.collision = onCollision
+    portal:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
@@ -301,6 +306,8 @@ local function RemoveCollisionListeners()
     pluto:removeEventListener("collision")
 
     floor:removeEventListener("collision")
+
+    portal:removeEventListener("collision")
 end
 
 local function AddPhysicsBodies()
@@ -322,6 +329,8 @@ local function AddPhysicsBodies()
     physics.addBody(earth, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(saturn, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(pluto, "static", {density=1, friction=0.3, bounce=0.2})
+
+    physics.addBody(portal, "static", {density=1, friction=0.3, bounce=0.2})
 end
 
 local function RemovePhysicsBodies()
@@ -460,8 +469,8 @@ function scene:create( event )
     sceneGroup:insert(rightW)
 
     platform1 = display.newImage("Images/PlatformIsabelleLC.png", 200, 100)
-    platform1.x = display.contentWidth/11
-    platform1.y = display.contentHeight/6
+    platform1.x = display.contentWidth/8
+    platform1.y = display.contentHeight/3
     platform1.myName = "platform1"
 
     -- insert platform1 into sceneGroup
@@ -570,6 +579,16 @@ function scene:create( event )
 
     -- insert earth into sceneGroup
     sceneGroup:insert(pluto)
+
+    -- insert the portal
+    portal = display.newImage("Images/portal.png", 100, 100)
+    portal.x = display.contentWidth/2
+    portal.y = display.contentHeight/1.3
+    portal.width = 150
+    portal.height = 150
+    portal.myName = "portal"
+
+    sceneGroup:insert(portal)
 end --function scene:create( event )
 
 

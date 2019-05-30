@@ -30,8 +30,8 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 -- Creating Transition Function to Credits Page
-local function MainMenuTransition( )       
-    composer.gotoScene( "main_menu" )
+local function LevelSelectTransition( )       
+    composer.gotoScene( "Level_Select" )
 end
 
 --------------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
-        timer.performWithDelay(1500, MainMenuTransition)
+        timer.performWithDelay(1500, LevelSelectTransition)
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.

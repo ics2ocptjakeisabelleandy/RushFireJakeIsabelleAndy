@@ -41,7 +41,7 @@ local bkgMusicChannel = audio.play( bkgMusic, { channel=3, loops=-1 })
 
 -- Creating Transitioning Function back to main menu
 local function BackTransition( )
-    composer.gotoScene( "main_menu", {effect = "zoomInOutFade", time = 500})
+    composer.gotoScene( "main_menu", {effect = "crossFade", time = 500})
 end
 
 
