@@ -204,14 +204,14 @@ local function AskQuestion()
     elseif (randomOperator == 4) then
 
         -- correct answer
-        correctAnswer = " Blue, Green "
+        correctAnswer = " cooking "
 
         -- wrong answers
-        wrongAnswer1 = " Blue "
-        wrongAnswer2 = " Purple, Green "
-        wrongAnswer3 = " Red, White "
+        wrongAnswer1 = " fortnite skills "
+        wrongAnswer2 = " shoveling "
+        wrongAnswer3 = " sports "
 
-        questionText.text = " ? "
+        questionText.text = " what is a living skill? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
