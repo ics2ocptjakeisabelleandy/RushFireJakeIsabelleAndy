@@ -139,7 +139,7 @@ end
 local function AskQuestion()
     -- generate a random number between 1 and 2
     -- *** declare this variable above
-    randomOperator = math.random(1,5)
+    randomOperator = math.random(1,20)
 
     if (randomOperator == 1) then
 
