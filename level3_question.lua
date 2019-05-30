@@ -62,7 +62,7 @@ local textTouched = false
 -----------------------------------------------------------------------------------------
 
 --making transition to next scene
-local function BackToLevel1() 
+local function BackToLevel3() 
     composer.hideOverlay("crossFade", 400 )
   
     ResumeGame()
@@ -75,8 +75,7 @@ local function TouchListenerAnswer(touch)
     
     if (touch.phase == "ended") then
 
-        BackToLevel3( )
-    
+        BackToLevel3()
     end 
 end
 
@@ -86,9 +85,7 @@ local function TouchListenerWrongAnswer(touch)
     
     if (touch.phase == "ended") then
         
-        BackToLevel3( )
-        
-        
+        BackToLevel3()  
     end 
 end
 
@@ -98,10 +95,10 @@ local function TouchListenerWrongAnswer2(touch)
     
     if (touch.phase == "ended") then
 
-        BackToLevel3( )
-        
+        BackToLevel3() 
     end 
 end
+
 
 
 --adding the event listeners 
