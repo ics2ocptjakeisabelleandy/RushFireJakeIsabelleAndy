@@ -44,6 +44,7 @@ local uArrow
 
 local character
 local zombie1
+local theZombie
 
 local motionx = 0
 local SPEED = 7
@@ -121,8 +122,8 @@ end
 -- replace character
 local function ReplaceCharacter()
     character = display.newImageRect("Images/character.png", 100, 150)
-    character.x = display.contentWidth*1/2
-    character.y = display.contentHeight*0.1/3
+    character.x = display.contentWidth/2
+    character.y = display.contentHeight/1.2
     character.width = 75
     character.height = 100
     character.myName = "Sam"
@@ -147,14 +148,15 @@ local function MakeObjectCharactersVisible()
 
 end
 
-local function onCollision()
+local function onCollision(self, event)
     
     if ( event.phase == "began" ) then
 
         if (event.target.myName == "zombie1") then
 
-            -- get the ball that the user hit
-            zombie1 = event.target
+
+            -- get the zombie that the character hit
+            theZombie = event.target
 
             -- stop the character from moving
             motionx = 0
@@ -162,7 +164,7 @@ local function onCollision()
             -- make the character invisible
             character.isVisible = false
 
-            -- show overlay with math question
+            -- show overlay with health question
             composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
@@ -170,7 +172,7 @@ local function onCollision()
         end
 
         if (questionsAnswered == 5) then
-            timer.performWithDelay(200, YouWinTransition)
+            timer.performWithDelay(200, level3screenTransition)
         end
     end
 end
@@ -247,6 +249,9 @@ function scene:create( event )
     sceneGroup:insert( ground )    
 
     zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
+    zombie1.x = display.contentWidth/1.5
+    zombie1.y = display.contentHeight/1.2
+    zombie1.myName = "zombie1"
 
     -- insert the zombie into the scene group
     sceneGroup:insert( zombie1 )

@@ -1,4 +1,3 @@
------------------------------------------------------------------------------------------
 --
 -- level1_screen.lua
 -- Created by: Allison
@@ -21,7 +20,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level2_question"
+sceneName = "level3_question"
 
 -----------------------------------------------------------------------------------------
 
@@ -32,41 +31,31 @@ local scene = composer.newScene( sceneName )
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
--- the local variables for this scene
+-- The local variables for this scene
+local questionText
 
-local correctAnswerText
-local wrongAnswerText1
-local wrongAnswerText2
-local wrongAnswerText3
-local wrongAnswerText4
-local wrongAnswerText5
-local wrongAnswerText6
+local firstNumber
+local secondNumber
 
 local answer
 local wrongAnswer1
 local wrongAnswer2
-local wrongAnswer3
-local wrongAnswer4
-local wrongAnswer5
-local wrongAnswer6
+
+local answerText 
+local wrongAnswerText1
+local wrongAnswerText2
 
 local answerPosition = 1
+local bkg
 local cover
-
-local userAnswer
-local textTouched = false
 
 local X1 = display.contentWidth*2/7
 local X2 = display.contentWidth*4/7
 local Y1 = display.contentHeight*1/2
-local Y2 = display.contentHeight*5/5/7
+local Y2 = display.contentHeight*5.5/7
 
-local questionObject
-local numericField
 local userAnswer
-local correctAnswer1
-local incorrectAnswer
-local randomOperator
+local textTouched = false
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -79,27 +68,26 @@ local function BackToLevel1()
     ResumeGame()
 end 
 
-
+-----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
     userAnswer = answerText.text
     
-    questionsAnswered = questionsAnswered + 1
-
     if (touch.phase == "ended") then
 
-        BackToLevel1( )
+        BackToLevel3( )
     
     end 
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
-local function TouchListenerWrongAnswer1(touch)
+local function TouchListenerWrongAnswer(touch)
     userAnswer = wrongText1.text
     
     if (touch.phase == "ended") then
         
-        BackToLevel2( )
+        BackToLevel3( )
+        
         
     end 
 end
@@ -109,115 +97,139 @@ local function TouchListenerWrongAnswer2(touch)
     userAnswer = wrongText2.text
     
     if (touch.phase == "ended") then
-        
-        BackToLevel2( ) 
+
+        BackToLevel3( )
         
     end 
 end
 
---checking to see if the user pressed the right answer and bring them back to level 1
-local function TouchListenerWrongAnswer3(touch)
-    userAnswer = wrongText3.text
-    
-    if (touch.phase == "ended") then
-        
-        BackToLeve2( )
-          
-    end 
+
+--adding the event listeners 
+local function AddTextListeners ( )
+    answerText:addEventListener( "touch", TouchListenerAnswer )
+    wrongText1:addEventListener( "touch", TouchListenerWrongAnswer)
+    wrongText2:addEventListener( "touch", TouchListenerWrongAnswer2)
 end
 
--- add the event listeners
-local function AddTextListeners()
-	answerText:addEventListener("touch", TouchListenerAnswer)
-	wrongText1:addEventListener("tocuh", TouchListenerWrongAnswer1)
-	wrongText2:addEventListener("tocuh", TouchListenerWrongAnswer2)
-	wrongText3:addEventListener("tocuh", TouchListenerWrongAnswer3)
-end
-
--- remove event listeners
+--removing the event listeners
 local function RemoveTextListeners()
-	answerText:removeEventListener("touch", TouchListenerAnswer)
-	wrongText1:removeEventListener("touch", TouchListenerWrongAnswer1)
-    wrongText2:removeEventListener("touch", TouchListenerWrongAnswer2)
-    wrongText3:removeEventListener("touch", TouchListenerWrongAnswer3)
+    answerText:removeEventListener( "touch", TouchListenerAnswer )
+    wrongText1:removeEventListener( "touch", TouchListenerWrongAnswer)
+    wrongText2:removeEventListener( "touch", TouchListenerWrongAnswer2)
 end
 
-local function AskQuestion()
-    -- generate a random number between 1 and 2
-    -- *** declare this variable above
-    randomOperator = math.random(1,2)
+local function DisplayQuestion()
+    --creating random numbers
+    firstNumber = math.random (0,15)
+    secondNumber = math.random (0,15)
 
-    if (randomOperator == 1) then
+    -- calculate answer
+    answer = firstNumber + secondNumber
 
-        -- correct answer
-        correctAnswer = " Chicken "
+    -- calculate wrong answers
+    wrongAnswer1 = answer + math.random(1, 3)
+    wrongAnswer2 = answer + math.random(4, 6)
 
-        -- wrong answers
-        wrongAnswer1 = " Carrot "
-        wrongAnswer2 = " Yogurt "
-        wrongAnswer3 = " Cereal "
-        wrongAsnwer4 = " Orange "
 
-        questionObject.text == " what is in the protein food group? "
+    --creating the question depending on the selcetion number
+    questionText.text = firstNumber .. " + " .. secondNumber .. " ="
 
-        -- create answer text
-        correctAnswerText.text = correctAnswer
-
-        -- wrong answer text
-        wrongText1.text = wrongAnswer1
-        wrongText2.text = wrongAnswer2
-        wrongText3.text = wrongAnswer3
+    --creating answer text from list it corispondes with the animals list
+    answerText.text = answer
     
-    elseif (randomOperator == 2) then
-
-        -- correct answer
-        correctAnswer = " Dairy "
-
-        -- wrong answers
-        wrongAnswer4 = " Vegetables "
-        wrongAnswer5 = " Protein "
-        wrongAnswer6 = " Fruits "
-        wrongAnswer7 = " Grains "
-
-        questionObjectText2.text == " what food group is milk part of? "
-
-        -- create answer text
-        correctAnswerText.text = correctAnswer
-
-        -- wrong answer text
-        wrongText4.text = wrongAnswer4
-        wrongText5.text = wrongAnswer5
-        wrongText6.text = wrongAnswer6
-    end
+    --creating wrong answers
+    wrongText1.text = wrongAnswer1
+    wrongText2.text = wrongAnswer2
 end
 
 local function PositionAnswers()
 
-    --creating random positions in a certain area
-    answerPosition = math.random(1,2)
+    --creating random start position in a cretain area
+    answerPosition = math.random(1,3)
 
     if (answerPosition == 1) then
 
-        correctAnswerText1
+        answerText.x = X1
+        answerText.y = Y1
+        
+        wrongText1.x = X2
+        wrongText1.y = Y1
+        
+        wrongText2.x = X1
+        wrongText2.y = Y2
 
---------------------------------------------------------------------------------------
+        
+    elseif (answerPosition == 2) then
+
+        answerText.x = X1
+        answerText.y = Y2
+            
+        wrongText1.x = X1
+        wrongText1.y = Y1
+            
+        wrongText2.x = X2
+        wrongText2.y = Y1
+
+
+    elseif (answerPosition == 3) then
+
+        answerText.x = X2
+        answerText.y = Y1
+            
+        wrongText1.x = X1
+        wrongText1.y = Y2
+            
+        wrongText2.x = X1
+        wrongText2.y = Y1
+            
+    end
+end
+
+-----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
---------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 
--- the function called when the screen doesn't exist
-function scene:create(event)
+-- The function called when the screen doesn't exist
+function scene:create( event )
 
-    -- creat a group tht associates objects with the scene
-    local sceneGroup = self.view
-    ----------------------------------------------------------------------------------
-    -- make a cover rectangle to have rhe background fully blocked where the question is
-    cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*0.8, display.contentHeight*0.95, 50)
-    -- set the cover color
-    cover:settFillColor(96/255, 96/255, 96/255)
-    ----------------------------------------------------------------------------------
+    -- Creating a group that associates objects with the scene
+    local sceneGroup = self.view  
+
+    -----------------------------------------------------------------------------------------
+    --covering the other scene with a rectangle so it looks faded and stops touch from going through
+    bkg = display.newRect(display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
+    --setting to a semi black colour
+    bkg:setFillColor(0,0,0,0.5)
+
+    -----------------------------------------------------------------------------------------
+    --making a cover rectangle to have the background fully bolcked where the question is
+    cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*0.8, display.contentHeight*0.95, 50 )
+    --setting its colour
+    cover:setFillColor(96/255, 96/255, 96/255)
+
+    -- create the question text object
+    questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
+
+    -- create the answer text object & wrong answer text objects
+    answerText = display.newText("", X1, Y2, Arial, 75)
+    answerText.anchorX = 0
+    wrongText1 = display.newText("", X2, Y2, Arial, 75)
+    wrongText1.anchorX = 0
+    wrongText2 = display.newText("", X1, Y1, Arial, 75)
+    wrongText2.anchorX = 0
+
+    -----------------------------------------------------------------------------------------
 
     -- insert all objects for this scene into the scene group
+    sceneGroup:insert(bkg)
     sceneGroup:insert(cover)
+    sceneGroup:insert(questionText)
+    sceneGroup:insert(answerText)
+    sceneGroup:insert(wrongText1)
+    sceneGroup:insert(wrongText2)
+
+
+end --function scene:create( event )
 
 -----------------------------------------------------------------------------------------
 
