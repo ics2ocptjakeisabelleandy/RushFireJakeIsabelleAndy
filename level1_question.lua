@@ -50,7 +50,7 @@ local cover
 local userAnswer
 local textTouched = false
 
-local X1 = display.contentWidth*2/7
+local X1 = display.contentWidth*1/7
 local X2 = display.contentWidth*4/7
 local Y1 = display.contentHeight*1/2
 local Y2 = display.contentHeight*5.5/7
@@ -140,6 +140,7 @@ local function AskQuestion()
     -- generate a random number between 1 and 2
     -- *** declare this variable above
     randomOperator = math.random(1,5)
+    randomOperator = 4
 
     if (randomOperator == 1) then
 
@@ -621,16 +622,16 @@ function scene:create(event)
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 60)
 
     -- create the answer text object & wrong answer text objects
-    correctAnswerText = display.newText("", X1, Y2, Arial, 40)
+    correctAnswerText = display.newText("", X1, Y2, Arial, 50)
     correctAnswerText.anchorX = 0
 
-    wrongAnswerText1 = display.newText("", X2, Y2, Arial, 40)
+    wrongAnswerText1 = display.newText("", X2, Y2, Arial, 50)
     wrongAnswerText1.anchorX = 0
 
-    wrongAnswerText2 = display.newText("", X1, Y1, Arial, 40)
+    wrongAnswerText2 = display.newText("", X1, Y1, Arial, 50)
     wrongAnswerText2.anchorX = 0
 
-    wrongAnswerText3 = display.newText("", X2, Y1, Arial, 40)
+    wrongAnswerText3 = display.newText("", X2, Y1, Arial, 50)
     wrongAnswerText3.anchorX = 0
 
     ----------------------------------------------------------------------------------
