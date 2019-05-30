@@ -46,6 +46,7 @@ local LevelSelectScreenButton3
 local muteButton
 local unmuteButton
 
+local backButton
 -----------------------------------------------------------------------------------------
 -- SOUNDS
 -----------------------------------------------------------------------------------------
@@ -109,6 +110,12 @@ local function Level2ScreenTransition( )
     composer.gotoScene( "level2_screen", {effect = "zoomInOutFade", time = 500})
 end 
 
+-----------------------------------------------------------------------------------------
+
+-- Create transition back to Main_Menu
+local function BackTransition()
+    composer.gotoScene( "main_menu", {effect = "fromRight", time = 500})
+end
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -140,7 +147,31 @@ function scene:create( event )
 
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
-    -----------------------------------------------------------------------------------------   
+    -----------------------------------------------------------------------------------------
+
+    -- Creating Back Button
+    backButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth*1/8,
+        y = display.contentHeight*15/16,
+
+        -- Setting Dimensions
+        -- width = 1000,
+        -- height = 106,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/BackButtonUnpressed.png",
+        overFile = "Images/BackButtonPressed.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+
+    } )
+
+    backButton:scale(0.5, 0.5)
+
+    ----------------------------------------------------------------------------------------   
 
     -- Creating Play Button
     LevelSelectScreenButton = widget.newButton( 
@@ -221,6 +252,7 @@ function scene:create( event )
     sceneGroup:insert( LevelSelectScreenButton )
     sceneGroup:insert( LevelSelectScreenButton2 )
     sceneGroup:insert( LevelSelectScreenButton3 )
+    sceneGroup:insert( backButton )
     
 
 end -- function scene:create( event )   
