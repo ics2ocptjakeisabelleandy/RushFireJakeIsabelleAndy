@@ -122,8 +122,8 @@ end
 -- replace character
 local function ReplaceCharacter()
     character = display.newImageRect("Images/character.png", 100, 150)
-    character.x = display.contentWidth*1/2
-    character.y = display.contentHeight*0.1/3
+    character.x = display.contentWidth/2
+    character.y = display.contentHeight/1.2
     character.width = 75
     character.height = 100
     character.myName = "Sam"
@@ -151,11 +151,9 @@ end
 local function onCollision(self, event)
     
     if ( event.phase == "began" ) then
-        print ("***Collision occurred")
 
         if (event.target.myName == "zombie1") then
 
-            print ("*** Collided with zombie")
 
             -- get the zombie that the character hit
             theZombie = event.target
@@ -166,7 +164,7 @@ local function onCollision(self, event)
             -- make the character invisible
             character.isVisible = false
 
-            -- show overlay with math question
+            -- show overlay with health question
             composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
@@ -251,8 +249,8 @@ function scene:create( event )
     sceneGroup:insert( ground )    
 
     zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
-    zombie1.x = display.contentWidth/2
-    zombie1.y = display.contentHeight/2
+    zombie1.x = display.contentWidth/1.5
+    zombie1.y = display.contentHeight/1.2
     zombie1.myName = "zombie1"
 
     -- insert the zombie into the scene group
