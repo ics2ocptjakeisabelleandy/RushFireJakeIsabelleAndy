@@ -44,6 +44,10 @@ local uArrow
 
 local character
 local zombie1
+local zombie2
+local zombie3
+local zombie4
+local zombie5
 local theZombie
 
 local motionx = 0
@@ -252,6 +256,26 @@ function scene:create( event )
     zombie1.x = display.contentWidth/1.5
     zombie1.y = display.contentHeight/1.2
     zombie1.myName = "zombie1"
+
+    zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
+    zombie1.x = display.contentWidth/1.5
+    zombie1.y = display.contentHeight/1.7
+    zombie1.myName = "zombie2"
+
+    zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
+    zombie1.x = display.contentWidth/1.5
+    zombie1.y = display.contentHeight/1.6
+    zombie1.myName = "zombie3"
+
+    zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
+    zombie1.x = display.contentWidth/1.5
+    zombie1.y = display.contentHeight/1.5
+    zombie1.myName = "zombie4"
+    
+    zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
+    zombie1.x = display.contentWidth/1.5
+    zombie1.y = display.contentHeight/1.3
+    zombie1.myName = "zombie5"
 
     -- insert the zombie into the scene group
     sceneGroup:insert( zombie1 )
