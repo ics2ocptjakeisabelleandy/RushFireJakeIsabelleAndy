@@ -21,7 +21,7 @@ local widget = require( "widget" )
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "main_menu"
+sceneName = "Level_Select"
 
 -----------------------------------------------------------------------------------------
 
@@ -98,7 +98,7 @@ end
 
 -- Creating Transition to Level1 Screen
 local function Level1ScreenTransition()
-    composer.gotoScene("Level1_screen", {effect = "zoomInOutFade", time = 500})
+    composer.gotoScene("level1_screen", {effect = "zoomInOutFade", time = 500})
 end    
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
