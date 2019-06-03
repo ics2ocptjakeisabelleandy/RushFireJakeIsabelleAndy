@@ -127,7 +127,7 @@ end
 local function ReplaceCharacter()
     character = display.newImageRect("Images/character.png", 100, 150)
     character.x = display.contentWidth/2
-    character.y = display.contentHeight/1.2
+    character.y = display.contentHeight/1.9
     character.width = 75
     character.height = 100
     character.myName = "Sam"
@@ -156,7 +156,11 @@ local function onCollision(self, event)
     
     if ( event.phase == "began" ) then
 
-        if (event.target.myName == "zombie1") then
+        if (event.target.myName == "zombie1") or
+           (event.target.myName == "zombie2") or 
+           (event.target.myName == "zombie3") or 
+           (event.target.myName == "zombie4") or 
+           (event.target.myName == "zombie5") then
 
 
             -- get the zombie that the character hit
@@ -186,20 +190,39 @@ local function AddCollisionListeners()
     -- if character collides with earth, onCollision will be called
     zombie1.collision = onCollision
     zombie1:addEventListener( "collision" )
+    zombie2.collision = onCollision
+    zombie2:addEventListener( "collision" )
+    zombie3.collision = onCollision
+    zombie3:addEventListener( "collision" )
+    zombie4.collision = onCollision
+    zombie4:addEventListener( "collision" )
+    zombie5.collision = onCollision
+    zombie5:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
     zombie1:removeEventListener( "collision" )
+    zombie2:removeEventListener( "collision" )
+    zombie3:removeEventListener( "collision" )
+    zombie4:removeEventListener( "collision" )
+    zombie5:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
     -- add the physics
     physics.addBody(ground, "static", {density=1, friction=0.5, bounce=0 })
-    physics.addBody(zombie1, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(zombie2, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(zombie3, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(zombie4, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(zombie5, "static", {density=1, friction=0.5, bounce=0 })
 end
 
 local function RemovePhysicsBodies()
     physics.removeBody(zombie1)
+    physics.removeBody(zombie2)
+    physics.removeBody(zombie3)
+    physics.removeBody(zombie4)
+    physics.removeBody(zombie5)
 end
 
 -----------------------------------------------------------------------------------------
@@ -254,28 +277,33 @@ function scene:create( event )
 
     zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie1.x = display.contentWidth/1.5
-    zombie1.y = display.contentHeight/1.2
+    zombie1.y = display.contentHeight/1.1
     zombie1.myName = "zombie1"
+    zombie1:scale (0.5, 0.5)
 
-    zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
-    zombie1.x = display.contentWidth/1.5
-    zombie1.y = display.contentHeight/1.7
-    zombie1.myName = "zombie2"
+    zombie2 = display.newImage("Images/character2(resize)AndyDF.png")
+    zombie2.x = display.contentWidth/1.7
+    zombie2.y = display.contentHeight/1.21
+    zombie2.myName = "zombie2"
+    zombie2:scale (0.5, 0.5)
 
-    zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
-    zombie1.x = display.contentWidth/1.5
-    zombie1.y = display.contentHeight/1.6
-    zombie1.myName = "zombie3"
+    zombie3 = display.newImage("Images/character2(resize)AndyDF.png")
+    zombie3.x = display.contentWidth/1.9
+    zombie3.y = display.contentHeight/1.1
+    zombie3.myName = "zombie3"
+    zombie3:scale (0.5, 0.5)
 
-    zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
-    zombie1.x = display.contentWidth/1.5
-    zombie1.y = display.contentHeight/1.5
-    zombie1.myName = "zombie4"
+    zombie4 = display.newImage("Images/character2(resize)AndyDF.png")
+    zombie4.x = display.contentWidth/1.3
+    zombie4.y = display.contentHeight/1.1
+    zombie4.myName = "zombie4"
+    zombie4:scale (0.5, 0.5)
     
-    zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
-    zombie1.x = display.contentWidth/1.5
-    zombie1.y = display.contentHeight/1.3
-    zombie1.myName = "zombie5"
+    zombie5 = display.newImage("Images/character2(resize)AndyDF.png")
+    zombie5.x = display.contentWidth/1.1
+    zombie5.y = display.contentHeight/1.1
+    zombie5.myName = "zombie5"
+    zombie5:scale (0.5, 0.5)
 
     -- insert the zombie into the scene group
     sceneGroup:insert( zombie1 )
