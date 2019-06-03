@@ -35,7 +35,13 @@ local scene = composer.newScene( sceneName )
 
 -- local variables for the scene
 local bkg
-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+-- SOUNDS
+-----------------------------------------------------------------------------------------
+
+local winSound = audio.loadSound("Sounds/YouWin.mp3")
+local youWinChannel
+
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -96,8 +102,8 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-
-        timer.performWithDelay(2500, LevelSelectTransition)
+        youWinChannel = audio.play( winSound )
+        timer.performWithDelay(5000, LevelSelectTransition)
     end
 
 end

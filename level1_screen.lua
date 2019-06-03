@@ -31,7 +31,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 local bkgMusic = audio.loadStream("Sounds/clear.mp3")
-local bkgMusicChannel = audio.play( bkgMusic, { channel=2, loops=-1 })
+local bkgMusicChannel = audio.play( bkgMusic, { channel=4, loops=-1 })
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
