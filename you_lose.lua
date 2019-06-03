@@ -24,6 +24,14 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 -- FORWARD REFERENCES
 -----------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------
+-- SOUNDS
+-----------------------------------------------------------------------------------------
+
+local loseSound = audio.loadSound("Sounds/YouLose.mp3")
+local loseSoundChannel
+
 ----------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -81,7 +89,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-
+        loseSoundChannel = audio.play( loseSound )
         timer.performWithDelay(2500, LevelSelectTransition)
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
