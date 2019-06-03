@@ -253,7 +253,7 @@ function scene:show( event )
     elseif ( phase == "did" ) then       
         
         --play background music
-        bkgMusicChannel = audio.play(bkgMusic, {loops= -1})
+        bkgMusicChannel = audio.play(bkgMusic, {channel= 1, loops= -1})
         muteButton:addEventListener("touch", Mute)
         unmuteButton:addEventListener("touch", Unmute)
     end
