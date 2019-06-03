@@ -224,14 +224,14 @@ local function AskQuestion()
         elseif (randomOperator == 5) then
 
         -- correct answer
-        correctAnswer = " Neptune "
+        correctAnswer = " drink the mouthwash "
 
         -- wrong answers
-        wrongAnswer1 = " Saturn "
-        wrongAnswer2 = " Mercury "
-        wrongAnswer3 = " Earth "
+        wrongAnswer1 = " Brush your teeth "
+        wrongAnswer2 = " Brush your gums "
+        wrongAnswer3 = " Floss "
 
-        questionText.text = " What is the coldest planet? "
+        questionText.text = " what should you not do while taking care of your teeth?? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
