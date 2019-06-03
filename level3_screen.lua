@@ -162,6 +162,7 @@ local function ReplaceCharacter()
     -- intialize horizontal movement of character
     motionx = 0
 
+
     -- add physics body
     physics.addBody( character, "dynamic", {density=0, friction=0.5, bounce=0, rotation=0} )
 
@@ -345,7 +346,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(cloud)
     physics.removeBody(Moon)
     physics.removeBody(zombie)
-    physice.removeBody(zombie2)
+    physics.removeBody(zombie2)
     physics.removeBody(greg)
     
 end

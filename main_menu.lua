@@ -203,7 +203,8 @@ function scene:create( event )
     muteButton.x = display.contentWidth*9/10
     muteButton.y = display.contentHeight*1.3/10
     muteButton.isVisible = true
-
+    sceneGroup:insert (muteButton
+        )
     muteButton:scale(0.5, 0.5)
 
     -----------------------------------------------------------------------------------------
@@ -213,7 +214,7 @@ function scene:create( event )
     unmuteButton.x = display.contentWidth*9/10
     unmuteButton.y = display.contentHeight*1.3/10
     unmuteButton.isVisible = true
-
+    sceneGroup:insert (unmuteButton)
     unmuteButton:scale(0.5, 0.5)
 
     -----------------------------------------------------------------------------------------
