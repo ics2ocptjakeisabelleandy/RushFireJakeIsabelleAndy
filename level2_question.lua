@@ -66,10 +66,10 @@ local questionText
 -----------------------------------------------------------------------------------------
 
 --making transition to next scene
-local function BackToLevel1() 
+local function BackToLevel2() 
     composer.hideOverlay("crossFade", 400 )
   
-    ResumeGame()
+    ResumeLevel2()
 end 
 
 
@@ -79,43 +79,41 @@ local function TouchListenerAnswer(touch)
 
     if (touch.phase == "ended") then
 
-        timer.performWithDelay(100, BackToLevel1)
+        timer.performWithDelay(100, BackToLevel2)
     end 
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer1(touch)
-    userAnswer = wrongAnswerText1.text
-    
+ 
     if (touch.phase == "ended") then
 
         numLives = numLives - 1
         
-        timer.performWithDelay(100, BackToLevel1)
+        timer.performWithDelay(100, BackToLevel2)
     end 
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer2(touch)
-    userAnswer = wrongAnswerText2.text
-    
+
     if (touch.phase == "ended") then
 
         numLives = numLives - 1
 
-        timer.performWithDelay(100, BackToLevel1)
+        timer.performWithDelay(100, BackToLevel2)
     end 
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer3(touch)
-    userAnswer = wrongAnswerText3.text
+
     
     if (touch.phase == "ended") then
 
         numLives = numLives - 1
 
-        timer.performWithDelay(100, BackToLevel1)
+        timer.performWithDelay(100, BackToLevel2)
     end 
 end
 
@@ -144,14 +142,14 @@ local function AskQuestion()
     if (randomOperator == 1) then
 
         -- correct answer
-        correctAnswer = " baseball "
+        correctAnswer = "baseball"
 
         -- wrong answers
-        wrongAnswer1 = " basketball "
-        wrongAnswer2 = " wrestling "
-        wrongAnswer3 = " soccer "
+        wrongAnswer1 = "basketball"
+        wrongAnswer2 = "wrestling"
+        wrongAnswer3 = "soccer"
 
-        questionText.text = " what sport uses a bat? "
+        questionText.text = "What sport uses a bat?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -164,14 +162,14 @@ local function AskQuestion()
     elseif (randomOperator == 2) then
 
         -- correct answer
-        correctAnswer = " running long "
+        correctAnswer = "running long"
 
         -- wrong answers
-        wrongAnswer1 = " jumping high "
-        wrongAnswer2 = " running fast "
-        wrongAnswer3 = " throwing far "
+        wrongAnswer1 = "jumping high"
+        wrongAnswer2 = "running fast"
+        wrongAnswer3 = "throwing far"
 
-        questionText.text = " what is cardio? "
+        questionText.text = "What is cardio?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -184,14 +182,14 @@ local function AskQuestion()
     elseif (randomOperator == 3) then
 
         -- correct answer
-        correctAnswer = " cocaine "
+        correctAnswer = "beer"
 
         -- wrong answers
-        wrongAnswer1 = " Benylin "
-        wrongAnswer2 = " caffeine "
-        wrongAnswer3 = " advil "
+        wrongAnswer1 = "Benylin"
+        wrongAnswer2 = "caffeine"
+        wrongAnswer3 = "water"
 
-        questionText.text = " what is the bad drug? "
+        questionText.text = " What drink is bad for your health? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -204,14 +202,14 @@ local function AskQuestion()
     elseif (randomOperator == 4) then
 
         -- correct answer
-        correctAnswer = " cooking "
+        correctAnswer = "cooking"
 
         -- wrong answers
-        wrongAnswer1 = " fortnite skills "
-        wrongAnswer2 = " shoveling "
-        wrongAnswer3 = " sports "
+        wrongAnswer1 = "fortnite skills"
+        wrongAnswer2 = "shoveling"
+        wrongAnswer3 = "sports"
 
-        questionText.text = " what is a living skill? "
+        questionText.text = "hat is a living skill?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer

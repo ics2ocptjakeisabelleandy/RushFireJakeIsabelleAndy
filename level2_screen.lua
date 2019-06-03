@@ -67,6 +67,10 @@ local ground
 -- LOCAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
 
+local function Level3ScreenTransition( )       
+    composer.gotoScene( "level3_screen", {effect = "zoomInOutFade", time = 500})
+end
+
 -- when right arrow is pressed
 local function right(touch)
     motionx = SPEED
@@ -178,10 +182,6 @@ local function onCollision(self, event)
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
         end
-
-        if (questionsAnswered == 5) then
-            timer.performWithDelay(200, level3screenTransition)
-        end
     end
 end
 
@@ -229,16 +229,19 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function ResumeLevel2()
 
     -- make character visible again
     character.isVisible = true
 
     if (questionsAnswered > 0) then
-        if (theplanet~= nil) and (theplanet.isBodyActive == true) then
-            physics.removeBody(theplanet)
-            theplanet.isVisible = false
+        if (theZombie~= nil) and (theZombie.isBodyActive == true) then
+            physics.removeBody(theZombie)
+            theZombie.isVisible = false
         end
+    end 
+    if (questionsAnswered == 5) then
+        timer.performWithDelay(200, level3ScreenTransition)
     end
 end
 
@@ -280,18 +283,27 @@ function scene:create( event )
     zombie1.y = display.contentHeight/1.1
     zombie1.myName = "zombie1"
     zombie1:scale (0.5, 0.5)
+   
+    -- insert the zombie into the scene group
+    sceneGroup:insert( zombie1 )
 
     zombie2 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie2.x = display.contentWidth/1.7
-    zombie2.y = display.contentHeight/1.21
+    zombie2.y = display.contentHeight/1.1
     zombie2.myName = "zombie2"
     zombie2:scale (0.5, 0.5)
+    
+    -- insert the zombie into the scene group
+    sceneGroup:insert( zombie2 )
 
     zombie3 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie3.x = display.contentWidth/1.9
     zombie3.y = display.contentHeight/1.1
     zombie3.myName = "zombie3"
     zombie3:scale (0.5, 0.5)
+   
+    -- insert the zombie into the scene group
+    sceneGroup:insert( zombie3 )
 
     zombie4 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie4.x = display.contentWidth/1.3
@@ -299,14 +311,18 @@ function scene:create( event )
     zombie4.myName = "zombie4"
     zombie4:scale (0.5, 0.5)
     
+    -- insert the zombie into the scene group
+    sceneGroup:insert( zombie4 )
+
     zombie5 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie5.x = display.contentWidth/1.1
     zombie5.y = display.contentHeight/1.1
     zombie5.myName = "zombie5"
     zombie5:scale (0.5, 0.5)
-
+   
     -- insert the zombie into the scene group
-    sceneGroup:insert( zombie1 )
+    sceneGroup:insert( zombie5 )
+
 
    --Insert the right arrow
     rArrow = display.newImageRect("Images/arrow.png", 100, 50)
