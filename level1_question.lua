@@ -351,8 +351,7 @@ local function AskQuestion()
         wrongAnswer2 = " 76 "
         wrongAnswer3 = " 4 "
 
-        questionText.text = " About how many Jupiters can fit on the Sun? "
-
+        questionText.text = " How many Jupiters can fit on the Sun? "
         -- create answer text
         correctAnswerText.text = correctAnswer
 
@@ -431,7 +430,7 @@ local function AskQuestion()
         wrongAnswer2 = " Uranus "
         wrongAnswer3 = " Pluto "
 
-        questionText.text = " What chocolate bar is named after a planet? "
+        questionText.text = " What chocolate is named after a planet? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -511,7 +510,7 @@ local function AskQuestion()
         wrongAnswer2 = " Neptune "
         wrongAnswer3 = " Uranus "
 
-        questionText.text = " One day on Earth, ie equal to a year on which planet? "
+        questionText.text = " One day on Earth, is equal to a year on... "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -618,7 +617,7 @@ function scene:create(event)
     cover:setFillColor(96/255, 96/255, 96/255)
 
     -- create the question text object
-    questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 60)
+    questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 55)
 
     -- create the answer text object & wrong answer text objects
     correctAnswerText = display.newText("", X1, Y2, Arial, 50)

@@ -379,7 +379,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/Level1Screen.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/level1backgroundIsabelleLC.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -392,18 +392,18 @@ function scene:create( event )
     sceneGroup:insert( bkg_image )
 
     -- make a cover rectangle to have rhe background fully blocked where the question is
-    cover = display.newRoundedRect(150, 650, display.contentWidth/2.4, display.contentHeight/2.6, 50)
+    cover = display.newRoundedRect(150, 650, display.contentWidth/2.3, display.contentHeight/2.2, 50)
     -- set the cover color
     cover:setFillColor(96/255, 96/255, 96/255)
 
     sceneGroup:insert(cover)
 
-    instructions = display.newText("The evil Greg and Betmorax", display.contentWidth/6, display.contentHeight/1.4, nil, 25)
-    instructions2 = display.newText("scattered our planets!", display.contentWidth/6.5, display.contentHeight/1.325, nil, 25)
-    instructions3 = display.newText("Can you collect them?", display.contentWidth/6.3, display.contentHeight/1.25, nil, 25)
-    instructions4 = display.newText("For this level ONLY", display.contentWidth/6.3, display.contentHeight/1.15, nil, 25)
-    instructions5 = display.newText("you only lose a life", display.contentWidth/6.3, display.contentHeight/1.1, nil, 25)
-    instructions6 = display.newText("if you fall off the screen!", display.contentWidth/6.3, display.contentHeight/1.05, nil, 25)
+    instructions = display.newText("The evil Greg and Betmorax", display.contentWidth/6, display.contentHeight/1.5, nil, 27)
+    instructions2 = display.newText("scattered our planets!", display.contentWidth/6.4, display.contentHeight/1.425, nil, 27)
+    instructions3 = display.newText("Can you collect them?", display.contentWidth/6.3, display.contentHeight/1.35, nil, 27)
+    instructions4 = display.newText("For this level ONLY", display.contentWidth/6.3, display.contentHeight/1.175, nil, 27)
+    instructions5 = display.newText("you only lose a life", display.contentWidth/6.3, display.contentHeight/1.125, nil, 27)
+    instructions6 = display.newText("if you fall off the screen!", display.contentWidth/6.3, display.contentHeight/1.05, nil, 27)
 
     sceneGroup:insert(instructions)
     sceneGroup:insert(instructions2)
@@ -581,7 +581,7 @@ function scene:create( event )
     sceneGroup:insert(pluto)
 
     -- insert the portal
-    portal = display.newImage("Images/portal.png", 100, 100)
+    portal = display.newImage("Images/Portal.png", 100, 100)
     portal.x = display.contentWidth/2
     portal.y = display.contentHeight/1.3
     portal.width = 150

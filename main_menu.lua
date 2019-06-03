@@ -216,18 +216,11 @@ function scene:create( event )
 
     unmuteButton:scale(0.5, 0.5)
 
-    -- Insert the background image and set it to the center of the screen
-    floor = display.newImage("Images/floor.png")
-    floor.x = display.contentCenterX
-    floor.y = display.contentCenterY
-    floor.width = display.contentWidth
-    floor.height = display.contentHeight
     -----------------------------------------------------------------------------------------
     -- Associating button widgets with this scene
     sceneGroup:insert( playButton )
     sceneGroup:insert( creditsButton )
     sceneGroup:insert( instructionsButton)
-    sceneGroup:insert( floor )
     
 
 end -- function scene:create( event )   
