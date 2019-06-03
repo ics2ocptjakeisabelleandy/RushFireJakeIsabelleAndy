@@ -164,12 +164,12 @@ local function AskQuestion()
     elseif (randomOperator == 2) then
 
         -- correct answer
-        correctAnswer = " how long you can run "
+        correctAnswer = " running long "
 
         -- wrong answers
-        wrongAnswer1 = " how far you can jump "
-        wrongAnswer2 = " how fast you can run "
-        wrongAnswer3 = " how far you can throw "
+        wrongAnswer1 = " jumping high "
+        wrongAnswer2 = " running fast "
+        wrongAnswer3 = " throwing far "
 
         questionText.text = " what is cardio? "
 
@@ -184,7 +184,7 @@ local function AskQuestion()
     elseif (randomOperator == 3) then
 
         -- correct answer
-        correctAnswer = " heroine "
+        correctAnswer = " cocaine "
 
         -- wrong answers
         wrongAnswer1 = " Benylin "
@@ -231,7 +231,7 @@ local function AskQuestion()
         wrongAnswer2 = " Brush your gums "
         wrongAnswer3 = " Floss "
 
-        questionText.text = " what should you not do while taking care of your teeth?? "
+        questionText.text = " what should you not do while cleaning your teeth? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -251,7 +251,7 @@ local function AskQuestion()
         wrongAnswer2 = " Blue Star "
         wrongAnswer3 = " Green Star "
 
-        questionText.text = " What is the biggest Star? "
+        questionText.text = " when should you ? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
