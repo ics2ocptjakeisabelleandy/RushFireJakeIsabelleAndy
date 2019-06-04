@@ -34,8 +34,9 @@ local scene = composer.newScene( sceneName )
 -- The local variables for this scene
 local bkg_image
 
-local heart1
-local heart2
+local health1
+local health2
+local health3
 local numLives = 2
 
 local rArrow
@@ -130,12 +131,11 @@ end
 -- replace character
 local function ReplaceCharacter()
     character = display.newImageRect("Images/character.png", 100, 150)
-    character.x = display.contentWidth/2
-    character.y = display.contentHeight/1.9
+    character.x = display.contentWidth/7
+    character.y = display.contentHeight/1.2
     character.width = 75
     character.height = 100
-    character.myName = "Sam"
-
+    character.myName = "Kill_me"
     -- intialize horizontal movement of character
     motionx = 0
 
@@ -267,13 +267,34 @@ function scene:create( event )
     -- Insert background image into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( bkg_image ) 
 
+    wall = display.newImageRect("Images/wallAndyDF.png", display.contentWidth, 100)
+
+    -- putting the wall on the left
+    wall.x = display.contentWidth/2
+    wall.y = display.contentHeight/2
+
 
     ground = display.newImageRect("Images/ground.png", display.contentWidth, 100)
 
     -- putting the ground on the ground
     ground.x = display.contentWidth/2
-    ground.y = display.contentHeight*1.02  
+    ground.y = display.contentHeight/1  
 
+    --displaying the health bars
+    health1 = display.newImage("Images/HealthBarJakeH.png", 200, 100)
+    health1.x = display.contentWidth/18
+    health1.y = display.contentHeight/7.5
+    sceneGroup:insert(health1)
+
+    health2 = display.newImage("Images/HealthBarJakeH.png", 200, 100)
+    health2.x = display.contentWidth/8
+    health2.y = display.contentHeight/7.5
+    sceneGroup:insert(health2)
+
+    health3 = display.newImage("Images/HealthBarJakeH.png", 200, 100)
+    health3.x = display.contentWidth/5.10
+    health3.y = display.contentHeight/7.5
+    sceneGroup:insert(health3)
 
     -- insert the ground image into the scene group
     sceneGroup:insert( ground )    

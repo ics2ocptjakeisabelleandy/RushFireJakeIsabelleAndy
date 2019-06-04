@@ -222,14 +222,14 @@ local function AskQuestion()
         elseif (randomOperator == 5) then
 
         -- correct answer
-        correctAnswer = " drink the mouthwash "
+        correctAnswer = "drink the mouthwash"
 
         -- wrong answers
-        wrongAnswer1 = " Brush your teeth "
-        wrongAnswer2 = " Brush your gums "
-        wrongAnswer3 = " Floss "
+        wrongAnswer1 = "Brush your teeth"
+        wrongAnswer2 = "Brush your gums"
+        wrongAnswer3 = "Floss"
 
-        questionText.text = " what should you not do while cleaning your teeth? "
+        questionText.text = "what should you not do while cleaning your teeth?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -242,14 +242,14 @@ local function AskQuestion()
         elseif (randomOperator == 6) then
 
         -- correct answer
-        correctAnswer = " The Sun "
+        correctAnswer = "The Sun"
 
         -- wrong answers
-        wrongAnswer1 = " Red Star "
-        wrongAnswer2 = " Blue Star "
-        wrongAnswer3 = " Green Star "
+        wrongAnswer1 = ""
+        wrongAnswer2 = ""
+        wrongAnswer3 = ""
 
-        questionText.text = " when should you ? "
+        questionText.text = "when should you?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -262,14 +262,14 @@ local function AskQuestion()
         elseif (randomOperator == 7) then
 
         -- correct answer
-        correctAnswer = " Earth "
+        correctAnswer = "Earth"
 
         -- wrong answers
-        wrongAnswer1 = " Saturn "
-        wrongAnswer2 = " Pluto "
-        wrongAnswer3 = " The Moon "
+        wrongAnswer1 = "Saturn"
+        wrongAnswer2 = "Pluto"
+        wrongAnswer3 = "The Moo"
 
-        questionText.text = " What planet do we live on? "
+        questionText.text = "What planet do we live on?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -282,14 +282,14 @@ local function AskQuestion()
         elseif (randomOperator == 8) then
 
         -- correct answer
-        correctAnswer = " hockey "
+        correctAnswer = "hockey "
 
         -- wrong answers
-        wrongAnswer1 = " volleyball "
-        wrongAnswer2 = " basketball "
-        wrongAnswer3 = " Tag "
+        wrongAnswer1 = "volleyball"
+        wrongAnswer2 = "basketball"
+        wrongAnswer3 = "Tag"
 
-        questionText.text = " what sport do you HAVE to wear a helmet? "
+        questionText.text = "what sport do you HAVE to wear a helmet?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -302,14 +302,14 @@ local function AskQuestion()
         elseif (randomOperator == 9) then
 
         -- correct answer
-        correctAnswer = " boxing "
+        correctAnswer = "fencing"
 
         -- wrong answers
-        wrongAnswer1 = " Hockey "
-        wrongAnswer2 = " Tennis "
-        wrongAnswer3 = " surfing "
+        wrongAnswer1 = "Hockey"
+        wrongAnswer2 = "Tennis"
+        wrongAnswer3 = "surfing"
 
-        questionText.text = " which sport is a martial art? "
+        questionText.text = " which sport is a olympic sport? "
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -325,11 +325,11 @@ local function AskQuestion()
         correctAnswer = " football "
 
         -- wrong answers
-        wrongAnswer1 = " hockey "
-        wrongAnswer2 = " basketball "
-        wrongAnswer3 = " soccer "
+        wrongAnswer1 =  "hockey"
+        wrongAnswer2 = "basketball"
+        wrongAnswer3 = "soccer"
 
-        questionText.text = " what sport can you only allowed do outside? "
+        questionText.text = "what sport can you only allowed do outside?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -342,14 +342,14 @@ local function AskQuestion()
         elseif (randomOperator == 11) then
 
         -- correct answer
-        correctAnswer = " Badminton "
+        correctAnswer = "Badminton"
 
         -- wrong answers
-        wrongAnswer1 = " rugby "
-        wrongAnswer2 = " football "
-        wrongAnswer3 = " dodgeball "
+        wrongAnswer1 = "rugby"
+        wrongAnswer2 = "football"
+        wrongAnswer3 = "dodgeball"
 
-        questionText.text = " what sport uses a raquet? "
+        questionText.text = "what sport uses a raquet?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -362,14 +362,14 @@ local function AskQuestion()
         elseif (randomOperator == 12) then
 
         -- correct answer
-        correctAnswer = " around "
+        correctAnswer = "around "
 
         -- wrong answers
-        wrongAnswer1 = " above "
-        wrongAnswer2 = " under "
-        wrongAnswer3 = " through "
+        wrongAnswer1 = "above"
+        wrongAnswer2 = "under"
+        wrongAnswer3 = "through"
 
-        questionText.text = " there is a wall qith a ceiling in your way. how do get to the other side? "
+        questionText.text = "there is a wall qith a ceiling in your way. how do get to the other side?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -382,12 +382,12 @@ local function AskQuestion()
         elseif (randomOperator == 13) then
 
         -- correct answer
-        correctAnswer = " Track and Field "
+        correctAnswer = "Track and Field"
 
         -- wrong answers
-        wrongAnswer1 = " volleyball "
-        wrongAnswer2 = " basketball "
-        wrongAnswer3 = " soccer "
+        wrongAnswer1 = "volleyball"
+        wrongAnswer2 = "basketball"
+        wrongAnswer3 = "soccer"
 
         questionText.text = " which sport is not a team sport? "
 
@@ -402,14 +402,14 @@ local function AskQuestion()
         elseif (randomOperator == 14) then
 
         -- correct answer
-        correctAnswer = "good Aim "
+        correctAnswer = "good Aim"
 
         -- wrong answers
-        wrongAnswer1 = " patience "
-        wrongAnswer2 = " climbing "
-        wrongAnswer3 = " kicking "
+        wrongAnswer1 = "patience"
+        wrongAnswer2 = "climbing"
+        wrongAnswer3 = "kicking"
 
-        questionText.text = " what do you need to be good at to play dodgeball? "
+        questionText.text = "?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -422,14 +422,14 @@ local function AskQuestion()
         elseif (randomOperator == 15) then
 
         -- correct answer
-        correctAnswer = " 8 hours "
+        correctAnswer = "8 hours "
 
         -- wrong answers
-        wrongAnswer1 = " 4 hours hours "
-        wrongAnswer2 = " 10 hours "
-        wrongAnswer3 = " 5 hours "
+        wrongAnswer1 = "4 hours"
+        wrongAnswer2 = "10 hours"
+        wrongAnswer3 = "5 hours"
 
-        questionText.text = " How long should you sleep every night? "
+        questionText.text = "How long should you sleep every night?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
