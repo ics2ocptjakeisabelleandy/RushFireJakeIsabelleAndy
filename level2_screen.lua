@@ -198,6 +198,8 @@ local function AddCollisionListeners()
     zombie4:addEventListener( "collision" )
     zombie5.collision = onCollision
     zombie5:addEventListener( "collision" )
+    wall.collision = onCollision
+    wall:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
@@ -206,6 +208,7 @@ local function RemoveCollisionListeners()
     zombie3:removeEventListener( "collision" )
     zombie4:removeEventListener( "collision" )
     zombie5:removeEventListener( "collision" )
+    wall:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
@@ -215,6 +218,7 @@ local function AddPhysicsBodies()
     physics.addBody(zombie3, "static", {density=1, friction=0.5, bounce=0 })
     physics.addBody(zombie4, "static", {density=1, friction=0.5, bounce=0 })
     physics.addBody(zombie5, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(wall, "static", {density=1, friction=0.5, bounce=0 })
 end
 
 local function RemovePhysicsBodies()
@@ -223,6 +227,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(zombie3)
     physics.removeBody(zombie4)
     physics.removeBody(zombie5)
+    physics.removeBody(wall)
 end
 
 -----------------------------------------------------------------------------------------
@@ -270,8 +275,11 @@ function scene:create( event )
     wall = display.newImageRect("Images/wallAndyDF.png", display.contentWidth, 100)
 
     -- putting the wall on the left
-    wall.x = display.contentWidth/2
+    wall.x = -50
     wall.y = display.contentHeight/2
+    wall:rotate(90)
+
+    sceneGroup:insert( wall )
 
 
     ground = display.newImageRect("Images/ground.png", display.contentWidth, 100)

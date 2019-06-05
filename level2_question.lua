@@ -50,8 +50,8 @@ local cover
 local userAnswer
 local textTouched = false
 
-local X1 = display.contentWidth*2/7
-local X2 = display.contentWidth*4/7
+local X1 = display.contentWidth*1/7
+local X2 = display.contentWidth*5/7
 local Y1 = display.contentHeight*1/2
 local Y2 = display.contentHeight*5.5/7
 
