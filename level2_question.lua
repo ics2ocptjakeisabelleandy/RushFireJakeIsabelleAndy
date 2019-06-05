@@ -116,6 +116,7 @@ local function TouchListenerWrongAnswer3(touch)
 
         numLives = numLives - 1
 
+
         timer.performWithDelay(100, BackToLevel2)
     end 
 end
