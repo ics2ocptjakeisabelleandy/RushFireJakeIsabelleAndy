@@ -30,8 +30,10 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 -- SOUNDS
 -----------------------------------------------------------------------------------------
+
 local GamerTime = audio.loadStream("Sounds/duel.mp3")
 local GamerTimeChannel = audio.play(bkgMusic, { channel=4, loops=-1})
+
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -68,6 +70,8 @@ local rightW
 
 local questionsAnswered = 0
 
+local wall
+local wall2
 local ground 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -75,6 +79,10 @@ local ground
 
 local function Level3ScreenTransition( )       
     composer.gotoScene( "level3_screen", {effect = "zoomInOutFade", time = 500})
+end
+
+local function LevelSelectScreenTransition( )       
+    composer.gotoScene( "Level_Select", {effect = "zoomInOutFade", time = 500})
 end
 
 -- when right arrow is pressed
@@ -190,6 +198,30 @@ local function onCollision(self, event)
     end
 end
 
+local function Mute(touch)
+    if (touch.phase == "ended") then
+        -- pause the sound
+        audio.pause(GamerTime)
+        soundOn = false
+        -- hide the mute button
+        muteButton.isVisible = false
+        -- make the unmute button visible
+        unmuteButton.isVisible = true
+    end
+end
+
+
+local function Unmute(touch)
+    if (touch.phase == "ended") then
+        -- play the sound
+        audio.play(GamerTime)
+        soundOn = true
+        -- hide the mute button
+        muteButton.isVisible = true
+        -- make the unmute button visible
+        unmuteButton.isVisible = false
+    end
+end
 
 local function AddCollisionListeners()
     -- if character collides with earth, onCollision will be called
@@ -330,7 +362,7 @@ function scene:create( event )
 
     zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie1.x = display.contentWidth/1.5
-    zombie1.y = display.contentHeight/1.5
+    zombie1.y = display.contentHeight/1.2
     zombie1.myName = "zombie1"
     zombie1:scale (0.5, 0.5)
    
@@ -339,7 +371,7 @@ function scene:create( event )
 
     zombie2 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie2.x = display.contentWidth/1.7
-    zombie2.y = display.contentHeight/1.5
+    zombie2.y = display.contentHeight/1.2
     zombie2.myName = "zombie2"
     zombie2:scale (0.5, 0.5)
     
@@ -348,7 +380,7 @@ function scene:create( event )
 
     zombie3 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie3.x = display.contentWidth/1.9
-    zombie3.y = display.contentHeight/1.5
+    zombie3.y = display.contentHeight/1.2
     zombie3.myName = "zombie3"
     zombie3:scale (0.5, 0.5)
    
@@ -357,7 +389,7 @@ function scene:create( event )
 
     zombie4 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie4.x = display.contentWidth/1.3
-    zombie4.y = display.contentHeight/1.5
+    zombie4.y = display.contentHeight/1.2
     zombie4.myName = "zombie4"
     zombie4:scale (0.5, 0.5)
     
@@ -366,13 +398,12 @@ function scene:create( event )
 
     zombie5 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie5.x = display.contentWidth/1.1
-    zombie5.y = display.contentHeight/1.5
+    zombie5.y = display.contentHeight/1.2
     zombie5.myName = "zombie5"
     zombie5:scale (0.5, 0.5)
    
     -- insert the zombie into the scene group
     sceneGroup:insert( zombie5 )
-
 
    --Insert the right arrow
     rArrow = display.newImageRect("Images/arrow.png", 100, 50)
@@ -396,6 +427,22 @@ function scene:create( event )
     lArrow = display.newImageRect("Images/arrow.png", 100, 50)
     lArrow.x = display.contentWidth * 7.2 / 10
     lArrow.y = display.contentHeight * 9.5 / 10
+
+        -- creating mute button
+    muteButton = display.newImageRect( "Images/MuteButton.png", 200, 200)
+    muteButton.x = display.contentWidth*9/10
+    muteButton.y = display.contentHeight*1.3/10
+    muteButton.isVisible = true
+
+    muteButton:scale(0.5, 0.5)
+
+    -- creating mute button
+    unmuteButton = display.newImageRect( "Images/UnmuteButton.png", 200, 200)
+    unmuteButton.x = display.contentWidth*9/10
+    unmuteButton.y = display.contentHeight*1.3/10
+    unmuteButton.isVisible = true
+
+    unmuteButton:scale(0.5, 0.5)
 
     lArrow:rotate(180)
 

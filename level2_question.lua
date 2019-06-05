@@ -47,6 +47,8 @@ local answerPosition = 1
 local bkg
 local cover
 
+local questionsAnswered = 0
+
 local userAnswer
 local textTouched = false
 
@@ -58,7 +60,6 @@ local Y2 = display.contentHeight*5.5/7
 local questionObject
 local correctAnswer
 local randomOperator
-local questionsAnswered
 local questionText
 
 -----------------------------------------------------------------------------------------
@@ -78,6 +79,8 @@ local function TouchListenerAnswer(touch)
     userAnswer = correctAnswerText.text
 
     if (touch.phase == "ended") then
+
+        questionsAnswered = questionsAnswered + 1
 
         timer.performWithDelay(100, BackToLevel2)
     end 
@@ -469,7 +472,7 @@ local function AskQuestion()
         wrongAnswer2 = "White chocolate"
         wrongAnswer3 = "Milk chocolate"
 
-        questionText.text = "what is the least healthy Item here?"
+        questionText.text = "what is the healthiest Item here?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -613,23 +616,29 @@ function scene:create(event)
     -- make a cover rectangle to have rhe background fully blocked where the question is
     cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*1.5, display.contentHeight*0.95, 50)
     -- set the cover color
-    cover:setFillColor(96/255, 96/255, 96/255)
+    cover:setFillColor(102/255, 0/255, 0/255)
 
     -- create the question text object
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 60)
+    questionText:scale(0.7,0.7)
+
 
     -- create the answer text object & wrong answer text objects
     correctAnswerText = display.newText("", X1, Y2, Arial, 40)
     correctAnswerText.anchorX = 0
+    correctAnswerText:scale(0.7,0.7)
 
     wrongAnswerText1 = display.newText("", X2, Y2, Arial, 40)
     wrongAnswerText1.anchorX = 0
+    wrongAnswerText1:scale(0.7,0.7)
 
     wrongAnswerText2 = display.newText("", X1, Y1, Arial, 40)
     wrongAnswerText2.anchorX = 0
+    wrongAnswerText2:scale(0.7,0.7)
 
     wrongAnswerText3 = display.newText("", X2, Y1, Arial, 40)
     wrongAnswerText3.anchorX = 0
+    wrongAnswerText3:scale(0.7,0.7)
 
     ----------------------------------------------------------------------------------
 
