@@ -28,6 +28,11 @@ sceneName = "level2_screen"
 local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
+-- SOUNDS
+-----------------------------------------------------------------------------------------
+local GamerTime = audio.loadStream("Sounds/duel.mp3")
+local GamerTimeChannel = audio.play(bkgMusic, { channel=4, loops=-1})
+-----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
@@ -489,6 +494,7 @@ function scene:hide( event )
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
         display.remove(character)
+        GamerTime = audio.stop()
     end
 
 end --function scene:hide( event )
