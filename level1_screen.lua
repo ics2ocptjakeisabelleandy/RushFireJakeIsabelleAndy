@@ -581,7 +581,7 @@ function scene:create( event )
     sceneGroup:insert(pluto)
 
     -- insert the portal
-    portal = display.newImage("Images/portal.png", 100, 100)
+    portal = display.newImage("Images/Portal.png", 100, 100)
     portal.x = display.contentWidth/2
     portal.y = display.contentHeight/1.3
     portal.width = 150
