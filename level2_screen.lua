@@ -429,8 +429,8 @@ function scene:create( event )
     sceneGroup:insert( zombie2 )
 
     zombie3 = display.newImage("Images/character2(resize)AndyDF.png")
-    zombie3.x = display.contentWidth/1.9
-    zombie3.y = display.contentHeight/1.2
+    zombie3.x = display.contentWidth/4
+    zombie3.y = display.contentHeight/1.8
     zombie3.myName = "zombie3"
     zombie3:scale (0.5, 0.5)
    
@@ -456,8 +456,8 @@ function scene:create( event )
     sceneGroup:insert( zombie5 )
 
     platform1 = display.newImage("Images/platformAndyDF.png", 200, 100)
-    platform1.x = display.contentWidth/5.10
-    platform1.y = display.contentHeight/7.5
+    platform1.x = display.contentWidth/2
+    platform1.y = display.contentHeight/2
     
     -- insert the platform into the scene group
     sceneGroup:insert(platform1)
@@ -470,20 +470,18 @@ function scene:create( event )
     sceneGroup:insert(platform2)
 
     platform3 = display.newImage("Images/platformAndyDF.png", 200, 100)
-    platform3.x = display.contentWidth/5.10
-    platform3.y = display.contentHeight/7.5
+    platform3.x = display.contentWidth/4
+    platform3.y = display.contentHeight/1.5
     
     -- insert the platform into the scene group
     sceneGroup:insert(platform3)
 
     platform4 = display.newImage("Images/platformAndyDF.png", 200, 100)
-    platform4.x = display.contentWidth/5.10
-    platform4.y = display.contentHeight/7.5
+    platform4.x = display.contentWidth/7
+    platform4.y = display.contentHeight/7
     
     -- insert the platform into the scene group
     sceneGroup:insert(platform4)
-   
-
 
    --Insert the right arrow
     rArrow = display.newImageRect("Images/arrow.png", 100, 50)
