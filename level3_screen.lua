@@ -53,6 +53,8 @@ local theEnemy
 
 local collidedWithGreg
 local collidedWithZombie
+local collidedWithZombie2
+
 
 local motionx = 1
 local SPEED = 12.5
@@ -74,6 +76,8 @@ local cloud
 
 
 local questionsAnswered = 0
+
+local quenstionsRight
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -235,6 +239,11 @@ local function onCollision( self, event )
             collidedWithZombie = CheckCollision(character.x, character.y, character.width, character.height,
                 zombie.x, zombie.y, zombie.width, zombie.height)
 
+            -- check to see if the character collided with the zombie2
+            collidedWithZombie2 = CheckCollision(character.x, character.y, character.width, character.height,
+                zombie2.x, zombie2.y, zombie2.width, zombie2.height)
+
+
             if (collidedWithGreg == true) then
                 print ("***Collided with greg")
                 -- get the enemy that the user hit
@@ -277,7 +286,7 @@ local function onCollision( self, event )
             end         
 
             if (collidedWithZombie2 == true) then
-                print ("***Collided with zombie")
+                print ("***Collided with zombie2")
                 -- get the enemy that the user hit
                 theEnemy = event.target
 
@@ -286,7 +295,7 @@ local function onCollision( self, event )
 
                 -- make the character invisible
                 character.isVisible = false
-
+                composer.showOverlay( "level3_question", {isModal = true, effect = fade, time == 300})
                 -- show overlay with math question
                 --composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
 
@@ -334,7 +343,7 @@ local function AddPhysicsBodies()
     physics.addBody(zombie, "static,", {density=1, friction=0.3, bounce=0})
     physics.addBody(zombie2, "static,", {density=1, friction=0.3, bounce=0})
     physics.addBody(greg, "static,", {density=1, friction=0.3, bounce=0})
-    physics.addBody(Moon, "static", {density=1, friction=0.3, bounce=0})
+    --physics.addBody(Moon, "static", {density=1, friction=0.3, bounce=0})
 end
 
 local function RemovePhysicsBodies()
@@ -456,7 +465,7 @@ function scene:create( event )
     sceneGroup:insert(skyscraper2)
 
     --creating the cloud
-    cloud = display.newImage("Images/SquareCloudjakeH.png", 200, 100)
+    cloud = display.newImage("Images/SquareCloudJakeH.png", 200, 100)
     cloud.x = display.contentWidth/1.12
     cloud.y = display.contentHeight/1.5
 
@@ -487,13 +496,7 @@ function scene:create( event )
     Ground.myName = "Ground"
     sceneGroup:insert(Ground)
 
-    Moon = display.newImage("Images/MoonJakeH.png", 100, 200)
-    Moon.x = display.contentWidth/1.15
-    Moon.y = display.contentHeight/7.5
-    Moon.isVisible = true
-    Moon.myName = "Moon"
-    sceneGroup:insert(Moon)
-
+   
 
     zombie = display.newImage("Images/character2(resize)AndyDF.png", 25, 50)
     zombie.x = display.contentWidth/2
