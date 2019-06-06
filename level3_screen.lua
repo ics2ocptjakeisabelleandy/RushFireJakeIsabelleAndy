@@ -373,7 +373,7 @@ local function AddPhysicsBodies()
     physics.addBody(zombie, "static,", {density=1, friction=0.3, bounce=0})
     physics.addBody(zombie2, "static,", {density=1, friction=0.3, bounce=0})
     physics.addBody(greg, "static,", {density=1, friction=0.3, bounce=0})
-    --physics.addBody(Moon, "static", {density=1, friction=0.3, bounce=0})
+    physics.addBody(Moon, "static", {density=1, friction=0.3, bounce=0})
 end
 
 local function RemovePhysicsBodies()
@@ -390,7 +390,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(zombie)
     physics.removeBody(zombie2)
     physics.removeBody(greg)
-    --physics.removeBody(Moon)
+    physics.removeBody(Moon)
     
 end
 
@@ -509,7 +509,7 @@ function scene:create( event )
     --creating the cloud
     cloud = display.newImage("Images/SquareCloudJakeH.png", 200, 100)
     cloud.x = display.contentWidth/1.12
-    cloud.y = display.contentHeight/1.5
+    cloud.y = display.contentHeight/1.4
 
     sceneGroup:insert(cloud)
 
@@ -545,20 +545,29 @@ function scene:create( event )
     zombie.y = display.contentHeight/4
     zombie.myName = "zombie"
     sceneGroup:insert(zombie)
-    
+    zombie:scale (-1,1)
+
     zombie2 = display.newImageRect("Images/character2.png", 125, 175)
-    --zombie2.x = display.contentWidth/1.15
-    --zombie2.y = display.contentHeight/2.25
-    zombie2.x = 100
-    zombie2.y = display.contentHeight/2.25
+    zombie2.x = display.contentWidth/1.4
+    zombie2.y = display.contentHeight/1.4
+    zombie2.x = display.contentHeight*.9
+    zombie2.y = 30
     zombie2.myName = "zombie2"
+    zombie2:scale (-1,1)
     sceneGroup:insert(zombie2)
     
     greg = display.newImageRect("Images/JakeH(greg)@.png", 100, 100)
     greg.x = display.contentWidth*.9
     greg.y = 20
     greg.myName = "greg"
-    sceneGroup:insert(greg)    
+    sceneGroup:insert(greg)   
+
+    Moon = display.newImage("Images/MoonJakeH.png", 100, 100)
+    Moon.x = display.contentWidth*.85
+    Moon.y = 100
+    Moon.myName = "Moon"
+    sceneGroup:insert(Moon)
+    Moon:scale (-1,1)
 end --function scene:create( event )
 
 
