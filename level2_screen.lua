@@ -44,7 +44,7 @@ local bkg_image
 local health1
 local health2
 local health3
-local numLives = 2
+local numLives = 3
 
 local rArrow
 local lArrow
@@ -72,7 +72,11 @@ local questionsAnswered = 0
 
 local wall
 local wall2
-local ground 
+local ground
+local platform1
+local platform2
+local platform3
+local platform4 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -83,6 +87,10 @@ end
 
 local function LevelSelectScreenTransition( )       
     composer.gotoScene( "Level_Select", {effect = "zoomInOutFade", time = 500})
+end
+
+local function YouLoseTransition( )       
+    composer.gotoScene( "you_lose", {effect = "zoomInOutFade", time = 500})
 end
 
 -- when right arrow is pressed
@@ -194,6 +202,23 @@ local function onCollision(self, event)
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
+
+            if (numLives == 2 ) then 
+                health3.isVisible = false
+                health2.isVisible = true
+                health1.isVisible = true
+                timer.performWithDelay(200, ReplaceCharacter) 
+
+            elseif (numLives == 1) then
+
+                health1.isVisible = true
+                health2.isVisible = false
+                health3.isVisible = false
+                timer.performWithDelay(200, ReplaceCharacter) 
+
+            elseif (numLives == 0 ) then
+                timer.performWithDelay(200, YouLoseTransition)
+            end
         end
     end
 end
@@ -239,6 +264,14 @@ local function AddCollisionListeners()
     wall:addEventListener( "collision" )
     wall2.collision = onCollision
     wall2:addEventListener( "collision" )
+    platform1.collision = onCollision
+    platform1:addEventListener( "collision" )
+    platform2.collision = onCollision
+    platform2:addEventListener( "collision" )
+    platform3.collision = onCollision
+    platform3:addEventListener( "collision" )
+    platform4.collision = onCollision
+    platform4:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
@@ -249,6 +282,10 @@ local function RemoveCollisionListeners()
     zombie5:removeEventListener( "collision" )
     wall:removeEventListener( "collision" )
     wall2:removeEventListener( "collision" )
+    platform1:removeEventListener( "collision" )
+    platform2:removeEventListener( "collision" )
+    platform3:removeEventListener( "collision" )
+    platform4:removeEventListener( "collision" )    
 end
 
 local function AddPhysicsBodies()
@@ -261,6 +298,10 @@ local function AddPhysicsBodies()
     physics.addBody(zombie5, "static", {density=1, friction=0.5, bounce=0 })
     physics.addBody(wall, "static", {density=1, friction=0.5, bounce=0 })
     physics.addBody(wall2, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(platform1, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(platform2, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(platform3, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(platform4, "static", {density=1, friction=0.5, bounce=0 })
 end
 
 local function RemovePhysicsBodies()
@@ -271,8 +312,17 @@ local function RemovePhysicsBodies()
     physics.removeBody(zombie5)
     physics.removeBody(wall)
     physics.removeBody(wall2) 
+    physics.removeBody(platform1)
+    physics.removeBody(platform2)
+    physics.removeBody(platform3)
+    physics.removeBody(platform4)
 end
 
+local function makeHealthVisible()
+    health1.isVisible = true
+    health2.isVisible = true
+    health3.isVisible = true
+end
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -379,8 +429,8 @@ function scene:create( event )
     sceneGroup:insert( zombie2 )
 
     zombie3 = display.newImage("Images/character2(resize)AndyDF.png")
-    zombie3.x = display.contentWidth/1.9
-    zombie3.y = display.contentHeight/1.2
+    zombie3.x = display.contentWidth/4
+    zombie3.y = display.contentHeight/1.8
     zombie3.myName = "zombie3"
     zombie3:scale (0.5, 0.5)
    
@@ -401,9 +451,37 @@ function scene:create( event )
     zombie5.y = display.contentHeight/1.2
     zombie5.myName = "zombie5"
     zombie5:scale (0.5, 0.5)
-   
+
     -- insert the zombie into the scene group
     sceneGroup:insert( zombie5 )
+
+    platform1 = display.newImage("Images/platformAndyDF.png", 200, 100)
+    platform1.x = display.contentWidth/2
+    platform1.y = display.contentHeight/2
+    
+    -- insert the platform into the scene group
+    sceneGroup:insert(platform1)
+
+    platform2 = display.newImage("Images/platformAndyDF.png", 200, 100)
+    platform2.x = display.contentWidth/5.10
+    platform2.y = display.contentHeight/7.5
+    
+    -- insert the platform into the scene group
+    sceneGroup:insert(platform2)
+
+    platform3 = display.newImage("Images/platformAndyDF.png", 200, 100)
+    platform3.x = display.contentWidth/4
+    platform3.y = display.contentHeight/1.5
+    
+    -- insert the platform into the scene group
+    sceneGroup:insert(platform3)
+
+    platform4 = display.newImage("Images/platformAndyDF.png", 200, 100)
+    platform4.x = display.contentWidth/7
+    platform4.y = display.contentHeight/7
+    
+    -- insert the platform into the scene group
+    sceneGroup:insert(platform4)
 
    --Insert the right arrow
     rArrow = display.newImageRect("Images/arrow.png", 100, 50)
