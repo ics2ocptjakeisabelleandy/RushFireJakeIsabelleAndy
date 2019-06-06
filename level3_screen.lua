@@ -225,7 +225,6 @@ local function onCollision( self, event )
 
         if  (event.target.myName == "zombie2") or
             (event.target.myName == "zombie") or
-            
             (event.target.myName == "greg") then
 
             -- check to see if the character collided with the greg
@@ -246,12 +245,14 @@ local function onCollision( self, event )
 
                 -- make the character invisible
                 character.isVisible = false
-
+                composer.showOverlay( "level3_question", {isModal = true, effect = fade, time == 300})
                 -- show overlay with math question
                 --composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
 
                 -- Increment questions answered
                 questionsAnswered = questionsAnswered + 1
+
+
 
             end    
 
@@ -361,9 +362,9 @@ function ResumeGame()
     character.isVisible = true
 
     if (questionsAnswered > 0) then
-        if (thezombie ~= nil) and (thezombie.isBodyActive == true) then
-            physics.removeBody(thezombie)
-            thezombie.isVisible = false
+        if (theEnemy ~= nil) and (theEnemy.isBodyActive == false) then
+            physics.removeBody(theEnemy)
+            theEnemy.isVisible = false
         end
     end
 end
@@ -439,7 +440,7 @@ function scene:create( event )
     -- insert the wall into scene group
     sceneGroup:insert(rightW)
 
-    skyscraper1 = display.newImage("Images/skyscraper1JakeH.png", 200, 100)
+    skyscraper1 = display.newImage("Images/skyscraper1jakeH.png", 200, 100)
     skyscraper1.x = display.contentWidth/11
     skyscraper1.y = display.contentHeight/1.35
 
@@ -447,7 +448,7 @@ function scene:create( event )
     sceneGroup:insert(skyscraper1)
 
 
-    skyscraper2 = display.newImage("Images/skyscraper2JakeH.png", 300, 100)
+    skyscraper2 = display.newImage("Images/skyscraper2jakeH.png", 300, 100)
     skyscraper2.x = display.contentWidth/2
     skyscraper2.y = display.contentHeight/1.35
 
@@ -455,7 +456,7 @@ function scene:create( event )
     sceneGroup:insert(skyscraper2)
 
     --creating the cloud
-    cloud = display.newImage("Images/SquareCloudJakeH.png", 200, 100)
+    cloud = display.newImage("Images/SquareCloudjakeH.png", 200, 100)
     cloud.x = display.contentWidth/1.12
     cloud.y = display.contentHeight/1.5
 
