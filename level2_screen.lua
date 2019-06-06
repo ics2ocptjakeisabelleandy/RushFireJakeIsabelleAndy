@@ -28,6 +28,13 @@ sceneName = "level2_screen"
 local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
+-- SOUNDS
+-----------------------------------------------------------------------------------------
+
+local GamerTime = audio.loadStream("Sounds/duel.mp3")
+local GamerTimeChannel = audio.play(bkgMusic, { channel=4, loops=-1})
+
+-----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
@@ -63,6 +70,8 @@ local rightW
 
 local questionsAnswered = 0
 
+local wall
+local wall2
 local ground 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -70,6 +79,10 @@ local ground
 
 local function Level3ScreenTransition( )       
     composer.gotoScene( "level3_screen", {effect = "zoomInOutFade", time = 500})
+end
+
+local function LevelSelectScreenTransition( )       
+    composer.gotoScene( "Level_Select", {effect = "zoomInOutFade", time = 500})
 end
 
 -- when right arrow is pressed
@@ -185,6 +198,30 @@ local function onCollision(self, event)
     end
 end
 
+local function Mute(touch)
+    if (touch.phase == "ended") then
+        -- pause the sound
+        audio.pause(GamerTime)
+        soundOn = false
+        -- hide the mute button
+        muteButton.isVisible = false
+        -- make the unmute button visible
+        unmuteButton.isVisible = true
+    end
+end
+
+
+local function Unmute(touch)
+    if (touch.phase == "ended") then
+        -- play the sound
+        audio.play(GamerTime)
+        soundOn = true
+        -- hide the mute button
+        muteButton.isVisible = true
+        -- make the unmute button visible
+        unmuteButton.isVisible = false
+    end
+end
 
 local function AddCollisionListeners()
     -- if character collides with earth, onCollision will be called
@@ -198,6 +235,10 @@ local function AddCollisionListeners()
     zombie4:addEventListener( "collision" )
     zombie5.collision = onCollision
     zombie5:addEventListener( "collision" )
+    wall.collision = onCollision
+    wall:addEventListener( "collision" )
+    wall2.collision = onCollision
+    wall2:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
@@ -206,15 +247,20 @@ local function RemoveCollisionListeners()
     zombie3:removeEventListener( "collision" )
     zombie4:removeEventListener( "collision" )
     zombie5:removeEventListener( "collision" )
+    wall:removeEventListener( "collision" )
+    wall2:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
     -- add the physics
     physics.addBody(ground, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(zombie1, "static", {density=1, friction=0.5, bounce=0 })
     physics.addBody(zombie2, "static", {density=1, friction=0.5, bounce=0 })
     physics.addBody(zombie3, "static", {density=1, friction=0.5, bounce=0 })
     physics.addBody(zombie4, "static", {density=1, friction=0.5, bounce=0 })
     physics.addBody(zombie5, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(wall, "static", {density=1, friction=0.5, bounce=0 })
+    physics.addBody(wall2, "static", {density=1, friction=0.5, bounce=0 })
 end
 
 local function RemovePhysicsBodies()
@@ -223,6 +269,8 @@ local function RemovePhysicsBodies()
     physics.removeBody(zombie3)
     physics.removeBody(zombie4)
     physics.removeBody(zombie5)
+    physics.removeBody(wall)
+    physics.removeBody(wall2) 
 end
 
 -----------------------------------------------------------------------------------------
@@ -270,9 +318,22 @@ function scene:create( event )
     wall = display.newImageRect("Images/wallAndyDF.png", display.contentWidth, 100)
 
     -- putting the wall on the left
-    wall.x = display.contentWidth/2
+    wall.x = -50
     wall.y = display.contentHeight/2
+    wall:rotate(90)
 
+    -- inserting the wall into the scene group
+    sceneGroup:insert( wall )
+
+    wall2 = display.newImageRect("Images/wallAndyDF.png", display.contentWidth, 100)
+
+    -- putting the wall on the left
+    wall2.x = 1060
+    wall2.y = display.contentHeight/2
+    wall2:rotate(90)
+
+    -- inserting the second wall into the scene group
+    sceneGroup:insert( wall2 )
 
     ground = display.newImageRect("Images/ground.png", display.contentWidth, 100)
 
@@ -301,7 +362,7 @@ function scene:create( event )
 
     zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie1.x = display.contentWidth/1.5
-    zombie1.y = display.contentHeight/1.1
+    zombie1.y = display.contentHeight/1.2
     zombie1.myName = "zombie1"
     zombie1:scale (0.5, 0.5)
    
@@ -310,7 +371,7 @@ function scene:create( event )
 
     zombie2 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie2.x = display.contentWidth/1.7
-    zombie2.y = display.contentHeight/1.1
+    zombie2.y = display.contentHeight/1.2
     zombie2.myName = "zombie2"
     zombie2:scale (0.5, 0.5)
     
@@ -319,7 +380,7 @@ function scene:create( event )
 
     zombie3 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie3.x = display.contentWidth/1.9
-    zombie3.y = display.contentHeight/1.1
+    zombie3.y = display.contentHeight/1.2
     zombie3.myName = "zombie3"
     zombie3:scale (0.5, 0.5)
    
@@ -328,7 +389,7 @@ function scene:create( event )
 
     zombie4 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie4.x = display.contentWidth/1.3
-    zombie4.y = display.contentHeight/1.1
+    zombie4.y = display.contentHeight/1.2
     zombie4.myName = "zombie4"
     zombie4:scale (0.5, 0.5)
     
@@ -337,13 +398,12 @@ function scene:create( event )
 
     zombie5 = display.newImage("Images/character2(resize)AndyDF.png")
     zombie5.x = display.contentWidth/1.1
-    zombie5.y = display.contentHeight/1.1
+    zombie5.y = display.contentHeight/1.2
     zombie5.myName = "zombie5"
     zombie5:scale (0.5, 0.5)
    
     -- insert the zombie into the scene group
     sceneGroup:insert( zombie5 )
-
 
    --Insert the right arrow
     rArrow = display.newImageRect("Images/arrow.png", 100, 50)
@@ -367,6 +427,22 @@ function scene:create( event )
     lArrow = display.newImageRect("Images/arrow.png", 100, 50)
     lArrow.x = display.contentWidth * 7.2 / 10
     lArrow.y = display.contentHeight * 9.5 / 10
+
+        -- creating mute button
+    muteButton = display.newImageRect( "Images/MuteButton.png", 200, 200)
+    muteButton.x = display.contentWidth*9/10
+    muteButton.y = display.contentHeight*1.3/10
+    muteButton.isVisible = true
+
+    muteButton:scale(0.5, 0.5)
+
+    -- creating mute button
+    unmuteButton = display.newImageRect( "Images/UnmuteButton.png", 200, 200)
+    unmuteButton.x = display.contentWidth*9/10
+    unmuteButton.y = display.contentHeight*1.3/10
+    unmuteButton.isVisible = true
+
+    unmuteButton:scale(0.5, 0.5)
 
     lArrow:rotate(180)
 
@@ -465,6 +541,7 @@ function scene:hide( event )
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
         display.remove(character)
+        GamerTime = audio.stop()
     end
 
 end --function scene:hide( event )
