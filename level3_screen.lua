@@ -190,6 +190,7 @@ end
 -- x2,y2,w2 & h2 are the same, but for the second box.
 local function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
 
+
     print ("***x2+w2 = " .. (x2 + w2) .. " should be > x1 = " .. x1)
     print ("***x1+w1 = " .. (x1 + w1) .. " should be > x2 = " .. x2)
     print ("***y2+h2 = " .. (y2 + h2) .. " should be > y1 = " .. y1)
@@ -199,7 +200,7 @@ local function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
     return  x1 < x2+w2 and
             x2 < x1+w1 and
             y1 < y2+h2 and
-            y2 < y1+h1
+            y2 > y1+h1
 end
 
 local function UpdateHealth()
