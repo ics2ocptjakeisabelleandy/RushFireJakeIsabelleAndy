@@ -61,7 +61,7 @@ local theZombie
 local motionx = 0
 local SPEED = 7
 local negativeSpeed = -9
-local LINEAR_VELOCITY = -100
+local LINEAR_VELOCITY = -150
 local GRAVITY = 7
 
 local leftW
@@ -410,9 +410,9 @@ function scene:create( event )
     -- insert the ground image into the scene group
     sceneGroup:insert( ground )    
 
-    zombie1 = display.newImage("Images/character2(resize)AndyDF.png")
-    zombie1.x = display.contentWidth/1.5
-    zombie1.y = display.contentHeight/1.2
+    zombie1 = display.newImage("Images/character2JetPack(resize)AndyDF.png")
+    zombie1.x = display.contentWidth/1.3
+    zombie1.y = display.contentHeight/4
     zombie1.myName = "zombie1"
     zombie1:scale (0.5, 0.5)
    
@@ -420,8 +420,8 @@ function scene:create( event )
     sceneGroup:insert( zombie1 )
 
     zombie2 = display.newImage("Images/character2(resize)AndyDF.png")
-    zombie2.x = display.contentWidth/1.7
-    zombie2.y = display.contentHeight/1.2
+    zombie2.x = display.contentWidth/1.4
+    zombie2.y = display.contentHeight/1.8
     zombie2.myName = "zombie2"
     zombie2:scale (0.5, 0.5)
     
@@ -438,8 +438,8 @@ function scene:create( event )
     sceneGroup:insert( zombie3 )
 
     zombie4 = display.newImage("Images/character2(resize)AndyDF.png")
-    zombie4.x = display.contentWidth/1.3
-    zombie4.y = display.contentHeight/1.2
+    zombie4.x = display.contentWidth/2
+    zombie4.y = display.contentHeight/2.8
     zombie4.myName = "zombie4"
     zombie4:scale (0.5, 0.5)
     
@@ -447,8 +447,8 @@ function scene:create( event )
     sceneGroup:insert( zombie4 )
 
     zombie5 = display.newImage("Images/character2(resize)AndyDF.png")
-    zombie5.x = display.contentWidth/1.1
-    zombie5.y = display.contentHeight/1.2
+    zombie5.x = display.contentWidth/4
+    zombie5.y = display.contentHeight/5.2
     zombie5.myName = "zombie5"
     zombie5:scale (0.5, 0.5)
 
@@ -463,22 +463,22 @@ function scene:create( event )
     sceneGroup:insert(platform1)
 
     platform2 = display.newImage("Images/platformAndyDF.png", 200, 100)
-    platform2.x = display.contentWidth/5.10
-    platform2.y = display.contentHeight/7.5
+    platform2.x = display.contentWidth/4
+    platform2.y = display.contentHeight/1.5
     
     -- insert the platform into the scene group
     sceneGroup:insert(platform2)
 
     platform3 = display.newImage("Images/platformAndyDF.png", 200, 100)
-    platform3.x = display.contentWidth/4
+    platform3.x = display.contentWidth/1.4
     platform3.y = display.contentHeight/1.5
     
     -- insert the platform into the scene group
     sceneGroup:insert(platform3)
 
     platform4 = display.newImage("Images/platformAndyDF.png", 200, 100)
-    platform4.x = display.contentWidth/7
-    platform4.y = display.contentHeight/7
+    platform4.x = display.contentWidth/4
+    platform4.y = display.contentHeight/3.5
     
     -- insert the platform into the scene group
     sceneGroup:insert(platform4)
