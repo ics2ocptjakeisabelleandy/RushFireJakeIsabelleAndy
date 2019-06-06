@@ -413,6 +413,9 @@ function ResumeLevel3()
 
             print ("***Made " .. theEnemy.myName .. " invisible")
         end
+        if (questionsAnswered == 3) then
+            composer.gotoScene "you_win"
+        end
     end
 end
 

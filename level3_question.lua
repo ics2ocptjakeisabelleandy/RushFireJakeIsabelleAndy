@@ -75,7 +75,7 @@ end
 local function TouchListenerAnswer(touch)
     
     if (touch.phase == "ended") then
-        numLivesLevel3 = numLivesLevel3 - 1
+        
         BackToLevel3()
     end 
 end
@@ -102,7 +102,7 @@ end
 local function TouchListenerWrongAnswer3(touch)
     
     if (touch.phase == "ended") then
-
+        numLivesLevel3 = numLivesLevel3 - 1
         BackToLevel3() 
     end 
 end
