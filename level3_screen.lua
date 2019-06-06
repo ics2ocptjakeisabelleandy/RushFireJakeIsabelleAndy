@@ -365,7 +365,7 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function ResumeLevel3()
 
     -- make character visible again
     character.isVisible = true
@@ -374,6 +374,7 @@ function ResumeGame()
         if (theEnemy ~= nil) and (theEnemy.isBodyActive == false) then
             physics.removeBody(theEnemy)
             theEnemy.isVisible = false
+            print ("***Made theEnemy invisible")
         end
     end
 end
