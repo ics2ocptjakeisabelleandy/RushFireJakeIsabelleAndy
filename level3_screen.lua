@@ -29,6 +29,11 @@ sceneName = "level3_screen"
 local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+
+numLivesLevel3 = 3
+-----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
@@ -39,7 +44,6 @@ local health1
 local health2
 local health3
 
-local numLives = 3
 
 local rArrow
 local lArrow
@@ -51,9 +55,9 @@ local zombie2
 local greg
 local theEnemy
 
-local collidedWithGreg
-local collidedWithZombie
-local collidedWithZombie2
+local collidedWithGreg = false
+local collidedWithZombie = false
+local collidedWithZombie2 = false
 
 
 local motionx = 1
@@ -77,7 +81,6 @@ local cloud
 
 local questionsAnswered = 0
 
-local quenstionsRight
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -191,6 +194,25 @@ local function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
             y2 < y1+h1
 end
 
+local function UpdateHealth()
+    if (numLivesLevel3 == 2 ) then 
+        health3.isVisible = false
+        health2.isVisible = true
+        health1.isVisible = true
+        
+
+    elseif (numLivesLevel3 == 1) then
+
+        health1.isVisible = true
+        health2.isVisible = false
+        health3.isVisible = false
+         
+
+    elseif (numLivesLevel3 == 0 ) then
+        timer.performWithDelay(200, YouLoseTransition)
+    end
+end
+
 local function onCollision( self, event )
     
     if ( event.phase == "began" ) then
@@ -205,25 +227,10 @@ local function onCollision( self, event )
             -- remove the character from the display
             display.remove(character)
 
-            numLives = numLives - 1
+            numLivesLevel3 = numLivesLevel3 - 1
             print ("***Collided with ground")
-
-            if (numLives == 2 ) then 
-                health3.isVisible = false
-                health2.isVisible = true
-                health1.isVisible = true
-                timer.performWithDelay(200, ReplaceCharacter) 
-
-            elseif (numLives == 1) then
-
-                health1.isVisible = true
-                health2.isVisible = false
-                health3.isVisible = false
-                timer.performWithDelay(200, ReplaceCharacter) 
-
-            elseif (numLives == 0 ) then
-                timer.performWithDelay(200, YouLoseTransition)
-            end
+            UpdateHealth()
+            
         end
 
 
@@ -309,6 +316,11 @@ local function onCollision( self, event )
     end
 end
 
+local function MakeEnemiesVisible()
+    zombie.isVisible = true
+    greg.isVisible = true
+    zombie2.isVisible = true
+end
 
 local function AddCollisionListeners()
     --if character collides with ground they lose a life
@@ -369,9 +381,10 @@ function ResumeLevel3()
 
     -- make character visible again
     character.isVisible = true
+    UpdateHealth()
 
     if (questionsAnswered > 0) then
-        if (theEnemy ~= nil) and (theEnemy.isBodyActive == false) then
+        if (theEnemy ~= nil) and (theEnemy.isBodyActive == true) then
             physics.removeBody(theEnemy)
             theEnemy.isVisible = false
             print ("***Made theEnemy invisible")
@@ -499,7 +512,7 @@ function scene:create( event )
 
    
 
-    zombie = display.newImage("Images/character2(resize)AndyDF.png", 25, 50)
+    zombie = display.newImageRect("Images/character2.png", 125, 175)
     zombie.x = display.contentWidth/2
     zombie.y = display.contentHeight/4
     zombie.isVisible = true
@@ -508,7 +521,7 @@ function scene:create( event )
     
 
 
-    zombie2 = display.newImage("Images/character2(resize)AndyDF.png", 25, 50)
+    zombie2 = display.newImageRect("Images/character2.png", 125, 175)
     zombie2.x = display.contentWidth/1.15
     zombie2.y = display.contentHeight/2.25
     zombie2.isVisible = true
@@ -551,7 +564,14 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
 
         --create the character, add physics bodies and runtime listeners
+        numLivesLevel3 = 3
+        collidedWithGreg = false
+        collidedWithZombie = false 
+        collidedWithZombie2 = false
+
         ReplaceCharacter()
+
+        MakeEnemiesVisible()
 
         -- add physics bodies to each object
         AddPhysicsBodies()
