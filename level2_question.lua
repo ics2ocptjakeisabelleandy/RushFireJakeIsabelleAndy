@@ -38,7 +38,7 @@ local wrongAnswerText1
 local wrongAnswerText2
 local wrongAnswerText3
 
-local correctAnswer
+local rightAnswer = 0
 local wrongAnswer1
 local wrongAnswer2
 local wrongAnswer3
@@ -70,7 +70,6 @@ local questionText
 
 local function Back2Level2() 
     composer.hideOverlay("crossFade", 400 )
-    numLives = numLives - 1
     ResumeLevel2()
 end 
 
@@ -80,7 +79,9 @@ local function TouchListenerAnswer(touch)
 
     if (touch.phase == "ended") then
 
-        timer.performWithDelay(100, BackToLevel2)
+        rightAnswer = rightAnswer + 1
+
+        timer.performWithDelay(100, Back2Level2)
     end 
 end
 
@@ -88,7 +89,7 @@ end
 local function TouchListenerWrongAnswer1(touch)
  
     if (touch.phase == "ended") then
-        
+        numLives = numLives - 1
         timer.performWithDelay(100, Back2Level2)
     end 
 end
@@ -97,7 +98,7 @@ end
 local function TouchListenerWrongAnswer2(touch)
 
     if (touch.phase == "ended") then
-
+        numLives = numLives - 1
         timer.performWithDelay(100, Back2Level2)
     end 
 end
@@ -107,7 +108,7 @@ local function TouchListenerWrongAnswer3(touch)
 
     
     if (touch.phase == "ended") then
-
+        numLives = numLives - 1
         timer.performWithDelay(100, Back2Level2)
     end 
 end
@@ -300,7 +301,7 @@ local function AskQuestion()
         correctAnswer = "fencing"
 
         -- wrong answers
-        wrongAnswer1 = " IceHockey"
+        wrongAnswer1 = " Ice Hockey"
         wrongAnswer2 = "Tennis"
         wrongAnswer3 = "surfing"
 
@@ -444,7 +445,7 @@ local function AskQuestion()
         wrongAnswer2 = "Laugh"
         wrongAnswer3 = "Fight them"
 
-        questionText.text = "what should you do when met with a bully?"
+        questionText.text = "gamer?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
