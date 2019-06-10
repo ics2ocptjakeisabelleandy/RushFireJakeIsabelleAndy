@@ -48,7 +48,7 @@ local userAnswer
 local textTouched = false
 
 local X1 = display.contentWidth*1/7
-local X2 = display.contentWidth*5/7
+local X2 = display.contentWidth*4.5/7
 local Y1 = display.contentHeight*1/2
 local Y2 = display.contentHeight*5.5/7
 
@@ -191,7 +191,7 @@ local function AskQuestion()
         wrongAnswerText2.text = "Brush your gums"
         wrongAnswerText3.text = "Floss"
 
-        questionText.text = "What shouldn't you do while cleaning your teeth?"
+        questionText.text = "What shouldn't you do while cleaning\nyour teeth?"
 
         elseif (randomOperator == 6) then
 
@@ -280,7 +280,7 @@ local function AskQuestion()
         wrongAnswerText2.text = "Under"
         wrongAnswerText3.text = "Through"
 
-        questionText.text = "You need to get to the other side of the wall. How?"
+        questionText.text = "You need to get to the other side of\nthe wall. How?"
 
 
         elseif (randomOperator == 13) then
@@ -372,7 +372,7 @@ local function AskQuestion()
         wrongAnswerText2.text = "Celary"
         wrongAnswerText3.text = "Beef"
 
-        questionText.text = "Which item go is in the same food group as apples?"
+        questionText.text = "Which item go is in the same food\ngroup as apples?"
 
 
         elseif (randomOperator == 20) then
@@ -479,24 +479,24 @@ function scene:create(event)
     cover:setFillColor(102/255, 0/255, 0/255)
 
     -- create the question text object
-    questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 60)
+    questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 70)
     questionText:scale(0.7,0.7)
 
 
     -- create the answer text object & wrong answer text objects
-    correctAnswerText = display.newText("", X1, Y2, Arial, 50)
+    correctAnswerText = display.newText("", X1, Y2, Arial, 60)
     correctAnswerText.anchorX = 0
     correctAnswerText:scale(0.7,0.7)
 
-    wrongAnswerText1 = display.newText("", X2, Y2, Arial, 50)
+    wrongAnswerText1 = display.newText("", X2, Y2, Arial, 60)
     wrongAnswerText1.anchorX = 0
     wrongAnswerText1:scale(0.7,0.7)
 
-    wrongAnswerText2 = display.newText("", X1, Y1, Arial, 50)
+    wrongAnswerText2 = display.newText("", X1, Y1, Arial, 60)
     wrongAnswerText2.anchorX = 0
     wrongAnswerText2:scale(0.7,0.7)
 
-    wrongAnswerText3 = display.newText("", X2, Y1, Arial, 50)
+    wrongAnswerText3 = display.newText("", X2, Y1, Arial, 60)
     wrongAnswerText3.anchorX = 0
     wrongAnswerText3:scale(0.7,0.7)
 
