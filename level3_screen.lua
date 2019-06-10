@@ -404,6 +404,7 @@ function ResumeLevel3()
     character.isVisible = true
     character.x = display.contentWidth*0.3/3
     character.y = 100
+   
 
     UpdateHealth()
 
