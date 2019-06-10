@@ -67,17 +67,10 @@ local questionText
 -----------------------------------------------------------------------------------------
 
 --making transition to next scene
-local function BackToLevel2() 
-    composer.hideOverlay("crossFade", 400 )
-  
-    ResumeLevel2()
-end 
 
 local function Back2Level2() 
     composer.hideOverlay("crossFade", 400 )
-  
     numLives = numLives - 1
-
     ResumeLevel2()
 end 
 
@@ -284,7 +277,7 @@ local function AskQuestion()
         elseif (randomOperator == 8) then
 
         -- correct answer
-        correctAnswer = "hockey "
+        correctAnswer = "Ice hockey "
 
         -- wrong answers
         wrongAnswer1 = "volleyball"
@@ -307,7 +300,7 @@ local function AskQuestion()
         correctAnswer = "fencing"
 
         -- wrong answers
-        wrongAnswer1 = "Hockey"
+        wrongAnswer1 = " IceHockey"
         wrongAnswer2 = "Tennis"
         wrongAnswer3 = "surfing"
 
@@ -327,7 +320,7 @@ local function AskQuestion()
         correctAnswer = "football"
 
         -- wrong answers
-        wrongAnswer1 =  "hockey"
+        wrongAnswer1 =  " ice hockey"
         wrongAnswer2 = "basketball"
         wrongAnswer3 = "soccer"
 

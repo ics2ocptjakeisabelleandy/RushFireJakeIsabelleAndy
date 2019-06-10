@@ -81,6 +81,8 @@ local platform4
 -- LOCAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
 
+
+
 local function Level3ScreenTransition( )       
     composer.gotoScene( "level3_screen", {effect = "zoomInOutFade", time = 500})
 end
@@ -231,6 +233,8 @@ local function onCollision(self, event)
     end
 end
 
+
+
 local function Mute(touch)
     if (touch.phase == "ended") then
         -- pause the sound
@@ -244,6 +248,7 @@ local function Mute(touch)
 end
 
 
+
 local function Unmute(touch)
     if (touch.phase == "ended") then
         -- play the sound
@@ -255,6 +260,8 @@ local function Unmute(touch)
         unmuteButton.isVisible = false
     end
 end
+
+
 
 local function AddCollisionListeners()
     -- if character collides with earth, onCollision will be called
@@ -282,6 +289,8 @@ local function AddCollisionListeners()
     platform4:addEventListener( "collision" )
 end
 
+
+
 local function RemoveCollisionListeners()
     zombie1:removeEventListener( "collision" )
     zombie2:removeEventListener( "collision" )
@@ -295,6 +304,8 @@ local function RemoveCollisionListeners()
     platform3:removeEventListener( "collision" )
     platform4:removeEventListener( "collision" )    
 end
+
+
 
 local function AddPhysicsBodies()
     -- add the physics
@@ -312,6 +323,8 @@ local function AddPhysicsBodies()
     physics.addBody(platform4, "static", {density=1, friction=0.5, bounce=0 })
 end
 
+
+
 local function RemovePhysicsBodies()
     physics.removeBody(zombie1)
     physics.removeBody(zombie2)
@@ -325,6 +338,8 @@ local function RemovePhysicsBodies()
     physics.removeBody(platform3)
     physics.removeBody(platform4)
 end
+
+
 
 local function makeHealthVisible()
     health1.isVisible = true
@@ -346,7 +361,7 @@ function ResumeLevel2()
             theZombie.isVisible = false
         end
     end 
-    if (questionsAnswered == 5) then
+    if (questionsAnswered == 3) then
         timer.performWithDelay(200, level3ScreenTransition)
     end
 end

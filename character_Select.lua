@@ -7,6 +7,5 @@
 -- continues the level and his 'questionsAnswered' goes up by one. if the user gets the
 -- answer wrong, they lose a life.
 -----------------------------------------------------------------------------------------
-local character1
-local character2
-local character3
+
+character = 1
