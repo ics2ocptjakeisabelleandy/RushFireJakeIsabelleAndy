@@ -44,7 +44,8 @@ local character
 
 local heart1
 local heart2
-local numLives = 2
+local heart3
+local numLives = 3
 
 local rArrow
 local lArrow
@@ -207,6 +208,7 @@ end
 local function MakeHeartsVisible()
     heart1.isVisible = true
     heart2.isVisible = true
+    heart3.isVisible = true
 end
 
 local function YouLoseTansition()
@@ -239,16 +241,25 @@ local function onCollision( self, event )
             -- decrease number of lives
             numLives = numLives - 1
 
-            if (numLives == 1) then
+            if (numLives == 2) then
+                -- update hearts
+                heart1.isVisible = true
+                heart2.isVisible = true
+                heart3.isVisible = false
+                timer.performWithDelay(200, ReplaceCharacter)
+
+            elseif (numLives == 1) then
                 -- update hearts
                 heart1.isVisible = true
                 heart2.isVisible = false
+                heart3.isVisible = false
                 timer.performWithDelay(200, ReplaceCharacter)
 
             elseif (numLives == 0) then
                 -- update hearts
                 heart1.isVisible = false
                 heart2.isVisible = false
+                heart3.isVisible = false
                 timer.performWithDelay(200, YouLoseTansition)
             end
         end
@@ -304,9 +315,7 @@ local function RemoveCollisionListeners()
     earth:removeEventListener("collision")
     saturn:removeEventListener("collision")
     pluto:removeEventListener("collision")
-
     floor:removeEventListener("collision")
-
     portal:removeEventListener("collision")
 end
 
@@ -546,6 +555,13 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( heart2 )
 
+    heart3 = display.newImageRect("Images/Lives.png", 80, 80)
+    heart3.x = 230
+    heart3.y = 50
+    heart3.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( heart3 )
 
     -- insert platform1 into sceneGroup
     sceneGroup:insert(platform4)
@@ -623,7 +639,7 @@ function scene:show( event )
             bkgMusicChannel = audio.play(bkgMusic)
         end
 
-        numLives = 2
+        numLives = 3
         numberCorrect = 0
 
         --create the character, add physics bodies and runtime listeners

@@ -75,7 +75,7 @@ local skyscraper2
 
 local platform4
 local Ground 
-local Moon
+---local Moon
 local cloud
 
 
@@ -160,7 +160,7 @@ end
 -- replace character
 local function ReplaceCharacter()
     character = display.newImageRect("Images/character.png", 100, 150)
-    character.x = display.contentWidth*0.3/3
+    character.x = display.contentWidth*0.2/3
     character.y = 100
     character.width = 75
     character.height = 100
@@ -184,25 +184,6 @@ local function ReplaceCharacter()
     AddRuntimeListeners()
 end
 
--- Collision detection function;
--- Returns true if two boxes overlap, false if they don't;
--- x1,y1 are the top-left coords of the first box, while w1,h1 are its width and height;
--- x2,y2,w2 & h2 are the same, but for the second box.
-local function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
-
-
-    print ("***x2+w2 = " .. (x2 + w2) .. " should be > x1 = " .. x1)
-    print ("***x1+w1 = " .. (x1 + w1) .. " should be > x2 = " .. x2)
-    print ("***y2+h2 = " .. (y2 + h2) .. " should be > y1 = " .. y1)
-    print ("***y1+h1 = " .. (y1 + h1) .. " should be > y2 = " .. y2)
-    
-
-    return  x1 < x2+w2 and
-            x2 < x1+w1 and
-            y1 < y2+h2 and
-            y2 > y1+h1
-end
-
 local function UpdateHealth()
     if (numLivesLevel3 == 2 ) then 
         health3.isVisible = false
@@ -222,11 +203,12 @@ local function UpdateHealth()
     end
 end
 
+ 
 local function onCollision( self, event )
-    
-    if ( event.phase == "began" ) then
 
-        print ("***Inside onCollision, collided with " .. event.target.myName)
+    
+    if ( event.phase == "began" ) then        
+
         if  (event.target.myName == "Ground") then
 
             -- remove runtime listeners that move the character
@@ -246,85 +228,26 @@ local function onCollision( self, event )
         if  (event.target.myName == "zombie2") or
             (event.target.myName == "zombie") or
             (event.target.myName == "greg") then
-
-            -- check to see if the character collided with the greg
-            collidedWithGreg = CheckCollision(character.x, character.y, character.width, character.height,
-                greg.x, greg.y, greg.width, greg.height)
             
+            if (event.other.myName ~= nil) then
+                if (event.other.myName == "Sam") then
+                    print ("***COLLIDED WITH SAM")
+                    -- get the enemy that the user hit
+                    theEnemy = event.target
+
+                    -- stop the character from moving
+                    motionx = 0
+
+                    -- make the character invisible
+                    character.isVisible = false
+                    composer.showOverlay( "level3_question", {isModal = true, effect = fade, time == 300})
+
+                    -- Increment questions answered
+                    questionsAnswered = questionsAnswered + 1 
 
 
-
-            -- check to see if the character collided with the zombie
-            collidedWithZombie = CheckCollision(character.x, character.y, character.width, character.height,
-                zombie.x, zombie.y, zombie.width, zombie.height)
-
-            -- check to see if the character collided with the zombie2
-            collidedWithZombie2 = CheckCollision(character.x, character.y, character.width, character.height,
-                zombie2.x, zombie2.y, zombie2.width, zombie2.height)
-            print ("***character.x = " .. character.x)
-            print ("***character.y = " .. character.y)
-            print ("***character.width = " .. character.width)
-            print ("***character.height = " .. character.height)
-
-            print ("***zombie2.x = " ..zombie2.x)
-            print ("***zombie2.y = " .. zombie2.y)
-            print ("***zombie2.width = " .. zombie2.width)
-            print ("***zombie2.height = " .. zombie2.height)
-
-            print ("***zombie.x = " ..zombie.x)
-            print ("***zombie.y = " .. zombie.y)
-            print ("***zombie.width = " .. zombie.width)
-            print ("***zombie.height = " .. zombie.height)
-
-
-            if (collidedWithGreg == true) then
-                print ("***Collided with greg")
-                -- get the enemy that the user hit
-                theEnemy = event.target
-
-                -- stop the character from moving
-                motionx = 0
-
-                -- make the character invisible
-                character.isVisible = false
-                composer.showOverlay( "level3_question", {isModal = true, effect = fade, time == 300})
-
-                -- Increment questions answered
-                questionsAnswered = questionsAnswered + 1 
-
-            elseif (collidedWithZombie2 == true) then
-                print ("***Collided with zombie2")
-                -- get the enemy that the user hit
-                theEnemy = event.target
-
-                -- stop the character from moving
-                motionx = 0
-
-                -- make the character invisible
-                character.isVisible = false
-                composer.showOverlay( "level3_question", {isModal = true, effect = fade, time == 300})
-
-                -- Increment questions answered
-                questionsAnswered = questionsAnswered + 1 
-
-            elseif (collidedWithZombie == true) then
-                print ("***Collided with zombie")
-                -- get the enemy that the user hit
-                theEnemy = event.target
-
-                -- stop the character from moving
-                motionx = 0
-
-                -- make the character invisible
-                character.isVisible = false
-                composer.showOverlay( "level3_question", {isModal = true, effect = fade, time == 300})
-
-                -- Increment questions answered
-                questionsAnswered = questionsAnswered + 1
-
-            end         
-
-        
+                end
+            end              
 
         end
     end
@@ -373,7 +296,7 @@ local function AddPhysicsBodies()
     physics.addBody(zombie, "static,", {density=1, friction=0.3, bounce=0})
     physics.addBody(zombie2, "static,", {density=1, friction=0.3, bounce=0})
     physics.addBody(greg, "static,", {density=1, friction=0.3, bounce=0})
-    physics.addBody(Moon, "static", {density=1, friction=0.3, bounce=0})
+    --physics.addBody(Moon, "static", {density=1, friction=0.3, bounce=0})
 end
 
 local function RemovePhysicsBodies()
@@ -390,8 +313,6 @@ local function RemovePhysicsBodies()
     physics.removeBody(zombie)
     physics.removeBody(zombie2)
     physics.removeBody(greg)
-    physics.removeBody(Moon)
-    
 end
 
 -----------------------------------------------------------------------------------------
@@ -404,6 +325,7 @@ function ResumeLevel3()
     character.isVisible = true
     character.x = display.contentWidth*0.3/3
     character.y = 100
+   
 
     UpdateHealth()
 
@@ -548,26 +470,26 @@ function scene:create( event )
     zombie:scale (-1,1)
 
     zombie2 = display.newImageRect("Images/character2.png", 125, 175)
-    zombie2.x = display.contentWidth/1.4
+    zombie2.x = display.contentWidth/5.5
     zombie2.y = display.contentHeight/1.4
-    zombie2.x = display.contentHeight*.9
+   
     zombie2.y = 30
     zombie2.myName = "zombie2"
     zombie2:scale (-1,1)
     sceneGroup:insert(zombie2)
     
     greg = display.newImageRect("Images/JakeH(greg)@.png", 100, 100)
-    greg.x = display.contentWidth*.9
+    greg.x = display.contentWidth*.85
     greg.y = 20
     greg.myName = "greg"
     sceneGroup:insert(greg)   
 
-    Moon = display.newImage("Images/MoonJakeH.png", 100, 100)
-    Moon.x = display.contentWidth*.85
-    Moon.y = 100
-    Moon.myName = "Moon"
-    sceneGroup:insert(Moon)
-    Moon:scale (-1,1)
+    --Moon = display.newImage("Images/MoonJakeH.png", 100, 100)
+    --Moon.x = display.contentWidth*.85
+    --Moon.y = 100
+    --Moon.myName = "Moon"
+    --sceneGroup:insert(Moon)
+    --Moon:scale (-1,1)
 end --function scene:create( event )
 
 
@@ -615,6 +537,7 @@ function scene:show( event )
         AddCollisionListeners()
 
         -- make planes visible
+        --Runtime:addEventListener( "collision", onGlobalCollision )
         
     end
 end --function scene:show( event )

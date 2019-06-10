@@ -28,6 +28,14 @@ sceneName = "level2_screen"
 local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+----------------------------------------------------------------------------------------- 
+
+questionsAnsweredRight = 0
+rightAnswer = false
+numLivesLevel2 = 3
+
+-----------------------------------------------------------------------------------------
 -- SOUNDS
 -----------------------------------------------------------------------------------------
 
@@ -44,7 +52,7 @@ local bkg_image
 local health1
 local health2
 local health3
-local numLives = 3
+
 
 local rArrow
 local lArrow
@@ -68,8 +76,6 @@ local leftW
 local topW
 local rightW
 
-local questionsAnswered = 0
-
 local wall
 local wall2
 local ground
@@ -81,6 +87,8 @@ local platform4
 -- LOCAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
 
+
+
 local function Level3ScreenTransition( )       
     composer.gotoScene( "level3_screen", {effect = "zoomInOutFade", time = 500})
 end
@@ -91,6 +99,10 @@ end
 
 local function YouLoseTransition( )       
     composer.gotoScene( "you_lose", {effect = "zoomInOutFade", time = 500})
+end
+
+local function YouWinTransition( )       
+    composer.gotoScene( "you_win", {effect = "zoomInOutFade", time = 500})
 end
 
 -- when right arrow is pressed
@@ -156,7 +168,7 @@ local function ReplaceCharacter()
     character.y = display.contentHeight/1.2
     character.width = 75
     character.height = 100
-    character.myName = "Kill_me"
+    character.myName = "EndMii"
     -- intialize horizontal movement of character
     motionx = 0
 
@@ -187,6 +199,8 @@ local function onCollision(self, event)
            (event.target.myName == "zombie4") or 
            (event.target.myName == "zombie5") then
 
+           print ("***event.target.myName = " .. event.target.myName)
+
 
             -- get the zombie that the character hit
             theZombie = event.target
@@ -199,29 +213,12 @@ local function onCollision(self, event)
 
             -- show overlay with health question
             composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
-
-            -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
-
-            if (numLives == 2 ) then 
-                health3.isVisible = false
-                health2.isVisible = true
-                health1.isVisible = true
-                timer.performWithDelay(200, ReplaceCharacter) 
-
-            elseif (numLives == 1) then
-
-                health1.isVisible = true
-                health2.isVisible = false
-                health3.isVisible = false
-                timer.performWithDelay(200, ReplaceCharacter) 
-
-            elseif (numLives == 0 ) then
-                timer.performWithDelay(200, YouLoseTransition)
-            end
+            
         end
     end
 end
+
+
 
 local function Mute(touch)
     if (touch.phase == "ended") then
@@ -236,6 +233,7 @@ local function Mute(touch)
 end
 
 
+
 local function Unmute(touch)
     if (touch.phase == "ended") then
         -- play the sound
@@ -247,6 +245,8 @@ local function Unmute(touch)
         unmuteButton.isVisible = false
     end
 end
+
+
 
 local function AddCollisionListeners()
     -- if character collides with earth, onCollision will be called
@@ -274,6 +274,8 @@ local function AddCollisionListeners()
     platform4:addEventListener( "collision" )
 end
 
+
+
 local function RemoveCollisionListeners()
     zombie1:removeEventListener( "collision" )
     zombie2:removeEventListener( "collision" )
@@ -287,6 +289,8 @@ local function RemoveCollisionListeners()
     platform3:removeEventListener( "collision" )
     platform4:removeEventListener( "collision" )    
 end
+
+
 
 local function AddPhysicsBodies()
     -- add the physics
@@ -304,12 +308,9 @@ local function AddPhysicsBodies()
     physics.addBody(platform4, "static", {density=1, friction=0.5, bounce=0 })
 end
 
+
+
 local function RemovePhysicsBodies()
-    physics.removeBody(zombie1)
-    physics.removeBody(zombie2)
-    physics.removeBody(zombie3)
-    physics.removeBody(zombie4)
-    physics.removeBody(zombie5)
     physics.removeBody(wall)
     physics.removeBody(wall2) 
     physics.removeBody(platform1)
@@ -318,29 +319,71 @@ local function RemovePhysicsBodies()
     physics.removeBody(platform4)
 end
 
+
+
 local function makeHealthVisible()
     health1.isVisible = true
     health2.isVisible = true
     health3.isVisible = true
+end
+
+local function UpdateHealth()
+    if (numLivesLevel2 == 3) then
+        health3.isVisible = true
+        health2.isVisible = true
+        health1.isVisible = true
+
+    elseif (numLivesLevel2 == 2 ) then 
+        health3.isVisible = false
+        health2.isVisible = true
+        health1.isVisible = true
+
+    elseif (numLivesLevel2 == 1) then
+
+        health1.isVisible = true
+        health2.isVisible = false
+        health3.isVisible = false
+
+    elseif (numLivesLevel2 == 0 ) then
+        timer.performWithDelay(200, YouLoseTransition)
+    end
 end
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
 function ResumeLevel2()
+    print ("***Inside ResumeLevel2")
+
+    -- update health
+    UpdateHealth()
 
     -- make character visible again
     character.isVisible = true
+    
 
-    if (questionsAnswered > 0) then
+    print ("***questionsAnsweredRight = " .. questionsAnsweredRight)            
+
+
+    if (rightAnswer == true) then
+        print ("***rightAnswer is TRUE")
+
+        if (theZombie ~= nil) then
+            print ("***theZombie is not nil")
+        end
+
         if (theZombie~= nil) and (theZombie.isBodyActive == true) then
+            print ("***Removing the zombie")
             physics.removeBody(theZombie)
             theZombie.isVisible = false
         end
+
+        if (questionsAnsweredRight == 5) then
+            timer.performWithDelay(1000, LevelSelectScreenTransition)
+        end 
     end 
-    if (questionsAnswered == 5) then
-        timer.performWithDelay(200, level3ScreenTransition)
-    end
+    
+    rightAnswer = false
 end
 
 -----------------------------------------------------------------------------------------
@@ -378,7 +421,7 @@ function scene:create( event )
     wall2 = display.newImageRect("Images/wallAndyDF.png", display.contentWidth, 100)
 
     -- putting the wall on the left
-    wall2.x = 1060
+    wall2.x = 1076
     wall2.y = display.contentHeight/2
     wall2:rotate(90)
 
@@ -410,7 +453,7 @@ function scene:create( event )
     -- insert the ground image into the scene group
     sceneGroup:insert( ground )    
 
-    zombie1 = display.newImage("Images/character2JetPack(resize)AndyDF.png")
+    zombie1 = display.newImage("Images/character2Jetpack(resize)AndyDF.png")
     zombie1.x = display.contentWidth/1.3
     zombie1.y = display.contentHeight/4
     zombie1.myName = "zombie1"
@@ -577,6 +620,10 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
+        numLivesLevel2 = 3
+        questionsAnsweredRight = 0
+        rightAnswer = false
+
         --create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
 
@@ -588,6 +635,9 @@ function scene:show( event )
 
         -- make planes visible
         MakeObjectCharactersVisible()
+
+        -- call update healht
+        UpdateHealth()
     end
 end --function scene:show( event )
 
