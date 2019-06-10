@@ -28,6 +28,12 @@ sceneName = "level2_screen"
 local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+----------------------------------------------------------------------------------------- 
+
+questionsAnsweredRight = 0
+
+-----------------------------------------------------------------------------------------
 -- SOUNDS
 -----------------------------------------------------------------------------------------
 
@@ -68,8 +74,8 @@ local leftW
 local topW
 local rightW
 
-local questionsAnswered = 0
-local rightAnswer = 0
+
+local rightAnswer = false
 
 local wall
 local wall2
@@ -163,7 +169,7 @@ local function ReplaceCharacter()
     character.y = display.contentHeight/1.2
     character.width = 75
     character.height = 100
-    character.myName = "Kill_me"
+    character.myName = "EndMii"
     -- intialize horizontal movement of character
     motionx = 0
 
@@ -206,30 +212,7 @@ local function onCollision(self, event)
 
             -- show overlay with health question
             composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
-
-            -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
-
-            if (numLives == 2 ) then 
-                health3.isVisible = false
-                health2.isVisible = true
-                health1.isVisible = true
-                timer.performWithDelay(200, ReplaceCharacter) 
-
-            elseif (numLives == 1) then
-
-                health1.isVisible = true
-                health2.isVisible = false
-                health3.isVisible = false
-                timer.performWithDelay(200, ReplaceCharacter) 
-
-            elseif (numLives == 0 ) then
-                timer.performWithDelay(200, YouLoseTransition)
-            end
-
-            if (rightAnswer == 5) then
-                timer.performWithDelay(3000, LevelSelectScreenTransition)
-            end
+            
         end
     end
 end
@@ -347,21 +330,61 @@ local function makeHealthVisible()
     health2.isVisible = true
     health3.isVisible = true
 end
+
+local function UpdateHealth()
+    if (numLives == 2 ) then 
+        health3.isVisible = false
+        health2.isVisible = true
+        health1.isVisible = true
+        timer.performWithDelay(200, ReplaceCharacter) 
+
+    elseif (numLives == 1) then
+
+        health1.isVisible = true
+        health2.isVisible = false
+        health3.isVisible = false
+        timer.performWithDelay(200, ReplaceCharacter) 
+
+    elseif (numLives == 0 ) then
+        timer.performWithDelay(200, YouLoseTransition)
+    end
+end
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
 function ResumeLevel2()
+    print ("***Inside ResumeLevel2")
+
+    -- update health
+    UpdateHealth()
 
     -- make character visible again
     character.isVisible = true
 
-    if (rightAnswer > 0) then
+    -- Increment questions answered
+    questionsAnsweredRight = questionsAnsweredRight + 1
+    
+            
+
+
+    if (rightAnswer == true) then
+        print ("***rightAnswer is TRUE")
+
+        if (theZombie ~= nil) then
+            print ("***theZombie is not nil")
+        end
+
         if (theZombie~= nil) and (theZombie.isBodyActive == true) then
+            print ("***Removing the zombie")
             physics.removeBody(theZombie)
             theZombie.isVisible = false
         end
     end 
+    if (questionsAnsweredRight == 5) then
+        timer.performWithDelay(1000, LevelSelectScreenTransition)
+    end 
+    rightAnswer = false
 end
 
 -----------------------------------------------------------------------------------------
@@ -431,7 +454,7 @@ function scene:create( event )
     -- insert the ground image into the scene group
     sceneGroup:insert( ground )    
 
-    zombie1 = display.newImage("Images/character2JetPack(resize)AndyDF.png")
+    zombie1 = display.newImage("Images/character2Jetpack(resize)AndyDF.png")
     zombie1.x = display.contentWidth/1.3
     zombie1.y = display.contentHeight/4
     zombie1.myName = "zombie1"
@@ -599,7 +622,8 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
 
         numLives = 3
-        questionsAnswered = 0
+        questionsAnsweredRight = 0
+        rightAnswer = false
 
         --create the character, add physics bodies and runtime listeners
         ReplaceCharacter()

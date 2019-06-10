@@ -33,21 +33,16 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 -- the local variables for this scene
+local questionText
 local correctAnswerText
 local wrongAnswerText1
 local wrongAnswerText2
 local wrongAnswerText3
 
-local rightAnswer = 0
-local wrongAnswer1
-local wrongAnswer2
-local wrongAnswer3
 
 local answerPosition = 1
 local bkg
 local cover
-
-local questionsAnswered = 0
 
 local userAnswer
 local textTouched = false
@@ -57,10 +52,8 @@ local X2 = display.contentWidth*5/7
 local Y1 = display.contentHeight*1/2
 local Y2 = display.contentHeight*5.5/7
 
-local questionObject
-local correctAnswer
 local randomOperator
-local questionText
+
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -75,11 +68,12 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
-    userAnswer = correctAnswerText.text
 
     if (touch.phase == "ended") then
 
-        rightAnswer = rightAnswer + 1
+        questionsAnsweredRight = questionsAnsweredRight + 1
+
+        rightAnswer = true
 
         timer.performWithDelay(100, Back2Level2)
     end 
@@ -138,32 +132,25 @@ local function AskQuestion()
     if (randomOperator == 1) then
 
         -- correct answer
-        correctAnswer = "baseball"
+        correctAnswerText.text = "Baseball"
 
         -- wrong answers
-        wrongAnswer1 = "basketball"
-        wrongAnswer2 = "wrestling"
-        wrongAnswer3 = "soccer"
+        wrongAnswerText1.text = "Basketball"
+        wrongAnswerText2.text = "Wrestling"
+        wrongAnswerText3.text = "Soccer"
 
         questionText.text = "What sport uses a bat?"
 
-        -- create answer text
-        correctAnswerText.text = correctAnswer
-
-        -- wrong answer text
-        wrongAnswerText1.text = wrongAnswer1
-        wrongAnswerText2.text = wrongAnswer2
-        wrongAnswerText3.text = wrongAnswer3
     
     elseif (randomOperator == 2) then
 
         -- correct answer
-        correctAnswer = "running long"
+        correctAnswerText.text = "Running long"
 
         -- wrong answers
-        wrongAnswer1 = "jumping high"
-        wrongAnswer2 = "running fast"
-        wrongAnswer3 = "throwing far"
+        wrongAnswerText1.text = "Jumping high"
+        wrongAnswerText2.text = "Running fast"
+        wrongAnswerText3.text = "Throwing far"
 
         questionText.text = "What is cardio?"
 
@@ -178,12 +165,12 @@ local function AskQuestion()
     elseif (randomOperator == 3) then
 
         -- correct answer
-        correctAnswer = "beer"
+        correctAnswerText.text = "Beer"
 
         -- wrong answers
-        wrongAnswer1 = "Juice"
-        wrongAnswer2 = "caffeine"
-        wrongAnswer3 = "water"
+        wrongAnswerText1.text = "Juice"
+        wrongAnswerText2.text = "Smoothie"
+        wrongAnswerText3.text = "Eater"
 
         questionText.text = " What drink is bad for your health? "
 
@@ -198,12 +185,12 @@ local function AskQuestion()
     elseif (randomOperator == 4) then
 
         -- correct answer
-        correctAnswer = "cooking"
+        correctAnswerText.text = "Cooking"
 
         -- wrong answers
-        wrongAnswer1 = "fortnite skills"
-        wrongAnswer2 = "shoveling"
-        wrongAnswer3 = "sports"
+        wrongAnswerText1.text = "Fortnite skills"
+        wrongAnswerText2.text = "Shoveling"
+        wrongAnswerText3.text = "Sports"
 
         questionText.text = "What is a living skill?"
 
@@ -218,14 +205,14 @@ local function AskQuestion()
         elseif (randomOperator == 5) then
 
         -- correct answer
-        correctAnswer = "drink mouthwash"
+        correctAnswerText.text = "Drink mouthwash"
 
         -- wrong answers
-        wrongAnswer1 = "Brush your teeth"
-        wrongAnswer2 = "Brush your gums"
-        wrongAnswer3 = "Floss"
+        wrongAnswerText1.text = "Brush your teeth"
+        wrongAnswerText2.text = "Brush your gums"
+        wrongAnswerText3.text = "Floss"
 
-        questionText.text = "what shouldn't you do while cleaning your teeth?"
+        questionText.text = "What shouldn't you do while cleaning your teeth?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -238,14 +225,14 @@ local function AskQuestion()
         elseif (randomOperator == 6) then
 
         -- correct answer
-        correctAnswer = "18"
+        correctAnswerText.text = "18"
 
         -- wrong answers
-        wrongAnswer1 = "16"
-        wrongAnswer2 = "12"
-        wrongAnswer3 = "14"
+        wrongAnswerText1.text = "16"
+        wrongAnswerText2.text = "12"
+        wrongAnswerText3.text = "14"
 
-        questionText.text = "what age can you buy alcohol?"
+        questionText.text = "What age can you buy alcohol?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -258,12 +245,12 @@ local function AskQuestion()
         elseif (randomOperator == 7) then
 
         -- correct answer
-        correctAnswer = "extreme mood swings"
+        correctAnswerText.text = "Extreme mood swings"
 
         -- wrong answers
-        wrongAnswer1 = "nothing happens"
-        wrongAnswer2 = "faster reactions"
-        wrongAnswer3 = "hanging out with friends"
+        wrongAnswerText1.text = "Nothing happens"
+        wrongAnswerText2.text = "Faster reactions"
+        wrongAnswerText3.text = "Hanging out with friends"
 
         questionText.text = "What are signs of addiction?"
 
@@ -278,12 +265,12 @@ local function AskQuestion()
         elseif (randomOperator == 8) then
 
         -- correct answer
-        correctAnswer = "Ice hockey "
+        correctAnswerText.text = "Ice hockey "
 
         -- wrong answers
-        wrongAnswer1 = "volleyball"
-        wrongAnswer2 = "basketball"
-        wrongAnswer3 = "Tag"
+        wrongAnswerText1.text = "Volleyball"
+        wrongAnswerText2.text = "Basketball"
+        wrongAnswerText3.text = "Tag"
 
         questionText.text = "What sport do you HAVE to wear a helmet?"
 
@@ -298,12 +285,12 @@ local function AskQuestion()
         elseif (randomOperator == 9) then
 
         -- correct answer
-        correctAnswer = "fencing"
+        correctAnswerText.text = "Fencing"
 
         -- wrong answers
-        wrongAnswer1 = " Ice Hockey"
-        wrongAnswer2 = "Tennis"
-        wrongAnswer3 = "surfing"
+        wrongAnswerText1.text = "Ice Hockey"
+        wrongAnswerText2.text = "Tennis"
+        wrongAnswerText3.text = "Surfing"
 
         questionText.text = " Which sport is a olympic sport? "
 
@@ -318,12 +305,12 @@ local function AskQuestion()
         elseif (randomOperator == 10) then
 
         -- correct answer
-        correctAnswer = "football"
+        correctAnswerText.text = "football"
 
         -- wrong answers
-        wrongAnswer1 =  " ice hockey"
-        wrongAnswer2 = "basketball"
-        wrongAnswer3 = "soccer"
+        wrongAnswerText1.text =  "Ice hockey"
+        wrongAnswerText2.text = "Basketball"
+        wrongAnswerText3.text = "Soccer"
 
         questionText.text = "What sport can you only allowed do outside?"
 
@@ -338,12 +325,12 @@ local function AskQuestion()
         elseif (randomOperator == 11) then
 
         -- correct answer
-        correctAnswer = "Badminton"
+        correctAnswerText.text = "Badminton"
 
         -- wrong answers
-        wrongAnswer1 = "rugby"
-        wrongAnswer2 = "football"
-        wrongAnswer3 = "dodgeball"
+        wrongAnswerText1.text = "Rugby"
+        wrongAnswerText2.text = "Football"
+        wrongAnswerText3.text = "Dodgeball"
 
         questionText.text = "What sport uses a raquet?"
 
@@ -358,12 +345,12 @@ local function AskQuestion()
         elseif (randomOperator == 12) then
 
         -- correct answer
-        correctAnswer = "above "
+        correctAnswerText.text = "Above "
 
         -- wrong answers
-        wrongAnswer1 = "around"
-        wrongAnswer2 = "under"
-        wrongAnswer3 = "through"
+        wrongAnswerText1.text = "Around"
+        wrongAnswerText2.text = "Under"
+        wrongAnswerText3.text = "Through"
 
         questionText.text = "You need to get to the other side of the wall. How?"
 
@@ -378,12 +365,12 @@ local function AskQuestion()
         elseif (randomOperator == 13) then
 
         -- correct answer
-        correctAnswer = "Track and Field"
+        correctAnswerText.text = "Track and Field"
 
         -- wrong answers
-        wrongAnswer1 = "volleyball"
-        wrongAnswer2 = "basketball"
-        wrongAnswer3 = "soccer"
+        wrongAnswerText1.text = "Volleyball"
+        wrongAnswerText2.text = "Basketball"
+        wrongAnswerText3.text = "Soccer"
 
         questionText.text = "Which sport is not a team sport?"
 
@@ -398,14 +385,14 @@ local function AskQuestion()
         elseif (randomOperator == 14) then
 
         -- correct answer
-        correctAnswer = "kicking"
+        correctAnswerText.text = "Kicking"
 
         -- wrong answers
-        wrongAnswer1 = "punching"
-        wrongAnswer2 = "climbing"
-        wrongAnswer3 = "Throwing"
+        wrongAnswerText1.text = "Punching"
+        wrongAnswerText2.text = "Climbing"
+        wrongAnswerText3.text = "Throwing"
 
-        questionText.text = "what action do you do in soccer?"
+        questionText.text = "What action do you do in soccer?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
@@ -418,12 +405,12 @@ local function AskQuestion()
         elseif (randomOperator == 15) then
 
         -- correct answer
-        correctAnswer = "8 hours "
+        correctAnswerText.text = "8 hours "
 
         -- wrong answers
-        wrongAnswer1 = "4 hours"
-        wrongAnswer2 = "10 hours"
-        wrongAnswer3 = "5 hours"
+        wrongAnswerText1.text = "4 hours"
+        wrongAnswerText2.text = "10 hours"
+        wrongAnswerText3.text = "5 hours"
 
         questionText.text = "How long should you sleep every night?"
 
@@ -438,109 +425,76 @@ local function AskQuestion()
         elseif (randomOperator == 16) then
 
         -- correct answer
-        correctAnswer = "tell a teacher"
+        correctAnswerText.text = "Protein"
 
         -- wrong answers
-        wrongAnswer1 = "run away"
-        wrongAnswer2 = "Laugh"
-        wrongAnswer3 = "Fight them"
+        wrongAnswerText1.text = "Vegetables"
+        wrongAnswerText2.text = "Grain"
+        wrongAnswerText3.text = "Dairy"
 
-        questionText.text = "gamer?"
+        questionText.text = "what food group does beef go into?"
 
-        -- create answer text
-        correctAnswerText.text = correctAnswer
 
-        -- wrong answer text
-        wrongAnswerText1.text = wrongAnswer1
-        wrongAnswerText2.text = wrongAnswer2
-        wrongAnswerText3.text = wrongAnswer3
 
         elseif (randomOperator == 17) then
 
         -- correct answer
-        correctAnswer = "dark chocolate "
+        correctAnswerText.text = "Dark chocolate "
 
         -- wrong answers
-        wrongAnswer1 = "chocolate banana"
-        wrongAnswer2 = "White chocolate"
-        wrongAnswer3 = "Milk chocolate"
+        wrongAnswerText1.text = "Chocolate banana"
+        wrongAnswerText2.text = "White chocolate"
+        wrongAnswerText3.text = "Milk chocolate"
 
-        questionText.text = "what is the healthiest Item here?"
+        questionText.text = "What is the healthiest Item here?"
 
-        -- create answer text
-        correctAnswerText.text = correctAnswer
-
-        -- wrong answer text
-        wrongAnswerText1.text = wrongAnswer1
-        wrongAnswerText2.text = wrongAnswer2
-        wrongAnswerText3.text = wrongAnswer3
 
         elseif (randomOperator == 18) then
 
         -- correct answer
-        correctAnswer = "2 liters "
+        correctAnswerText.text = "2 liters "
 
         -- wrong answers
-        wrongAnswer1 = "10 Oz"
-        wrongAnswer2 = "10 liters"
-        wrongAnswer3 = "400 milliliters"
+        wrongAnswerText1.text = "10 Oz"
+        wrongAnswerText2.text = "10 liters"
+        wrongAnswerText3.text = "400 milliliters"
 
         questionText.text = "how much water should you drink a day?"
 
-        -- create answer text
-        correctAnswerText.text = correctAnswer
 
-        -- wrong answer text
-        wrongAnswerText1.text = wrongAnswer1
-        wrongAnswerText2.text = wrongAnswer2
-        wrongAnswerText3.text = wrongAnswer3
 
         elseif (randomOperator == 19) then
 
         -- correct answer
-        correctAnswer = "Orange"
+        correctAnswerText.text = "Orange"
 
         -- wrong answers
-        wrongAnswer1 = "Carrots"
-        wrongAnswer2 = "celary"
-        wrongAnswer3 = "beef"
+        wrongAnswerText1.text = "Carrots"
+        wrongAnswerText2.text = "Celary"
+        wrongAnswerText3.text = "Beef"
 
-        questionText.text = "which item go is in the same food group as apples?"
+        questionText.text = "Which item go is in the same food group as apples?"
 
-        -- create answer text
-        correctAnswerText.text = correctAnswer
-
-        -- wrong answer text
-        wrongAnswerText1.text = wrongAnswer1
-        wrongAnswerText2.text = wrongAnswer2
-        wrongAnswerText3.text = wrongAnswer3
 
         elseif (randomOperator == 20) then
 
         -- correct answer
-        correctAnswer = "dairy"
+        correctAnswerText.text = "Dairy"
 
         -- wrong answers
-        wrongAnswer1 = "fruits"
-        wrongAnswer2 = "protein"
-        wrongAnswer3 = "grain"
+        wrongAnswerText1.text = "Fruits"
+        wrongAnswerText2.text = "Protein"
+        wrongAnswerText3.text = "Grain"
 
-        questionText.text = "what food group is milk a part of?"
+        questionText.text = "What food group is milk a part of?"
 
-        -- create answer text
-        correctAnswerText.text = correctAnswer
-
-        -- wrong answer text
-        wrongAnswerText1.text = wrongAnswer1
-        wrongAnswerText2.text = wrongAnswer2
-        wrongAnswerText3.text = wrongAnswer3
     end
 end
 
 local function PositionAnswers()
 
     --creating random start position in a cretain area
-    answerPosition = math.random(1,3)
+    answerPosition = math.random(1,4)
 
     if (answerPosition == 1) then
 
@@ -559,21 +513,6 @@ local function PositionAnswers()
         
     elseif (answerPosition == 2) then
 
-        correctAnswerText.x = X1
-        correctAnswerText.y = Y2
-            
-        wrongAnswerText1.x = X1
-        wrongAnswerText1.y = Y1
-            
-        wrongAnswerText2.x = X2
-        wrongAnswerText2.y = Y2
-
-        wrongAnswerText3.x = X2
-        wrongAnswerText3.y = Y1
-
-
-    elseif (answerPosition == 3) then
-
         correctAnswerText.x = X2
         correctAnswerText.y = Y1
             
@@ -585,6 +524,35 @@ local function PositionAnswers()
 
         wrongAnswerText3.x = X1
         wrongAnswerText3.y = Y1
+
+
+    elseif (answerPosition == 3) then
+
+        correctAnswerText.x = X1
+        correctAnswerText.y = Y2
+            
+        wrongAnswerText1.x = X2
+        wrongAnswerText1.y = Y2
+            
+        wrongAnswerText2.x = X1
+        wrongAnswerText2.y = Y1
+
+        wrongAnswerText3.x = X2
+        wrongAnswerText3.y = Y1
+
+    elseif ( answerPosition == 4) then
+
+        correctAnswerText.x = X2
+        correctAnswerText.y = Y2
+
+        wrongAnswerText1.x = X1
+        wrongAnswerText1.y = Y1
+            
+        wrongAnswerText2.x = X2
+        wrongAnswerText2.y = Y1
+
+        wrongAnswerText3.x = X1
+        wrongAnswerText3.y = Y2
 
     end
 end
