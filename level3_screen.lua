@@ -492,7 +492,7 @@ function scene:create( event )
     -- insert the wall into scene group
     sceneGroup:insert(rightW)
 
-    skyscraper1 = display.newImage("Images/skyscraper1jakeH.png", 200, 100)
+    skyscraper1 = display.newImage("Images/skyscraper1JakeH.png", 200, 100)
     skyscraper1.x = display.contentWidth/11
     skyscraper1.y = display.contentHeight/1.35
 
@@ -500,7 +500,7 @@ function scene:create( event )
     sceneGroup:insert(skyscraper1)
 
 
-    skyscraper2 = display.newImage("Images/skyscraper2jakeH.png", 300, 100)
+    skyscraper2 = display.newImage("Images/skyscraper2JakeH.png", 300, 100)
     skyscraper2.x = display.contentWidth/2
     skyscraper2.y = display.contentHeight/1.35
 
