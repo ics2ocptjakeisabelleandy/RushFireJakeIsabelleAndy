@@ -95,6 +95,10 @@ local function YouLoseTransition( )
     composer.gotoScene( "you_lose", {effect = "zoomInOutFade", time = 500})
 end
 
+local function YouWinTransition( )       
+    composer.gotoScene( "you_win", {effect = "zoomInOutFade", time = 500})
+end
+
 -- when right arrow is pressed
 local function right(touch)
     motionx = SPEED
@@ -220,6 +224,10 @@ local function onCollision(self, event)
 
             elseif (numLives == 0 ) then
                 timer.performWithDelay(200, YouLoseTransition)
+            end
+
+            if (questionsAnswered == 5) then
+                timer.performWithDelay(3000, YouWinTransition)
             end
         end
     end
@@ -591,6 +599,9 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+
+        numLives = 3
+        questionsAnswered = 0
 
         --create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
