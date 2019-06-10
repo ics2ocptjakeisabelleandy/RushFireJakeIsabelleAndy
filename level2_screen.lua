@@ -32,6 +32,8 @@ local scene = composer.newScene( sceneName )
 ----------------------------------------------------------------------------------------- 
 
 questionsAnsweredRight = 0
+rightAnswer = false
+numLivesLevel2 = 3
 
 -----------------------------------------------------------------------------------------
 -- SOUNDS
@@ -50,7 +52,7 @@ local bkg_image
 local health1
 local health2
 local health3
-local numLives = 3
+
 
 local rArrow
 local lArrow
@@ -73,9 +75,6 @@ local GRAVITY = 7
 local leftW
 local topW
 local rightW
-
-
-local rightAnswer = false
 
 local wall
 local wall2
@@ -200,6 +199,8 @@ local function onCollision(self, event)
            (event.target.myName == "zombie4") or 
            (event.target.myName == "zombie5") then
 
+           print ("***event.target.myName = " .. event.target.myName)
+
 
             -- get the zombie that the character hit
             theZombie = event.target
@@ -310,11 +311,6 @@ end
 
 
 local function RemovePhysicsBodies()
-    physics.removeBody(zombie1)
-    physics.removeBody(zombie2)
-    physics.removeBody(zombie3)
-    physics.removeBody(zombie4)
-    physics.removeBody(zombie5)
     physics.removeBody(wall)
     physics.removeBody(wall2) 
     physics.removeBody(platform1)
@@ -332,20 +328,23 @@ local function makeHealthVisible()
 end
 
 local function UpdateHealth()
-    if (numLives == 2 ) then 
+    if (numLivesLevel2 == 3) then
+        health3.isVisible = true
+        health2.isVisible = true
+        health1.isVisible = true
+
+    elseif (numLivesLevel2 == 2 ) then 
         health3.isVisible = false
         health2.isVisible = true
         health1.isVisible = true
-        timer.performWithDelay(200, ReplaceCharacter) 
 
-    elseif (numLives == 1) then
+    elseif (numLivesLevel2 == 1) then
 
         health1.isVisible = true
         health2.isVisible = false
         health3.isVisible = false
-        timer.performWithDelay(200, ReplaceCharacter) 
 
-    elseif (numLives == 0 ) then
+    elseif (numLivesLevel2 == 0 ) then
         timer.performWithDelay(200, YouLoseTransition)
     end
 end
@@ -361,11 +360,9 @@ function ResumeLevel2()
 
     -- make character visible again
     character.isVisible = true
-
-    -- Increment questions answered
-    questionsAnsweredRight = questionsAnsweredRight + 1
     
-            
+
+    print ("***questionsAnsweredRight = " .. questionsAnsweredRight)            
 
 
     if (rightAnswer == true) then
@@ -380,10 +377,12 @@ function ResumeLevel2()
             physics.removeBody(theZombie)
             theZombie.isVisible = false
         end
+
+        if (questionsAnsweredRight == 5) then
+            timer.performWithDelay(1000, LevelSelectScreenTransition)
+        end 
     end 
-    if (questionsAnsweredRight == 5) then
-        timer.performWithDelay(1000, LevelSelectScreenTransition)
-    end 
+    
     rightAnswer = false
 end
 
@@ -621,7 +620,7 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
-        numLives = 3
+        numLivesLevel2 = 3
         questionsAnsweredRight = 0
         rightAnswer = false
 
@@ -636,6 +635,9 @@ function scene:show( event )
 
         -- make planes visible
         MakeObjectCharactersVisible()
+
+        -- call update healht
+        UpdateHealth()
     end
 end --function scene:show( event )
 
