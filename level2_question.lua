@@ -21,7 +21,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_question"
+sceneName = "level2_question"
 
 -----------------------------------------------------------------------------------------
 
@@ -73,14 +73,19 @@ local function BackToLevel2()
     ResumeLevel2()
 end 
 
+local function Back2Level2() 
+    composer.hideOverlay("crossFade", 400 )
+  
+    numLives = numLives - 1
+
+    ResumeLevel2()
+end 
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
     userAnswer = correctAnswerText.text
 
     if (touch.phase == "ended") then
-
-        questionsAnswered = questionsAnswered + 1
 
         timer.performWithDelay(100, BackToLevel2)
     end 
@@ -90,10 +95,8 @@ end
 local function TouchListenerWrongAnswer1(touch)
  
     if (touch.phase == "ended") then
-
-        numLives = numLives - 1
         
-        timer.performWithDelay(100, BackToLevel2)
+        timer.performWithDelay(100, Back2Level2)
     end 
 end
 
@@ -102,9 +105,7 @@ local function TouchListenerWrongAnswer2(touch)
 
     if (touch.phase == "ended") then
 
-        numLives = numLives - 1
-
-        timer.performWithDelay(100, BackToLevel2)
+        timer.performWithDelay(100, Back2Level2)
     end 
 end
 
@@ -114,10 +115,7 @@ local function TouchListenerWrongAnswer3(touch)
     
     if (touch.phase == "ended") then
 
-        numLives = numLives - 1
-
-
-        timer.performWithDelay(100, BackToLevel2)
+        timer.performWithDelay(100, Back2Level2)
     end 
 end
 
@@ -366,14 +364,14 @@ local function AskQuestion()
         elseif (randomOperator == 12) then
 
         -- correct answer
-        correctAnswer = "around "
+        correctAnswer = "above "
 
         -- wrong answers
-        wrongAnswer1 = "above"
+        wrongAnswer1 = "around"
         wrongAnswer2 = "under"
         wrongAnswer3 = "through"
 
-        questionText.text = "you need to get around a wall with a ceiling. How?"
+        questionText.text = "You need to get to the other side of the wall. How?"
 
         -- create answer text
         correctAnswerText.text = correctAnswer
