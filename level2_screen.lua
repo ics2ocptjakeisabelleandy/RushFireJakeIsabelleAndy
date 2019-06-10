@@ -69,6 +69,7 @@ local topW
 local rightW
 
 local questionsAnswered = 0
+local rightAnswer = 0
 
 local wall
 local wall2
@@ -226,8 +227,8 @@ local function onCollision(self, event)
                 timer.performWithDelay(200, YouLoseTransition)
             end
 
-            if (questionsAnswered == 5) then
-                timer.performWithDelay(3000, YouWinTransition)
+            if (rightAnswer == 5) then
+                timer.performWithDelay(3000, LevelSelectScreenTransition)
             end
         end
     end
@@ -355,15 +356,12 @@ function ResumeLevel2()
     -- make character visible again
     character.isVisible = true
 
-    if (questionsAnswered > 0) then
+    if (rightAnswer > 0) then
         if (theZombie~= nil) and (theZombie.isBodyActive == true) then
             physics.removeBody(theZombie)
             theZombie.isVisible = false
         end
     end 
-    if (questionsAnswered == 3) then
-        timer.performWithDelay(200, level3ScreenTransition)
-    end
 end
 
 -----------------------------------------------------------------------------------------
@@ -401,7 +399,7 @@ function scene:create( event )
     wall2 = display.newImageRect("Images/wallAndyDF.png", display.contentWidth, 100)
 
     -- putting the wall on the left
-    wall2.x = 1060
+    wall2.x = 1076
     wall2.y = display.contentHeight/2
     wall2:rotate(90)
 
