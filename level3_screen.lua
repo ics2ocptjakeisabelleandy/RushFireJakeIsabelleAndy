@@ -160,7 +160,7 @@ end
 -- replace character
 local function ReplaceCharacter()
     character = display.newImageRect("Images/character.png", 100, 150)
-    character.x = display.contentWidth*0.3/3
+    character.x = display.contentWidth*0.2/3
     character.y = 100
     character.width = 75
     character.height = 100
@@ -313,8 +313,6 @@ local function RemovePhysicsBodies()
     physics.removeBody(zombie)
     physics.removeBody(zombie2)
     physics.removeBody(greg)
-    --physics.removeBody(Moon)
-    
 end
 
 -----------------------------------------------------------------------------------------
@@ -423,7 +421,7 @@ function scene:create( event )
     sceneGroup:insert(skyscraper1)
 
 
-    skyscraper2 = display.newImage("Images/skyscraper2JakeH.png", 300, 100)
+    skyscraper2 = display.newImage("Images/skyscraper2jakeH.png", 300, 100)
     skyscraper2.x = display.contentWidth/2
     skyscraper2.y = display.contentHeight/1.35
 
@@ -472,7 +470,7 @@ function scene:create( event )
     zombie:scale (-1,1)
 
     zombie2 = display.newImageRect("Images/character2.png", 125, 175)
-    zombie2.x = display.contentWidth/6
+    zombie2.x = display.contentWidth/5.5
     zombie2.y = display.contentHeight/1.4
    
     zombie2.y = 30
