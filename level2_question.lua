@@ -1,9 +1,8 @@
 -----------------------------------------------------------------------------------------
 --
--- level1_screen.lua
--- Created by: Isabelle
+-- level2_question.lua
 -- Date: May 23, 2019
--- Description: Asks a question in level 1. If user gets the question right, then the user
+-- Description: Asks a question in level 2. If user gets the question right, then the user
 -- continues the level and his 'questionsAnswered' goes up by one. if the user gets the
 -- answer wrong, they lose a life.
 -----------------------------------------------------------------------------------------

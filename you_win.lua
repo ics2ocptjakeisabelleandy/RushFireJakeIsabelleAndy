@@ -1,9 +1,6 @@
 -----------------------------------------------------------------------------------------
--- SceneTemplate.lua
--- Scene Template (Composer API)
--- credits_screen.lua
--- Created by: Daniel Lopez-Carreon
--- Date: Nov. 24th, 2014
+-- you_win.lua
+-- Date: May 2, 2019
 -- Description: This is the you win screen
 -----------------------------------------------------------------------------------------
 

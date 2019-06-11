@@ -1,7 +1,5 @@
 -----------------------------------------------------------------------------------------
---
 -- credits_screen.lua
--- Created by: Isabelle LC
 -- Date: May 2, 2019
 -- Description: This is the credits page, displaying a back button to the main menu.
 -----------------------------------------------------------------------------------------

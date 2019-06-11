@@ -1,9 +1,7 @@
 -----------------------------------------------------------------------------------------
---
--- main_menu.lua
--- Created by: Isabelle LC
+-- level_select.lua
 -- Date: May 2, 2019
--- Description: This is the main menu, displaying the credits, instructions & play buttons.
+-- Description: This is the level select, it displays the buttons to go into different levels.
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
