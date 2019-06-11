@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------------------
 --
--- level1_screen.lua
--- Created by: Isabelle
+-- level1_question.lua
+-- Created by: Isabelle LC
 -- Date: May 23, 2019
 -- Description: Asks a question in level 1. If user gets the question right, then the user
 -- continues the level and his 'questionsAnswered' goes up by one. if the user gets the

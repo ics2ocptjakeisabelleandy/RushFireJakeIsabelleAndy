@@ -1,9 +1,8 @@
 -----------------------------------------------------------------------------------------
 --
--- level1_screen.lua
--- Created by: Isabelle LC
+-- level2_screen.lua
 -- Date: May 2, 2019
--- Description: This is the level 1 screen of the game.
+-- Description: This is the level 2 screen of the game.
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
@@ -186,7 +185,11 @@ local function ReplaceCharacter()
 end
 
 local function MakeObjectCharactersVisible()
-
+    zombie1.isVisible = true
+    zombie2.isVisible = true
+    zombie3.isVisible = true
+    zombie4.isVisible = true
+    zombie5.isVisible = true
 end
 
 local function onCollision(self, event)

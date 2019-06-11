@@ -1,7 +1,5 @@
 -----------------------------------------------------------------------------------------
---
 -- main_menu.lua
--- Created by: Isabelle LC
 -- Date: May 2, 2019
 -- Description: This is the main menu, displaying the credits, instructions & play buttons.
 -----------------------------------------------------------------------------------------
