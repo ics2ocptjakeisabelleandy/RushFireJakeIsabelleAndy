@@ -1,6 +1,5 @@
 -----------------------------------------------------------------------------------------
 -- main.lua
--- Created by: Isabelle LC
 -- Date: May 2, 2019
 -- Course: ICS20/3C
 -- Description: This calls the splash screen of the app to load itself.
