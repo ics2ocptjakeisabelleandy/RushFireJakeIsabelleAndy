@@ -639,8 +639,6 @@ function scene:show( event )
             bkgMusicChannel = audio.play(bkgMusic)
         end
 
-        numLives = 3
-        numberCorrect = 0
 
         --create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
