@@ -279,7 +279,7 @@ local function AskQuestion()
         wrongAnswerText2.text = "Under"
         wrongAnswerText3.text = "Through"
 
-        questionText.text = "What is another word for moving forward"?
+        questionText.text = "What is another word for moving forward?"
 
 
         elseif (randomOperator == 13) then
