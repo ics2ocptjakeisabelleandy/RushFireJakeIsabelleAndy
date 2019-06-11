@@ -419,7 +419,7 @@ function scene:create( event )
     sceneGroup:insert(skyscraper1)
 
 
-    skyscraper2 = display.newImage("Images/skyscraper2jakeH.png", 300, 100)
+    skyscraper2 = display.newImage("Images/skyscraper2JakeH.png", 300, 100)
     skyscraper2.x = display.contentWidth/2
     skyscraper2.y = display.contentHeight/1.35
 
