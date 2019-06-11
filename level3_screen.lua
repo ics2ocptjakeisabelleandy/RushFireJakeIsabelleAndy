@@ -53,11 +53,6 @@ local zombie2
 local greg
 local theEnemy
 
-local collidedWithGreg = false
-local collidedWithZombie = false
-local collidedWithZombie2 = false
-
-
 local motionx = 1
 local SPEED = 12.5
 local negativeSpeed = -8
@@ -165,6 +160,7 @@ local function ReplaceCharacter()
     character.myName = "Sam"
     print ("***Inside ReplaceCharacter")
 
+
     -- intialize horizontal movement of character
     motionx = 0
 
@@ -183,7 +179,13 @@ local function ReplaceCharacter()
 end
 
 local function UpdateHealth()
-    if (numLivesLevel3 == 2 ) then 
+    if (numLivesLevel3 == 3 ) then
+        health3.isVisible = true
+        health2.isVisible = true
+        health1.isVisible = true
+
+
+    elseif (numLivesLevel3 == 2 ) then 
         health3.isVisible = false
         health2.isVisible = true
         health1.isVisible = true
@@ -208,18 +210,17 @@ local function onCollision( self, event )
     if ( event.phase == "began" ) then        
 
         if  (event.target.myName == "Ground") then
-
+            character.isVisible = false
             -- remove runtime listeners that move the character
-            RemoveArrowEventListeners()
-            RemoveRuntimeListeners()
+            --RemoveArrowEventListeners()
+            --RemoveRuntimeListeners()
 
             -- remove the character from the display
-            display.remove(character)
-
+            --display.remove(character)
+            
             numLivesLevel3 = numLivesLevel3 - 1
             print ("***Collided with ground")
-            UpdateHealth()
-            timer.performWithDelay(1000, ReplaceCharacter)
+            timer.performWithDelay(1000, ResumeLevel3)
             
         end
 
@@ -308,9 +309,15 @@ local function RemovePhysicsBodies()
 
     physics.removeBody(Ground)
     
-    physics.removeBody(zombie)
-    physics.removeBody(zombie2)
-    physics.removeBody(greg)
+    if (zombie ~= nil) and (zombie.isBodyActive == true) then
+        physics.removeBody(zombie)
+    end
+    if (zombie2 ~= nil) and (zombie2.isBodyActive == true) then
+        physics.removeBody(zombie2)
+    end
+    if (greg ~= nil) and (greg.isBodyActive == true) then    
+        physics.removeBody(greg)
+    end
 end
 
 -----------------------------------------------------------------------------------------
@@ -318,14 +325,14 @@ end
 -----------------------------------------------------------------------------------------
 
 function ResumeLevel3()
+    UpdateHealth()
 
     -- make character visible again
     character.isVisible = true
     character.x = display.contentWidth*0.3/3
     character.y = 100
    
-
-    UpdateHealth()
+    
 
     if (questionsAnswered > 0) then
         if (theEnemy ~= nil) and (theEnemy.isBodyActive == true) then
@@ -411,7 +418,7 @@ function scene:create( event )
     -- insert the wall into scene group
     sceneGroup:insert(rightW)
 
-    skyscraper1 = display.newImage("Images/skyscraper1JakeH.png", 200, 100)
+    skyscraper1 = display.newImage("Images/skyscraper1jakeH.png", 200, 100)
     skyscraper1.x = display.contentWidth/11
     skyscraper1.y = display.contentHeight/1.35
 
@@ -520,11 +527,8 @@ function scene:show( event )
 
         --create the character, add physics bodies and runtime listeners
         numLivesLevel3 = 3
-        collidedWithGreg = false
-        collidedWithZombie = false 
-        collidedWithZombie2 = false
-
-        ReplaceCharacter()
+        questionsAnswered = 0
+        UpdateHealth()      
 
         MakeEnemiesVisible()
 
@@ -534,8 +538,8 @@ function scene:show( event )
         -- add collision listeners to objects
         AddCollisionListeners()
 
-        -- make planes visible
-        --Runtime:addEventListener( "collision", onGlobalCollision )
+        -- add the character
+        ReplaceCharacter()
         
     end
 end --function scene:show( event )
