@@ -159,7 +159,7 @@ local function AskQuestion()
     elseif (randomOperator == 3) then
 
         -- correct answer
-        correctAnswerText.text = "Beer"
+        correctAnswerText.text = "Caffeine"
 
         -- wrong answers
         wrongAnswerText1.text = "Juice"
@@ -184,14 +184,14 @@ local function AskQuestion()
         elseif (randomOperator == 5) then
 
         -- correct answer
-        correctAnswerText.text = "Drink mouthwash"
+        correctAnswerText.text = "Swallow mouthwash"
 
         -- wrong answers
         wrongAnswerText1.text = "Brush your teeth"
         wrongAnswerText2.text = "Brush your gums"
         wrongAnswerText3.text = "Floss"
 
-        questionText.text = "What shouldn't you do while cleaning\nyour teeth?"
+        questionText.text = "What shouldn't you do while cleaning your teeth?"
 
         elseif (randomOperator == 6) then
 
@@ -203,7 +203,7 @@ local function AskQuestion()
         wrongAnswerText2.text = "12"
         wrongAnswerText3.text = "14"
 
-        questionText.text = "What age can you buy alcohol?"
+        questionText.text = "At what age can you buy alcohol?"
 
         elseif (randomOperator == 7) then
 
@@ -221,7 +221,7 @@ local function AskQuestion()
         elseif (randomOperator == 8) then
 
         -- correct answer
-        correctAnswerText.text = "Ice hockey "
+        correctAnswerText.text = "Ice hockey"
 
         -- wrong answers
         wrongAnswerText1.text = "Volleyball"
@@ -247,14 +247,14 @@ local function AskQuestion()
         elseif (randomOperator == 10) then
 
         -- correct answer
-        correctAnswerText.text = "Football"
+        correctAnswerText.text = "Sailing"
 
         -- wrong answers
-        wrongAnswerText1.text =  "Ice hockey"
+        wrongAnswerText1.text =  "Tag"
         wrongAnswerText2.text = "Basketball"
         wrongAnswerText3.text = "Soccer"
 
-        questionText.text = "What sport can you only allowed do outside?"
+        questionText.text = "What activity can you only allowed do outside?"
 
 
         elseif (randomOperator == 11) then
@@ -273,20 +273,20 @@ local function AskQuestion()
         elseif (randomOperator == 12) then
 
         -- correct answer
-        correctAnswerText.text = "Above "
+        correctAnswerText.text = "Above"
 
         -- wrong answers
         wrongAnswerText1.text = "Around"
         wrongAnswerText2.text = "Under"
         wrongAnswerText3.text = "Through"
 
-        questionText.text = "You need to get to the other side of\nthe wall. How?"
+        questionText.text = "What is another word for moving forward"?
 
 
         elseif (randomOperator == 13) then
 
         -- correct answer
-        correctAnswerText.text = "Track and Field"
+        correctAnswerText.text = "Wrestling"
 
         -- wrong answers
         wrongAnswerText1.text = "Volleyball"

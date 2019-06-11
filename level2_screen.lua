@@ -71,6 +71,7 @@ local SPEED = 7
 local negativeSpeed = -9
 local LINEAR_VELOCITY = -150
 local GRAVITY = 7
+local scrollSpeed = 1
 
 local leftW
 local topW
@@ -247,6 +248,14 @@ local function Unmute(touch)
 end
 
 
+
+local function moveZombie(event)
+    zombie1.x = zombie1 + scrollSpeed
+end
+
+local function AddEventListener()
+    Runtime:addEventListener( "enterFrame", moveZombie)
+end
 
 local function AddCollisionListeners()
     -- if character collides with earth, onCollision will be called
