@@ -41,6 +41,9 @@ numLivesLevel2 = 3
 local GamerTime = audio.loadStream("Sounds/duel.mp3")
 local GamerTimeChannel = audio.play(bkgMusic, { channel=4, loops=-1})
 
+local Growl = audio.loadStream("Sounds/Growl.mp3")
+local GrowlChannel
+
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -70,7 +73,7 @@ local SPEED = 7
 local negativeSpeed = -9
 local LINEAR_VELOCITY = -150
 local GRAVITY = 7
-local scrollSpeed = 1
+local scrollSpeed = 2
 
 local leftW
 local topW
@@ -349,12 +352,15 @@ local function UpdateHealth()
         health3.isVisible = false
         health2.isVisible = true
         health1.isVisible = true
+        GrowlChannel = audio.play(Growl)
+        
 
     elseif (numLivesLevel2 == 1) then
 
         health1.isVisible = true
         health2.isVisible = false
         health3.isVisible = false
+        GrowlChannel = audio.play(Growl)
 
     elseif (numLivesLevel2 == 0 ) then
         timer.performWithDelay(200, YouLoseTransition)
