@@ -163,7 +163,7 @@ local function AskQuestion()
         -- wrong answers
         wrongAnswerText1.text = "Juice"
         wrongAnswerText2.text = "Smoothie"
-        wrongAnswerText3.text = "Eater"
+        wrongAnswerText3.text = "Water"
 
         questionText.text = " What drink is bad for your health? "
 
@@ -195,14 +195,14 @@ local function AskQuestion()
         elseif (randomOperator == 6) then
 
         -- correct answer
-        correctAnswerText.text = "18"
+        correctAnswerText.text = "Lead"
 
         -- wrong answers
-        wrongAnswerText1.text = "16"
-        wrongAnswerText2.text = "12"
-        wrongAnswerText3.text = "14"
+        wrongAnswerText1.text = "Vitamins"
+        wrongAnswerText2.text = "Eggs"
+        wrongAnswerText3.text = "hamburgers"
 
-        questionText.text = "At what age can you buy alcohol?"
+        questionText.text = "Which Item here is harmful to you?"
 
         elseif (randomOperator == 7) then
 
@@ -236,11 +236,11 @@ local function AskQuestion()
         correctAnswerText.text = "Fencing"
 
         -- wrong answers
-        wrongAnswerText1.text = "Ice Hockey"
-        wrongAnswerText2.text = "Tennis"
-        wrongAnswerText3.text = "Surfing"
+        wrongAnswerText1.text = "Bowling"
+        wrongAnswerText2.text = "Parkour"
+        wrongAnswerText3.text = "Skateboarding"
 
-        questionText.text = " Which sport is a olympic sport? "
+        questionText.text = "Which sport is a olympic sport?"
 
 
         elseif (randomOperator == 10) then
@@ -253,7 +253,7 @@ local function AskQuestion()
         wrongAnswerText2.text = "Basketball"
         wrongAnswerText3.text = "Soccer"
 
-        questionText.text = "What activity can you only allowed do outside?"
+        questionText.text = "What activity can are you only allowed do outside?"
 
 
         elseif (randomOperator == 11) then
@@ -272,12 +272,12 @@ local function AskQuestion()
         elseif (randomOperator == 12) then
 
         -- correct answer
-        correctAnswerText.text = "Above"
+        correctAnswerText.text = "Advance"
 
         -- wrong answers
-        wrongAnswerText1.text = "Around"
-        wrongAnswerText2.text = "Under"
-        wrongAnswerText3.text = "Through"
+        wrongAnswerText1.text = "Flee"
+        wrongAnswerText2.text = "Sideways"
+        wrongAnswerText3.text = "Backward"
 
         questionText.text = "What is another word for moving forward?"
 
@@ -292,7 +292,7 @@ local function AskQuestion()
         wrongAnswerText2.text = "Basketball"
         wrongAnswerText3.text = "Soccer"
 
-        questionText.text = "Which sport is not a team sport?"
+        questionText.text = "Which sport is NOT a team sport?"
 
 
         elseif (randomOperator == 14) then
@@ -330,7 +330,7 @@ local function AskQuestion()
         wrongAnswerText2.text = "Grain"
         wrongAnswerText3.text = "Dairy"
 
-        questionText.text = "What food group does beef go into?"
+        questionText.text = "What food group does beef belong too?"
 
 
 
@@ -371,7 +371,7 @@ local function AskQuestion()
         wrongAnswerText2.text = "Celary"
         wrongAnswerText3.text = "Beef"
 
-        questionText.text = "Which item go is in the same food\ngroup as apples?"
+        questionText.text = "Which item goes in the same food group as an apples?"
 
 
         elseif (randomOperator == 20) then
