@@ -1,5 +1,4 @@
 -----------------------------------------------------------------------------------------
---
 -- level1_question.lua
 -- Created by: Isabelle LC
 -- Date: May 23, 2019
@@ -60,6 +59,7 @@ local correctAnswer
 local randomOperator
 local questionsAnswered
 local questionText
+local incorrectText
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -72,6 +72,9 @@ local function BackToLevel1()
     ResumeGame()
 end 
 
+local function HideIncorrect()
+    incorrectText.isVisible = false
+end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
@@ -89,9 +92,10 @@ local function TouchListenerWrongAnswer1(touch)
     
     if (touch.phase == "ended") then
 
-        numLives = numLives - 1
-        
-        timer.performWithDelay(100, BackToLevel1)
+        incorrectText.isVisible = true
+
+        timer.performWithDelay(600, HideIncorrect)
+        timer.performWithDelay(1000, BackToLevel1)
     end 
 end
 
@@ -101,9 +105,10 @@ local function TouchListenerWrongAnswer2(touch)
     
     if (touch.phase == "ended") then
 
-        numLives = numLives - 1
+        incorrectText.isVisible = true
 
-        timer.performWithDelay(100, BackToLevel1)
+        timer.performWithDelay(600, HideIncorrect)
+        timer.performWithDelay(1000, BackToLevel1)
     end 
 end
 
@@ -113,9 +118,10 @@ local function TouchListenerWrongAnswer3(touch)
     
     if (touch.phase == "ended") then
 
-        numLives = numLives - 1
+        incorrectText.isVisible = true
 
-        timer.performWithDelay(100, BackToLevel1)
+        timer.performWithDelay(600, HideIncorrect)
+        timer.performWithDelay(1000, BackToLevel1)
     end 
 end
 
@@ -542,6 +548,7 @@ local function AskQuestion()
     end
 end
 
+
 local function PositionAnswers()
 
     --creating random start position in a cretain area
@@ -632,6 +639,11 @@ function scene:create(event)
     wrongAnswerText3 = display.newText("", X2, Y1, Arial, 50)
     wrongAnswerText3.anchorX = 0
 
+    -- create the incorrect object and make it invisible
+    incorrectText = display.newText( "Incorrect!", display.contentWidth/2, display.contentHeight*2.75/3, nil, 50 )
+    incorrectText:setTextColor(1, 0, 0)
+    incorrectText.isVisible = false
+
     ----------------------------------------------------------------------------------
 
     -- insert all objects for this scene into the scene group
@@ -642,6 +654,7 @@ function scene:create(event)
     sceneGroup:insert(wrongAnswerText1)
     sceneGroup:insert(wrongAnswerText2)
     sceneGroup:insert(wrongAnswerText3)
+    sceneGroup:insert(incorrectText)
 
 end
 
